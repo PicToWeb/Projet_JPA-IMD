@@ -1,0 +1,15 @@
+<persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence
+http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd" version="2.1">
+	<persistence-unit name="jpa_IMD" transaction-type="RESOURCE_LOCAL">
+		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+		<properties>
+			<property name="jakarta.persistence.jdbc.url" value="jdbc:mysql://buz1fsnlmnicsblqdr6l-mysql.services.clever-cloud.com/buz1fsnlmnicsblqdr6l" />
+			<property name="jakarta.persistence.jdbc.user" value="umijpgacy4ow1wjl" />
+			<property name="jakarta.persistence.jdbc.password" value="sYg0rCssRzA7eafjzYvH" />
+			<property name="hibernate.show_sql" value="true" />
+			<!-- <property name="jakarta.persistence.schema-generation.database.action" value="drop-and-create"/> -->
+		</properties>
+	</persistence-unit>
+</persistence>
