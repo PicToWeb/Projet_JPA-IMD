@@ -46,6 +46,9 @@ public abstract class Intervenant {
 		this.url = url;
 	}
 
+	public Intervenant() {
+		
+	}
 
 	/** Getter for id
 	 * @return the id

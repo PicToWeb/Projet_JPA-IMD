@@ -67,7 +67,6 @@ public class Film {
 	 * @param pays
 	 */
 	public Film(String id, String nom, Integer annee, Double rating, String url, Langue langue, Lieu lieu, Pays pays) {
-		super();
 		this.id = id;
 		this.nom = nom;
 		this.annee = annee;

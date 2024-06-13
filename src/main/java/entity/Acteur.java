@@ -25,6 +25,10 @@ public class Acteur extends Intervenant {
 		this.taille = taille;
 	}
 
+	public Acteur() {
+		// TODO Auto-generated constructor stub
+	}
+
 	/** Getter for taille
 	 * @return the taille
 	 */

@@ -38,6 +38,44 @@ public class Pays {
 		this.nom = nom;
 		this.url = url;
 	}
+
+	public Pays() {
+		// TODO Auto-generated constructor stub
+	}
+
+	/** Getter for nom
+	 * @return the nom
+	 */
+	public String getNom() {
+		return nom;
+	}
+
+	/** Setter for nom
+	 * @param nom the nom to set
+	 */
+	public void setNom(String nom) {
+		this.nom = nom;
+	}
+
+	/** Getter for url
+	 * @return the url
+	 */
+	public String getUrl() {
+		return url;
+	}
+
+	/** Setter for url
+	 * @param url the url to set
+	 */
+	public void setUrl(String url) {
+		this.url = url;
+	}
+
+	@Override
+	public String toString() {
+		return "Pays [id=" + id + ", nom=" + nom + ", url=" + url + "]";
+	}
+	
 	
 	
 
