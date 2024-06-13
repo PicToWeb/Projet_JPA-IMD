@@ -26,7 +26,13 @@ public class Acteur extends Intervenant {
 	}
 
 	public Acteur() {
-		// TODO Auto-generated constructor stub
+	}
+
+	
+	@Override
+	public String toString() {
+		return "Acteur [ " +super.id + " " +super.identite  + " LieuNaissance= " + getLieu() + " DateNaissance= " + getDateNaissance() + 
+				" taille= "+ getTaille() + " " + " URL= " + super.url + "]";
 	}
 
 	/** Getter for taille

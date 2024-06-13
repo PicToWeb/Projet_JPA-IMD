@@ -38,5 +38,10 @@
 			<artifactId>java-poo-j6</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
+		<dependency>
+			<groupId>CGE01</groupId>
+			<artifactId>APP01</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
 	</dependencies>
 </project>

@@ -73,7 +73,7 @@ public class Pays {
 
 	@Override
 	public String toString() {
-		return "Pays [id=" + id + ", nom=" + nom + ", url=" + url + "]";
+		return "Pays [nom= " + nom + ", url= " + url + "] \n";
 	}
 	
 	

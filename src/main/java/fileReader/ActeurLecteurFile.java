@@ -10,6 +10,8 @@ import java.util.List;
 import org.apache.commons.io.FileUtils;
 
 import entity.Acteur;
+import entity.Lieu;
+import utils.Convertir;
 
 public class ActeurLecteurFile {
 
@@ -18,7 +20,7 @@ public class ActeurLecteurFile {
 		HashMap<String, Acteur> acteurMap = new HashMap<>();
 
 		List<String> lignes = null;
-		
+
 		try {
 			File file = new File(cheminFichier);
 			lignes = FileUtils.readLines(file, "UTF-8");
@@ -27,8 +29,8 @@ public class ActeurLecteurFile {
 
 			for (String ligne : lignes) {
 
-				ajoutLigne(ligne);
-				//acteur.put(acteur.getId(),acteur);
+				Acteur acteur = ajoutLigne(ligne);
+				acteurMap.put(acteur.getId(),acteur);
 
 			}
 
@@ -41,28 +43,51 @@ public class ActeurLecteurFile {
 
 	}
 
-	public static void ajoutLigne(String ligne) {
+	public static Acteur ajoutLigne(String ligne) {
 
 		String[] colonne = ligne.split(";", -1);
-
+		Acteur acteur = new Acteur();
+		
 		if (colonne.length == 7) {
 			System.err.println("attention");
 		}
 		String id = colonne[0];
-		String Identite = colonne[1];
-		String dateNaissanceString = colonne[2];
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM-dd-YYYY");
-        LocalDate dateNaissance = LocalDate.parse(dateNaissanceString, formatter);
-        
-		String nutriGrade = colonne[3];
-		String[] ingredients = colonne[4].split(",");
+		String identite = colonne[1];
+		LocalDate dateNaissance = null;
+		try {
+			if (colonne[2].split(" ").length == 3) {
+				dateNaissance = Convertir.stringToDateUS(colonne[2]);
+				
+			}
+			
+		}catch(Exception e) {
+			e.getMessage();
+		}
+		HashMap<String,Lieu> lieuNaissance = Convertir.stringToLieuMap(colonne[3], colonne[0]);
+		
+		Lieu value = new Lieu();
+		for (String key : lieuNaissance.keySet()) {
+			if(id.equals(key)) {
+				value = lieuNaissance.get(key);
+			}
+		}
+		String taille = colonne[4];
+		String url = colonne[5];
+		acteur.setId(id);
+		acteur.setIdentite(identite);
+		acteur.setTaille(taille);
+		acteur.setUrl(url);
+		acteur.setDateNaissance(dateNaissance);
+		acteur.setLieu(value);
+//		String nutriGrade = colonne[3];
+//		String[] ingredients = colonne[4].split(",");
 
 		// String allergenes = morceaux[28];
 		// int ingredientTotal = Integer.parseInt(ingredients.replace(" ", "").trim());
 
-
-
 		// recensement.getProduits().add(prod);
+		System.out.println(acteur.toString());
+		return acteur;
 	}
 
 }

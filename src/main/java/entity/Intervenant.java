@@ -18,20 +18,20 @@ public abstract class Intervenant {
 
 	@Id
 	@Column(name = "id", length = 15)
-	private String id;
+	protected String id;
 
 	@Column(name = "identite", length = 150)
-	private String identite;
+	protected String identite;
 
 	@Column(name = "date_naissance", columnDefinition = "DATE")
-	private LocalDate dateNaissance;
+	protected LocalDate dateNaissance;
 
 	@Column(name = "url", length = 200)
-	private String url;
+	protected String url;
 	
 	@ManyToOne
 	@JoinColumn(name="id_lieu")
-	private Lieu lieu;
+	protected Lieu lieu;
 
 	
 	/** Constructor

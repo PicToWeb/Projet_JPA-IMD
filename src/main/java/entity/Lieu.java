@@ -52,6 +52,17 @@ public class Lieu {
 		this.pays = pays;
 	}
 
+	public Lieu() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	
+
+	@Override
+	public String toString() {
+		return "Lieu [rue=" + rue + ", ville=" + ville + ", etat=" + etat + ", pays=" + pays.getNom() + "]";
+	}
+
 	/** Getter for rue
 	 * @return the rue
 	 */
