@@ -49,5 +49,7 @@ public class Acteur extends Intervenant {
 		this.taille = taille;
 	}
 	
+	
+	
 
 }

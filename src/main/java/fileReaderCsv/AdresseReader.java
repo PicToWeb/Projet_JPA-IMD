@@ -1,4 +1,4 @@
-package fileReader;
+package fileReaderCsv;
 
 import java.util.HashMap;
 

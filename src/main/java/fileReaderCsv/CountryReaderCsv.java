@@ -1,4 +1,4 @@
-package fileReader;
+package fileReaderCsv;
 
 import java.io.File;
 import java.io.IOException;
@@ -9,7 +9,7 @@ import org.apache.commons.io.FileUtils;
 
 import entity.Pays;
 
-public class PaysReader {
+public class CountryReaderCsv {
 
 	public static HashMap<String, Pays> paysMap = new HashMap<>();
 

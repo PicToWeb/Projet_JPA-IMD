@@ -16,8 +16,6 @@ import jakarta.persistence.Table;
 @Table(name = "REALISATEUR")
 public class Realisateur extends Intervenant {
 
-	@Column(name = "taille", length = 10)
-	private String taille;
 	
 	@ManyToMany
 	@JoinTable(name = "FILM_REAL", joinColumns = @JoinColumn(name = "id_real", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "id_film", referencedColumnName = "id"))
@@ -27,24 +25,10 @@ public class Realisateur extends Intervenant {
 	private Set<Role> roles = new HashSet<>();
 	
 
-	public Realisateur(String id, String identite, String url, String taille) {
+	public Realisateur(String id, String identite, String url) {
 		super(id, identite, url);
-		this.taille = taille;
 	}
 
-	/** Getter for taille
-	 * @return the taille
-	 */
-	public String getTaille() {
-		return taille;
-	}
-
-	/** Setter for taille
-	 * @param taille the taille to set
-	 */
-	public void setTaille(String taille) {
-		this.taille = taille;
-	}
 
 	/** Getter for films
 	 * @return the films

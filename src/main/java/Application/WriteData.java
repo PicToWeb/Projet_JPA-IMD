@@ -1,29 +1,54 @@
 package Application;
 
-import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.List;
 
+import dao.CountryDao;
+import dao.LieuDao;
 import entity.Acteur;
-import entity.Film;
-import entity.Genre;
-import entity.Langue;
-import entity.Lieu;
 import entity.Pays;
-import entity.Realisateur;
-import entity.Role;
-import fileReader.ActeurLecteurFile;
-import fileReader.PaysReader;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.EntityTransaction;
-import jakarta.persistence.Persistence;
+import fileReaderCsv.ActorReaderCsv;
+import fileReaderCsv.CountryReaderCsv2;
 import utils.FileSource;
+import utils.JpaConnection;
+
 
 public class WriteData {
 
+	public static final CountryDao countryDao = JpaConnection.countryDao();
+	public static final LieuDao lieuDao = JpaConnection.lieuDao();
+			
 	public static void main(String[] args) {
+		
 
-		PaysReader.lire(FileSource.nom("pays.csv"));
-		ActeurLecteurFile.lire(FileSource.nom("acteurs.csv"));
+		List<Pays> countryList = CountryReaderCsv2.readFileToList(FileSource.nom("pays.csv"));
+		
+		for(Pays p : countryList) {
+			if(!countryDao.verifyCountry(p.getNom())) {
+			countryDao.insert(p);
+			}
+		}
+		
+		
+		//System.out.println(country.findAll().toString());
+		
+		//HashMap<String,Acteur> actorList = ActorReaderCsv.readFileToMap(FileSource.nom("acteurs.csv"));
+		
+		//lieu -> lier le pays en base (id)
+		// Ajouter mon acteur -> lié à mon lieu 
+		
+		//actorList.values().stream().map(actor->actor.getLieu()).forEach(System.out::println);
+		
+		
+		// un seul stream
+		//for(Acteur a : actorList.values())
+//			Lieu lieu = lieuDao.findAdresse(a.getLieu())
+//			//
+//			a.setLieu(lieu);
+//		//objet acteur auquel un lieu est associé
+//		acteurDao.insert(a);
+//			System.out.println(a.getIdentite() + a.getLieu().getPays());
+
 
 		
 //		EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("jpa_IMD");
@@ -33,8 +58,7 @@ public class WriteData {
 //
 //		transaction.begin();
 //
-//		Pays pays = new Pays("Belgique", "http://belgique.be");
-//		em.persist(pays);
+
 //
 //		Lieu lieuNaissance = new Lieu("rue 05", "Ville lieu", "Etat lieu", pays);
 //		em.persist(lieuNaissance);

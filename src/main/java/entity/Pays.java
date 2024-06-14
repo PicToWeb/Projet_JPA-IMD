@@ -47,7 +47,7 @@ public class Pays {
 	 * @return the nom
 	 */
 	public String getNom() {
-		return nom;
+		return nom ;
 	}
 
 	/** Setter for nom
