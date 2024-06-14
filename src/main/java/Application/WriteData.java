@@ -16,15 +16,15 @@ import utils.JpaConnection;
 public class WriteData {
 
 	public static final CountryDao countryDao = JpaConnection.countryDao();
-	public static final LieuDao lieuDao = JpaConnection.lieuDao();
+	//public static final LieuDao lieuDao = JpaConnection.lieuDao();
 			
 	public static void main(String[] args) {
 		
 
 		List<Pays> countryList = CountryReaderCsv2.readFileToList(FileSource.nom("pays.csv"));
-		
+
 		for(Pays p : countryList) {
-			if(!countryDao.verifyCountry(p.getNom())) {
+			if(!countryDao.countryExist(p.getNom())) {
 			countryDao.insert(p);
 			}
 		}
@@ -32,7 +32,7 @@ public class WriteData {
 		
 		//System.out.println(country.findAll().toString());
 		
-		//HashMap<String,Acteur> actorList = ActorReaderCsv.readFileToMap(FileSource.nom("acteurs.csv"));
+		HashMap<String,Acteur> actorList = ActorReaderCsv.readFileToMap(FileSource.nom("acteurs.csv"));
 		
 		//lieu -> lier le pays en base (id)
 		// Ajouter mon acteur -> lié à mon lieu 

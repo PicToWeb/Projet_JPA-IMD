@@ -1,10 +1,10 @@
 package utils;
 
 import dao.CountryDao;
+
 import dao.LieuDao;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.Persistence;
 
 public class JpaConnection {
@@ -12,9 +12,9 @@ public class JpaConnection {
 	 public static CountryDao countryDao() {
 		 return new CountryDao();
 	 }
-	 public static LieuDao lieuDao() {
-		 return new LieuDao();
-	 }
+//	 public static LieuDao lieuDao() {
+//		 return new LieuDao();
+//	 }
 	
 	private static final String PERSISTENCE_UNIT_NAME = "jpa_IMD";
 	private static EntityManagerFactory entityManagerFactory;

@@ -5,13 +5,13 @@ import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Locale;
 
+import dao.CountryDao;
 import entity.Lieu;
-import entity.Pays;
 import fileReaderCsv.CountryReaderCsv2;
 
 
 public class Convertir {
-
+	public static final CountryDao countryDao = JpaConnection.countryDao();
 	public static LocalDate stringToDateUS(String string) {
 
 		String chaine = string.trim();
@@ -31,7 +31,6 @@ public class Convertir {
 
 
 		if (colonne.length == 1) {
-			//lieu.setPays(CountryReaderCsv.verifPays(colonne[0]));
 			lieu.setPays(CountryReaderCsv2.verifPays(colonne[0]));
 			//lieu.setPays(new Pays(colonne[0],""));
 			adresseMap.put(id, lieu);
@@ -52,20 +51,18 @@ public class Convertir {
 		} else if (colonne.length == 4) {
 			lieu.setVille(colonne[0] + "-" +colonne[1]);
 			lieu.setEtat(colonne[2]);
-//			lieu.setPays(CountryReaderCsv.verifPays(colonne[3]));
 			lieu.setPays(CountryReaderCsv2.verifPays(colonne[3]));
 		//	lieu.setPays(new Pays(colonne[3],""));
 			adresseMap.put(id, lieu);
 		} else {
 			lieu.setVille(colonne[0] + "-" +colonne[1]);
 			lieu.setEtat(colonne[2] + "-" +colonne[3]);
-//			lieu.setPays(CountryReaderCsv.verifPays(colonne[4]));
 			lieu.setPays(CountryReaderCsv2.verifPays(colonne[4]));
 			//lieu.setPays(new Pays(colonne[4],""));
 			adresseMap.put(id, lieu);
 		}
 
-		//System.out.println(adresseMap.toString());
+		System.out.println(adresseMap.toString());
 		return adresseMap;
 	}
 

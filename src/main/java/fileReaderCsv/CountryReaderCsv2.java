@@ -47,6 +47,8 @@ public class CountryReaderCsv2 {
 
 	public static Pays verifPays(String pays) {
 		 
+		if(pays==null) return new Pays("","");
+		
 		String usa = "USA";
 		String uk = "UK";
 		
@@ -56,11 +58,11 @@ public class CountryReaderCsv2 {
 		{
 			pays = "United Kingdom";
 		}
-		Pays paysTrouve = country.findByName(pays);
-			
-			
+		if(country.findByName(pays.trim())==null)
+		  country.insert(new Pays (pays.trim(),""));
 		
-		return paysTrouve;
+		
+		return country.findByName(pays.trim());
 	}
 
 }

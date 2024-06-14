@@ -1,6 +1,7 @@
 package dao;
 
 import java.util.ArrayList;
+
 import java.util.List;
 
 import entity.Pays;
@@ -17,7 +18,7 @@ public class CountryDao implements DaoInterface<Pays> {
 		
 	}
 
-	public boolean verifyCountry(String pays) {
+	public boolean countryExist(String pays) {
 		return countryList.stream().anyMatch(p->p.getNom().equals(pays));
 		
 	}
@@ -29,7 +30,7 @@ public class CountryDao implements DaoInterface<Pays> {
 
 	
 
-
+	
 	public List<Pays> findAll() {
 		
 		return JpaConnection.getEntityManager().createQuery("SELECT p FROM Pays p",Pays.class).getResultList();
@@ -48,6 +49,7 @@ public class CountryDao implements DaoInterface<Pays> {
 	public void delete(Pays entity) {
 		
 	}
+
 	
 	
 
