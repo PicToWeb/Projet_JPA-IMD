@@ -28,9 +28,6 @@ public class CountryDao implements DaoInterface<Pays> {
 	}
 	
 
-	
-
-	
 	public List<Pays> findAll() {
 		
 		return JpaConnection.getEntityManager().createQuery("SELECT p FROM Pays p",Pays.class).getResultList();

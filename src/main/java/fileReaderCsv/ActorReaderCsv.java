@@ -61,19 +61,10 @@ public class ActorReaderCsv {
 			e.getMessage();
 		}
 
-		HashMap<String, Lieu> lieuNaissance = Convertir.stringToLieuMap(column[3], column[0]);
-
-		Lieu adress = new Lieu();
-
-		for (String key : lieuNaissance.keySet()) {
-			if (id.equals(key)) {
-				adress = lieuNaissance.get(key);
-			}
-		}
-
+		Lieu adress = AdresseReaderCsv.stringToLieu(column[3], column[0]);
 		String taille = column[4];
 		String url = column[5];
-
+		
 		acteur.setId(id);
 		acteur.setIdentite(identite);
 		acteur.setTaille(taille);

@@ -1,10 +1,7 @@
 package dao;
 
 import java.util.HashMap;
-import java.util.Optional;
-
 import entity.Lieu;
-
 import utils.JpaConnection;
 
 public class LieuDao implements DaoInterface<Lieu> {
@@ -30,8 +27,7 @@ public class LieuDao implements DaoInterface<Lieu> {
 		
 			JpaConnection.persist(lieu);
 			//lieuMap.put(lieu.getId(),lieu);
-			
-		
+				
 	}
 
 	@Override

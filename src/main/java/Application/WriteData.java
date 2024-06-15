@@ -1,14 +1,16 @@
 package Application;
 
 import java.util.HashMap;
+
 import java.util.List;
 
+import dao.ActorDao;
 import dao.CountryDao;
 import dao.LieuDao;
 import entity.Acteur;
 import entity.Pays;
 import fileReaderCsv.ActorReaderCsv;
-import fileReaderCsv.CountryReaderCsv2;
+import fileReaderCsv.CountryReaderCsv;
 import utils.FileSource;
 import utils.JpaConnection;
 
@@ -17,11 +19,12 @@ public class WriteData {
 
 	public static final CountryDao countryDao = JpaConnection.countryDao();
 	public static final LieuDao lieuDao = JpaConnection.lieuDao();
+	public static final ActorDao actorDao = JpaConnection.actorDao();
 			
 	public static void main(String[] args) {
 		
 
-		List<Pays> countryList = CountryReaderCsv2.readFileToList(FileSource.nom("pays.csv"));
+		List<Pays> countryList = CountryReaderCsv.readFileToList(FileSource.nom("pays.csv"));
 
 		for(Pays p : countryList) {
 			if(!countryDao.countryExist(p.getNom())) {
@@ -32,9 +35,10 @@ public class WriteData {
 		
 		//System.out.println(country.findAll().toString());
 		
-		HashMap<String,Acteur> actorList = ActorReaderCsv.readFileToMap(FileSource.nom("acteurs.csv"));
+		HashMap<String,Acteur> actorMap = ActorReaderCsv.readFileToMap(FileSource.nom("acteurs.csv"));
 		//System.out.println(actorList.get("nm1962736"));
-		lieuDao.insert(actorList.get("nm1962736").getLieu());
+		//lieuDao.insert(actorMap.get("nm1962736").getLieu());
+		actorDao.splitInsert(actorMap);
 		
 		
 		//lieu -> lier le pays en base (id)

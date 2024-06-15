@@ -1,5 +1,6 @@
 package utils;
 
+import dao.ActorDao;
 import dao.CountryDao;
 
 import dao.LieuDao;
@@ -15,7 +16,9 @@ public class JpaConnection {
 	 public static LieuDao lieuDao() {
 		 return new LieuDao();
 	 }
-	
+	 public static ActorDao actorDao() {
+		 return new ActorDao();
+	 }
 	private static final String PERSISTENCE_UNIT_NAME = "jpa_IMD";
 	private static EntityManagerFactory entityManagerFactory;
 
