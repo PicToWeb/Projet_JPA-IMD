@@ -29,7 +29,7 @@ public class LieuDao implements DaoInterface<Lieu> {
 	public void insert(Lieu lieu) {
 		
 			JpaConnection.persist(lieu);
-			lieuMap.put(lieu.getId(),lieu);
+			//lieuMap.put(lieu.getId(),lieu);
 			
 		
 	}

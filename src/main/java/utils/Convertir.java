@@ -62,7 +62,7 @@ public class Convertir {
 			adresseMap.put(id, lieu);
 		}
 
-		System.out.println(adresseMap.toString());
+		
 		return adresseMap;
 	}
 

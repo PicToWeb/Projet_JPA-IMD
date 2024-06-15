@@ -12,9 +12,9 @@ public class JpaConnection {
 	 public static CountryDao countryDao() {
 		 return new CountryDao();
 	 }
-//	 public static LieuDao lieuDao() {
-//		 return new LieuDao();
-//	 }
+	 public static LieuDao lieuDao() {
+		 return new LieuDao();
+	 }
 	
 	private static final String PERSISTENCE_UNIT_NAME = "jpa_IMD";
 	private static EntityManagerFactory entityManagerFactory;

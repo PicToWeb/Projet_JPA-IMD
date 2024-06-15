@@ -29,7 +29,7 @@ public class ActorReaderCsv {
 				Acteur acteur = addActor(actorData);
 				actorMap.put(acteur.getId(), acteur);
 			}
-
+			
 			return actorMap;
 
 		} catch (IOException e) {
@@ -82,6 +82,7 @@ public class ActorReaderCsv {
 		acteur.setLieu(adress);
 
 		return acteur;
+	
 	}
 
 }

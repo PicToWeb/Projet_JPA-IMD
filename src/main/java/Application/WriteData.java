@@ -16,7 +16,7 @@ import utils.JpaConnection;
 public class WriteData {
 
 	public static final CountryDao countryDao = JpaConnection.countryDao();
-	//public static final LieuDao lieuDao = JpaConnection.lieuDao();
+	public static final LieuDao lieuDao = JpaConnection.lieuDao();
 			
 	public static void main(String[] args) {
 		
@@ -33,6 +33,9 @@ public class WriteData {
 		//System.out.println(country.findAll().toString());
 		
 		HashMap<String,Acteur> actorList = ActorReaderCsv.readFileToMap(FileSource.nom("acteurs.csv"));
+		//System.out.println(actorList.get("nm1962736"));
+		lieuDao.insert(actorList.get("nm1962736").getLieu());
+		
 		
 		//lieu -> lier le pays en base (id)
 		// Ajouter mon acteur -> lié à mon lieu 
