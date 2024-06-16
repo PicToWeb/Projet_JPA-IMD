@@ -4,7 +4,7 @@ import dao.CountryDao;
 import entity.Pays;
 import utils.JpaConnection;
 
-public class PaysController {
+public abstract class PaysController {
 	public static final CountryDao country = JpaConnection.countryDao();
 	
 	public static Pays checkIfCountryExist(String pays) {
@@ -14,17 +14,17 @@ public class PaysController {
 		String usa = "USA";
 		String uk = "UK";
 		
-		if (pays.trim() .equals(usa)) {
+		if (pays.replaceAll("\\[.*?\\]","").trim() .equals(usa)) {
 			pays = "United States";
-		}else if(pays.trim().equals(uk))
+		}else if(pays.replaceAll("\\[.*?\\]","").trim().equals(uk))
 		{
 			pays = "United Kingdom";
 		}
-		if(country.findByName(pays.trim())==null)
-		  country.insert(new Pays (pays.trim(),""));
+		if(country.findByName(pays.replaceAll("\\[.*?\\]","").trim())==null)
+		  country.insert(new Pays (pays.replaceAll("\\[.*?\\]","").trim(),""));
 		
 		
-		return country.findByName(pays.trim());
+		return country.findByName(pays.replaceAll("\\[.*?\\]","").trim());
 	}
 
 }

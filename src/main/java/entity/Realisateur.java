@@ -30,6 +30,11 @@ public class Realisateur extends Intervenant {
 	}
 
 
+	public Realisateur() {
+		
+	}
+
+
 	/** Getter for films
 	 * @return the films
 	 */

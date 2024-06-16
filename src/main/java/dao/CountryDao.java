@@ -20,7 +20,6 @@ public class CountryDao implements DaoInterface<Pays> {
 
 	public boolean countryExist(String pays) {
 		return countryList.stream().anyMatch(p->p.getNom().equals(pays));
-		
 	}
 	
 	public Pays findByName(String pays) {

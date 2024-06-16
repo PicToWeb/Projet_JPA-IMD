@@ -1,16 +1,18 @@
 package Application;
 
 import java.util.HashMap;
-
 import java.util.List;
 
 import dao.ActorDao;
 import dao.CountryDao;
 import dao.LieuDao;
+import dao.RealisateurDao;
 import entity.Acteur;
 import entity.Pays;
+import entity.Realisateur;
 import fileReaderCsv.ActorReaderCsv;
 import fileReaderCsv.CountryReaderCsv;
+import fileReaderCsv.RealisateurReaderCsv;
 import utils.FileSource;
 import utils.JpaConnection;
 
@@ -20,6 +22,7 @@ public class WriteData {
 	public static final CountryDao countryDao = JpaConnection.countryDao();
 	public static final LieuDao lieuDao = JpaConnection.lieuDao();
 	public static final ActorDao actorDao = JpaConnection.actorDao();
+	public static final RealisateurDao realisateurDao = JpaConnection.realisateurDao();
 			
 	public static void main(String[] args) {
 		
@@ -35,16 +38,14 @@ public class WriteData {
 		
 		//System.out.println(country.findAll().toString());
 		
-		HashMap<String,Acteur> actorMap = ActorReaderCsv.readFileToMap(FileSource.nom("acteurs.csv"));
-		//System.out.println(actorList.get("nm1962736"));
-		//lieuDao.insert(actorMap.get("nm1962736").getLieu());
-		actorDao.splitInsert(actorMap);
+		//
 		
+		//HashMap<String,Acteur> actorMap = ActorReaderCsv.readFileToMap(FileSource.nom("acteurs.csv"));
+		//actorDao.splitInsert(actorMap);
 		
-		//lieu -> lier le pays en base (id)
-		// Ajouter mon acteur -> lié à mon lieu 
+		HashMap<String,Realisateur> realisateurMap = RealisateurReaderCsv.readFileToMap(FileSource.nom("realisateurs.csv"));
+		realisateurDao.splitInsert(realisateurMap);
 		
-		//actorList.values().stream().map(actor->actor.getLieu()).forEach(System.out::println);
 		
 		
 		// un seul stream

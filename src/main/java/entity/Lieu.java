@@ -59,21 +59,21 @@ public class Lieu {
 		// TODO Auto-generated constructor stub
 	}
 
-	@Override
-	public boolean equals(Object o) {
-		if (this == o)
-			return true;
-		if (o == null || getClass() != o.getClass())
-			return false;
-		Lieu adress = (Lieu) o;
-		return Objects.equals(ville, adress.ville) && Objects.equals(etat, adress.etat)
-				&& Objects.equals(pays, adress.pays);
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(ville, etat, pays);
-	}
+//	@Override
+//	public boolean equals(Object o) {
+//		if (this == o)
+//			return true;
+//		if (o == null || getClass() != o.getClass())
+//			return false;
+//		Lieu adress = (Lieu) o;
+//		return Objects.equals(ville, adress.ville) && Objects.equals(etat, adress.etat)
+//				&& Objects.equals(pays, adress.pays);
+//	}
+//
+//	@Override
+//	public int hashCode() {
+//		return Objects.hash(ville, etat, pays);
+//	}
 
 	@Override
 	public String toString() {

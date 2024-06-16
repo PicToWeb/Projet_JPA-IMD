@@ -2,8 +2,8 @@ package utils;
 
 import dao.ActorDao;
 import dao.CountryDao;
-
 import dao.LieuDao;
+import dao.RealisateurDao;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
@@ -18,6 +18,9 @@ public class JpaConnection {
 	 }
 	 public static ActorDao actorDao() {
 		 return new ActorDao();
+	 }
+	 public static RealisateurDao realisateurDao() {
+		 return new RealisateurDao();
 	 }
 	private static final String PERSISTENCE_UNIT_NAME = "jpa_IMD";
 	private static EntityManagerFactory entityManagerFactory;
