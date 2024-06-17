@@ -36,6 +36,14 @@ public class Genre {
 	public Genre(String nom) {
 		this.nom = nom;
 	}
+	
+
+	/** Constructor
+	 * 
+	 */
+	public Genre() {
+	}
+
 
 	/**
 	 * Getter for nom

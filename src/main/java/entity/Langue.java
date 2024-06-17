@@ -35,6 +35,14 @@ public class Langue {
 	public Langue(String nom) {
 		this.nom = nom;
 	}
+	
+
+	/** Constructor
+	 * 
+	 */
+	public Langue() {
+	}
+
 
 	/**
 	 * Getter for nom

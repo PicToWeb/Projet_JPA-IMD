@@ -9,6 +9,7 @@ import utils.JpaConnection;
 
 public class CountryDao implements DaoInterface<Pays> {
 
+	
 	List<Pays> countryList = new ArrayList<>();
 	 /** Constructor
 	 * @param lieuMap
@@ -26,6 +27,7 @@ public class CountryDao implements DaoInterface<Pays> {
 		return countryList.stream().filter(p->p.getNom().equals(pays)).findFirst().orElse(null);
 	}
 	
+	
 
 	public List<Pays> findAll() {
 		
@@ -37,8 +39,7 @@ public class CountryDao implements DaoInterface<Pays> {
 		
 			JpaConnection.persist(pays);
 			countryList.add(pays);
-			
-		
+				
 	}
 
 	@Override

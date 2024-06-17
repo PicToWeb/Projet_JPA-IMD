@@ -1,16 +1,16 @@
 package dao;
 
 import java.util.HashMap;
-
+import java.util.List;
 import entity.Acteur;
-
+import jakarta.persistence.TypedQuery;
 import utils.JpaConnection;
 
 public class ActorDao implements DaoInterface<Acteur> {
 
 	public static final LieuDao lieuDao = JpaConnection.lieuDao();
 
-	HashMap<Integer, Acteur> acteurMap = new HashMap<>();
+	HashMap<String, Acteur> actorMap = new HashMap<>();
 
 	/**
 	 * Constructor
@@ -18,42 +18,68 @@ public class ActorDao implements DaoInterface<Acteur> {
 	 * @param lieuMap
 	 */
 	public ActorDao() {
-		this.acteurMap = findAll();
+		this.actorMap = findAll();
 
 	}
 
-	public void splitInsert(HashMap<String, Acteur> acteurMap) {
-		Acteur acteur = new Acteur();
-		for (Acteur a : acteurMap.values()) {
-			//if(!lieuDao.lieuExist(a.getLieu())) {
-			lieuDao.insert(a.getLieu());
-			acteur.setLieu(a.getLieu());
-			//}
-			acteur.setId(a.getId());
-			acteur.setIdentite(a.getIdentite());
-			acteur.setDateNaissance(a.getDateNaissance());
-			acteur.setTaille(a.getTaille());
-			acteur.setUrl(a.getUrl());
-			insert(acteur);
+	public void splitInsert(HashMap<String, Acteur> actorMap) {
+
+		for (Acteur a : actorMap.values()) {
+			if (!actorExist(a.getId())) {
+				
+				Acteur acteur = new Acteur();
+				if (!lieuDao.lieuExist(a.getLieu())) {
+					lieuDao.insert(a.getLieu());
+				}
+				
+				acteur.setLieu(lieuDao.findByName(a.getLieu()));
+				acteur.setId(a.getId());
+				acteur.setIdentite(a.getIdentite());
+				acteur.setTaille(a.getTaille());
+				acteur.setDateNaissance(a.getDateNaissance());
+				acteur.setUrl(a.getUrl());
+
+				try {
+					insert(acteur);
+
+				} catch (Exception e) {
+					e.getMessage();
+					continue;
+				}
+
+			}
 		}
+	}
 	
-//		JpaConnection.persist(acteurMap.get("nm0287142").getLieu());
-//		acteur.setLieu(acteurMap.get("nm0287142").getLieu());
-//		
-//		JpaConnection.persist(acteur);
+	public boolean actorExist(String idActor) {
+		return actorMap.values().stream().anyMatch(r -> r.getId().equals(idActor));
 	}
 
-	public HashMap<Integer, Acteur> findAll() {
-		return null;
-		// return JpaConnection.getEntityManager().createQuery("SELECT l FROM Lieu
-		// l",Lieu.class).getResultList();
+	
+	public HashMap<String, Acteur> findAll() {
+
+		HashMap<String, Acteur> acteurMap = new HashMap<>();
+
+		// Utilisez une requête JPQL pour récupérer les réalisateurs depuis la base de
+		// données
+		TypedQuery<Acteur> query = JpaConnection.getEntityManager().createQuery("SELECT a FROM Acteur a JOIN FETCH a.lieu l JOIN FETCH l.pays",
+				Acteur.class);
+		List<Acteur> actors = query.getResultList();
+
+		// Remplissez le HashMap avec les réalisateurs
+		for (Acteur a : actors) {
+			acteurMap.put(a.getId(), a);
+		}
+
+		return acteurMap;
 	}
+
 
 	@Override
 	public void insert(Acteur acteur) {
 
 		JpaConnection.persist(acteur);
-		// lieuMap.put(lieu.getId(),lieu);
+		actorMap.put(acteur.getId(), acteur);
 
 	}
 

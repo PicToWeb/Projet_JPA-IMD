@@ -1,7 +1,6 @@
-package fileReaderCsv;
+package parseCsv;
 
 import java.io.File;
-
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.HashMap;
@@ -9,15 +8,15 @@ import java.util.List;
 
 import org.apache.commons.io.FileUtils;
 
-import entity.Acteur;
 import entity.Lieu;
+import entity.Realisateur;
 import utils.Convertir;
 
-public class ActorReaderCsv {
+public abstract class RealisateurReaderCsv {
 
-	public static HashMap<String, Acteur> readFileToMap(String urlFile) {
+	public static HashMap<String, Realisateur> readFileToMap(String urlFile) {
 
-		HashMap<String, Acteur> actorMap = new HashMap<>();
+		HashMap<String, Realisateur> realisateurMap = new HashMap<>();
 		List<String> linesList = null;
 
 		try {
@@ -25,12 +24,12 @@ public class ActorReaderCsv {
 			linesList = FileUtils.readLines(file, "UTF-8");
 			linesList.remove(0);
 
-			for (String actorData : linesList) {
-				Acteur acteur = addActor(actorData);
-				actorMap.put(acteur.getId(), acteur);
+			for (String realisateurData : linesList) {
+				Realisateur realisateur = addRealisateur(realisateurData);
+				realisateurMap.put(realisateur.getId(), realisateur);
 			}
 			
-			return actorMap;
+			return realisateurMap;
 
 		} catch (IOException e) {
 			System.out.println(e.getMessage());
@@ -39,10 +38,10 @@ public class ActorReaderCsv {
 
 	}
 
-	public static Acteur addActor(String line) {
+	public static Realisateur addRealisateur(String line) {
 
 		String[] column = line.split(";", -1);
-		Acteur acteur = new Acteur();
+		Realisateur realisateur = new Realisateur();
 
 //		if (column.length == 7) {
 //			System.err.println("attention");
@@ -62,17 +61,14 @@ public class ActorReaderCsv {
 		}
 
 		Lieu adress = AdresseReaderCsv.stringToLieu(column[3], column[0]);
-		String taille = column[4];
-		String url = column[5];
+		String url = column[4];
 		
-		acteur.setId(id);
-		acteur.setIdentite(identite);
-		acteur.setTaille(taille);
-		acteur.setUrl(url);
-		acteur.setDateNaissance(dateNaissance);
-		acteur.setLieu(adress);
-
-		return acteur;
+		realisateur.setId(id);
+		realisateur.setIdentite(identite);
+		realisateur.setUrl(url);
+		realisateur.setDateNaissance(dateNaissance);
+		realisateur.setLieu(adress);
+		return realisateur;
 	
 	}
 

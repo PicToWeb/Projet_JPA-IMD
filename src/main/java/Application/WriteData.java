@@ -1,50 +1,44 @@
 package Application;
 
-import java.util.HashMap;
-import java.util.List;
 
-import dao.ActorDao;
-import dao.CountryDao;
-import dao.LieuDao;
-import dao.RealisateurDao;
-import entity.Acteur;
-import entity.Pays;
-import entity.Realisateur;
-import fileReaderCsv.ActorReaderCsv;
-import fileReaderCsv.CountryReaderCsv;
-import fileReaderCsv.RealisateurReaderCsv;
-import utils.FileSource;
-import utils.JpaConnection;
+
+
+import service.importFile.FileActor;
+import service.importFile.FileCountry;
+import service.importFile.FileMovie;
+import service.importFile.FileProducer;
+
 
 
 public class WriteData {
 
-	public static final CountryDao countryDao = JpaConnection.countryDao();
-	public static final LieuDao lieuDao = JpaConnection.lieuDao();
-	public static final ActorDao actorDao = JpaConnection.actorDao();
-	public static final RealisateurDao realisateurDao = JpaConnection.realisateurDao();
+//	public static final CountryDao countryDao = JpaConnection.countryDao();
+//	public static final LieuDao lieuDao = JpaConnection.lieuDao();
+//	public static final ActorDao actorDao = JpaConnection.actorDao();
+//	public static final RealisateurDao realisateurDao = JpaConnection.realisateurDao();
 			
 	public static void main(String[] args) {
 		
-
-		List<Pays> countryList = CountryReaderCsv.readFileToList(FileSource.nom("pays.csv"));
-
-		for(Pays p : countryList) {
-			if(!countryDao.countryExist(p.getNom())) {
-			countryDao.insert(p);
-			}
-		}
+		//List<Pays> countryList = CountryReaderCsv.readFileToList(FileSource.nom("pays.csv"));
 		
+//		for(Pays p : countryList) {
+//			if(!countryDao.countryExist(p.getNom())) {
+//			countryDao.insert(p);
+//			}
+//		}
 		
-		//System.out.println(country.findAll().toString());
+//		HashMap<String,Realisateur> realisateurMap = RealisateurReaderCsv.readFileToMap(FileSource.nom("realisateurs.csv"));
+//		realisateurDao.splitInsert(realisateurMap);
 		
-		//
+		FileCountry.addCsvToDataBase(FileCountry.link("pays.csv"));
+		//FileProducer.addCsvToDataBase(FileProducer.link("realisateurs.csv"));
+		//FileActor.addCsvToDataBase(FileActor.link("acteurs.csv"));
+		FileMovie.addCsvToDataBase(FileMovie.link("films.csv"));
+		
 		
 		//HashMap<String,Acteur> actorMap = ActorReaderCsv.readFileToMap(FileSource.nom("acteurs.csv"));
 		//actorDao.splitInsert(actorMap);
 		
-		HashMap<String,Realisateur> realisateurMap = RealisateurReaderCsv.readFileToMap(FileSource.nom("realisateurs.csv"));
-		realisateurDao.splitInsert(realisateurMap);
 		
 		
 		

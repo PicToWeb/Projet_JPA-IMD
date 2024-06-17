@@ -7,7 +7,7 @@ import java.util.Locale;
 
 
 
-public class Convertir {
+public abstract class Convertir {
 	
 	//public static final CountryDao countryDao = JpaConnection.countryDao();
 	

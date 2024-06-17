@@ -26,23 +26,23 @@ public class RealisateurDao implements DaoInterface<Realisateur> {
 
 	public void splitInsert(HashMap<String, Realisateur> realisateurMap) {
 
-		for (Realisateur a : realisateurMap.values()) {
-			if (!realisateurExist(a.getId())) {
+		for (Realisateur r : realisateurMap.values()) {
+			if (!producerExist(r.getId())) {
 				Realisateur realisateur = new Realisateur();
-				if (!lieuDao.lieuExist(a.getLieu())) {
-					lieuDao.insert(a.getLieu());
-
+				
+				if (!lieuDao.lieuExist(r.getLieu())) {
+					lieuDao.insert(r.getLieu());
 				}
 				
-				realisateur.setLieu(lieuDao.findByName(a.getLieu()));
-				realisateur.setId(a.getId());
-				realisateur.setIdentite(a.getIdentite());
-				realisateur.setDateNaissance(a.getDateNaissance());
-				realisateur.setUrl(a.getUrl());
+				realisateur.setLieu(lieuDao.findByName(r.getLieu()));
+				realisateur.setId(r.getId());
+				realisateur.setIdentite(r.getIdentite());
+				realisateur.setDateNaissance(r.getDateNaissance());
+				realisateur.setUrl(r.getUrl());
 
 				try {
 					insert(realisateur);
-					realisateurMap.put(a.getId(), realisateur);
+//					realisateurMap.put(a.getId(), realisateur);
 
 				} catch (Exception e) {
 					e.getMessage();
@@ -54,7 +54,7 @@ public class RealisateurDao implements DaoInterface<Realisateur> {
 
 	}
 
-	public boolean realisateurExist(String idRealisateur) {
+	public boolean producerExist(String idRealisateur) {
 		return realisateurMap.values().stream().anyMatch(r -> r.getId().equals(idRealisateur));
 	}
 
@@ -64,7 +64,7 @@ public class RealisateurDao implements DaoInterface<Realisateur> {
 
 		// Utilisez une requête JPQL pour récupérer les réalisateurs depuis la base de
 		// données
-		TypedQuery<Realisateur> query = JpaConnection.getEntityManager().createQuery("SELECT r FROM Realisateur r",
+		TypedQuery<Realisateur> query = JpaConnection.getEntityManager().createQuery("SELECT r FROM Realisateur r JOIN FETCH r.lieu l JOIN FETCH l.pays",
 				Realisateur.class);
 		List<Realisateur> realisateurs = query.getResultList();
 
@@ -79,7 +79,7 @@ public class RealisateurDao implements DaoInterface<Realisateur> {
 	@Override
 	public void insert(Realisateur realisateur) {
 		JpaConnection.persist(realisateur);
-		// lieuMap.put(lieu.getId(),lieu);
+		realisateurMap.put(realisateur.getId(), realisateur);
 
 	}
 

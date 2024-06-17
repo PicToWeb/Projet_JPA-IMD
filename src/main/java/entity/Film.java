@@ -32,6 +32,9 @@ public class Film {
 
 	@Column(name = "url", length = 200)
 	private String url;
+	
+	@Column(name = "resume",length =1500)
+	private String resume;
 
 	@ManyToMany
 	@JoinTable(name = "FILM_GENRE", joinColumns = @JoinColumn(name = "id_film", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "id_genre", referencedColumnName = "id"))
@@ -62,19 +65,18 @@ public class Film {
 	 * @param annee
 	 * @param rating
 	 * @param url
-	 * @param langue
-	 * @param lieu
-	 * @param pays
+	 * @param resume
 	 */
-	public Film(String id, String nom, Integer annee, Double rating, String url, Langue langue, Lieu lieu, Pays pays) {
+	public Film(String id, String nom, Integer annee, Double rating, String url, String resume ) {
 		this.id = id;
 		this.nom = nom;
 		this.annee = annee;
 		this.rating = rating;
 		this.url = url;
-		this.langue = langue;
-		this.lieu = lieu;
-		this.pays = pays;
+		this.resume = resume;
+	}
+
+	public Film() {
 	}
 
 	/** Getter for id
@@ -145,6 +147,20 @@ public class Film {
 	 */
 	public void setUrl(String url) {
 		this.url = url;
+	}
+	
+	/** Getter for resume
+	 * @return the resume
+	 */
+	public String getResume() {
+		return resume;
+	}
+
+	/** Setter for resume
+	 * @param resume the resume to set
+	 */
+	public void setResume(String resume) {
+		this.resume = resume;
 	}
 
 	/** Getter for genres

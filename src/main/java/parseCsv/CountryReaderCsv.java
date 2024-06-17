@@ -1,4 +1,4 @@
-package fileReaderCsv;
+package parseCsv;
 
 import java.io.File;
 import java.io.IOException;
@@ -7,7 +7,7 @@ import java.util.List;
 import org.apache.commons.io.FileUtils;
 import entity.Pays;
 
-public class CountryReaderCsv {
+public abstract class CountryReaderCsv {
 	
 	
 	public static List<Pays> readFileToList(String urlFile) {

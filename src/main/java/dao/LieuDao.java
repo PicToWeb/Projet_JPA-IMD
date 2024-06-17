@@ -26,7 +26,7 @@ public class LieuDao implements DaoInterface<Lieu> {
 	}
 
 	public List<Lieu> findAll() {
-		return JpaConnection.getEntityManager().createQuery("SELECT l FROM Lieu l", Lieu.class).getResultList();
+		return JpaConnection.getEntityManager().createQuery("SELECT l FROM Lieu l JOIN FETCH l.pays", Lieu.class).getResultList();
 	}
 
 	public Lieu findByName(Lieu lieu) {
@@ -39,11 +39,8 @@ public class LieuDao implements DaoInterface<Lieu> {
 
 	@Override
 	public void insert(Lieu lieu) {
-
 		JpaConnection.persist(lieu);
 		lieuList.add(lieu);
-		// lieuMap.put(lieu.getId(),lieu);
-
 	}
 
 	@Override
