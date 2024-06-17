@@ -44,6 +44,13 @@ public class Genre {
 	public Genre() {
 	}
 
+	
+
+	@Override
+	public String toString() {
+		return "Genre [id=" + id + ", nom=" + nom + "]";
+	}
+
 
 	/**
 	 * Getter for nom

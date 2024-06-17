@@ -30,26 +30,15 @@ public class WriteData {
 //		HashMap<String,Realisateur> realisateurMap = RealisateurReaderCsv.readFileToMap(FileSource.nom("realisateurs.csv"));
 //		realisateurDao.splitInsert(realisateurMap);
 		
-		FileCountry.addCsvToDataBase(FileCountry.link("pays.csv"));
-		//FileProducer.addCsvToDataBase(FileProducer.link("realisateurs.csv"));
+		//FileCountry.addCsvToDataBase(FileCountry.link("pays.csv"));
 		//FileActor.addCsvToDataBase(FileActor.link("acteurs.csv"));
+		//FileProducer.addCsvToDataBase(FileProducer.link("realisateurs.csv"));
 		FileMovie.addCsvToDataBase(FileMovie.link("films.csv"));
 		
 		
 		//HashMap<String,Acteur> actorMap = ActorReaderCsv.readFileToMap(FileSource.nom("acteurs.csv"));
 		//actorDao.splitInsert(actorMap);
 		
-		
-		
-		
-		// un seul stream
-		//for(Acteur a : actorList.values())
-//			Lieu lieu = lieuDao.findAdresse(a.getLieu())
-//			//
-//			a.setLieu(lieu);
-//		//objet acteur auquel un lieu est associé
-//		acteurDao.insert(a);
-//			System.out.println(a.getIdentite() + a.getLieu().getPays());
 
 
 		

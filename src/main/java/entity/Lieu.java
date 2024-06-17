@@ -24,7 +24,7 @@ public class Lieu {
 	@Column(name = "rue", length = 150)
 	private String rue;
 
-	@Column(name = "ville", length = 60)
+	@Column(name = "ville", length = 200)
 	private String ville;
 
 	@Column(name = "etat", length = 100)
@@ -77,7 +77,7 @@ public class Lieu {
 
 	@Override
 	public String toString() {
-		return "Lieu [rue=" + rue + ", ville=" + ville + ", etat=" + etat + ", pays=" + pays.getNom() + "]";
+		return "Lieu [rue=" + rue + ", ville=" + ville + ", etat=" + etat +  "]";
 	}
 
 	/**

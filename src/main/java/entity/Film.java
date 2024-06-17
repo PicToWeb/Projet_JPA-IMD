@@ -79,6 +79,13 @@ public class Film {
 	public Film() {
 	}
 
+	@Override
+	public String toString() {
+		return "Film [id=" + id + ", nom=" + nom + ", annee=" + annee + ", rating=" + rating + ", url=" + url
+				+ ", resume=" + resume + ", genres=" + genres + ", realisateurs=" + realisateurs + ", langue=" + langue
+				+ ", lieu=" + lieu + ", pays=" + pays + ", roles=" + roles + "]";
+	}
+
 	/** Getter for id
 	 * @return the id
 	 */

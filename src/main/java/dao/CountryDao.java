@@ -22,6 +22,9 @@ public class CountryDao implements DaoInterface<Pays> {
 	public boolean countryExist(String pays) {
 		return countryList.stream().anyMatch(p->p.getNom().equals(pays));
 	}
+	public boolean countryExist2(Pays pays) {
+		return countryList.stream().anyMatch(p->p.getNom().equals(pays.getNom()));
+	}
 	
 	public Pays findByName(String pays) {
 		return countryList.stream().filter(p->p.getNom().equals(pays)).findFirst().orElse(null);
@@ -36,7 +39,7 @@ public class CountryDao implements DaoInterface<Pays> {
 
 	@Override
 	public void insert(Pays pays) {
-		
+			
 			JpaConnection.persist(pays);
 			countryList.add(pays);
 				

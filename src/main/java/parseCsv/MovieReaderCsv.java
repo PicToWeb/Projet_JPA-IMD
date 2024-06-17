@@ -8,14 +8,18 @@ import java.util.Set;
 
 import org.apache.commons.io.FileUtils;
 
+import dao.LieuDao;
 import entity.Film;
 import entity.Genre;
 import entity.Langue;
 import entity.Lieu;
 import entity.Pays;
+import utils.JpaConnection;
 
 public abstract class MovieReaderCsv {
 
+	public static final LieuDao lieuDao = JpaConnection.lieuDao();
+	
 	public static HashMap<String, Film> readFileToMap(String urlFile) {
 
 		HashMap<String, Film> movieMap = new HashMap<>();
@@ -60,10 +64,10 @@ public abstract class MovieReaderCsv {
 		String url = column[4];
 		Lieu filmAdress = AdresseReaderCsv.stringToLieuMovie(column[5], column[0]);
 		
+		
 		String resume = column[8];
 		Langue langue = LangueReaderCsv.langueExistOrAdded(column[7]);
 		Pays pays = AdresseReaderCsv.countryExistOrAdded(column[9]);
-		
 		Film movie = new Film(id,name,year,rating,url,resume);
 		
 		Set<Genre> movieGenres= GenreReaderCsv.genreExistOrAdded(column[6]);
@@ -74,7 +78,7 @@ public abstract class MovieReaderCsv {
 		movie.setLieu(filmAdress);
 		movie.setLangue(langue);
 		movie.setPays(pays);
-
+		
 		return movie;
 	
 	}

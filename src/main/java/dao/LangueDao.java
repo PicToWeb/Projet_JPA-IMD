@@ -35,7 +35,6 @@ public class LangueDao implements DaoInterface<Langue> {
 
 	@Override
 	public void insert(Langue langue) {
-		
 			JpaConnection.persist(langue);
 			langueList.add(langue);
 				

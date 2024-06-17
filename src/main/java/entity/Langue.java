@@ -44,6 +44,12 @@ public class Langue {
 	}
 
 
+	@Override
+	public String toString() {
+		return "Langue [nom=" + nom + "]";
+	}
+
+
 	/**
 	 * Getter for nom
 	 * 

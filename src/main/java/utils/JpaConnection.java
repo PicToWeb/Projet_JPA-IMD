@@ -20,8 +20,7 @@ public abstract class JpaConnection {
 	private static final MovieDao movieDao = new MovieDao();
 	private static final GenreDao genreDao = new GenreDao();
 	private static final LangueDao langueDao = new LangueDao();
-	private static final String PERSISTENCE_UNIT_NAME = "jpa_IMD";
-	private static EntityManagerFactory entityManagerFactory;
+	
 	
 	public static CountryDao countryDao() {
 		return countryDao;
@@ -51,6 +50,8 @@ public abstract class JpaConnection {
 		return langueDao;
 	}
 
+	private static final String PERSISTENCE_UNIT_NAME = "jpa_IMD";
+	private static EntityManagerFactory entityManagerFactory;
 
 	// Méthode statique pour initialiser l'EntityManagerFactory
 	public static void initializeEntityManagerFactory() {

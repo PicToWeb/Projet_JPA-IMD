@@ -21,21 +21,28 @@ public class LieuDao implements DaoInterface<Lieu> {
 	}
 
 	public boolean lieuExist(Lieu lieu) {
-		return lieuList.stream().anyMatch(l -> l.getVille() != null && l.getVille().equals(lieu.getVille())
-				&& l.getEtat() != null && l.getEtat().equals(lieu.getEtat()));
+		return lieuList.stream()
+				.anyMatch(l -> l.getRue() != null && l.getRue().equals(lieu.getRue()) && l.getVille() != null
+						&& l.getVille().equals(lieu.getVille()) && l.getEtat() != null
+						&& l.getEtat().equals(lieu.getEtat()));
 	}
 
 	public List<Lieu> findAll() {
-		return JpaConnection.getEntityManager().createQuery("SELECT l FROM Lieu l JOIN FETCH l.pays", Lieu.class).getResultList();
+		return JpaConnection.getEntityManager().createQuery("SELECT l FROM Lieu l JOIN FETCH l.pays", Lieu.class)
+				.getResultList();
 	}
 
 	public Lieu findByName(Lieu lieu) {
 		return lieuList.stream().filter(l -> l.getVille() != null && l.getVille().equals(lieu.getVille()))
 				.filter(l -> l.getEtat() != null && l.getEtat().equals(lieu.getEtat())).findFirst().orElse(null);
-		
+
 	}
-	
-	
+
+	public void lieuExistOrAdded(Lieu lieu) {
+		if (!lieuExist(lieu)) {
+			insert(lieu);
+		}
+	}
 
 	@Override
 	public void insert(Lieu lieu) {

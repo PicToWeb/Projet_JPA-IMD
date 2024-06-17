@@ -1,8 +1,8 @@
 package dao;
 
 import java.util.HashMap;
+
 import java.util.List;
-import entity.Acteur;
 import entity.Film;
 import jakarta.persistence.TypedQuery;
 import utils.JpaConnection;
@@ -10,6 +10,8 @@ import utils.JpaConnection;
 public class MovieDao implements DaoInterface<Film> {
 
 	public static final LieuDao lieuDao = JpaConnection.lieuDao();
+	public static final GenreDao genreDao = JpaConnection.genreDao();
+	public static final CountryDao countryDao = JpaConnection.countryDao();
 
 	HashMap<String, Film> movieMap = new HashMap<>();
 
@@ -25,23 +27,24 @@ public class MovieDao implements DaoInterface<Film> {
 
 	public void splitInsert(HashMap<String, Film> movieMap) {
 
-		for (Film a : movieMap.values()) {
-			if (!movieExist(a.getId())) {
+		for (Film f : movieMap.values()) {
+			if (!movieExist(f.getId())) {
 				
-				Film acteur = new Film();
-				if (!lieuDao.lieuExist(a.getLieu())) {
-					lieuDao.insert(a.getLieu());
+				if (!lieuDao.lieuExist(f.getLieu())) {
+					lieuDao.insert(f.getLieu());
+				}
+				if(!countryDao.countryExist2(f.getPays())) {
+					countryDao.insert(f.getPays());
 				}
 				
-				acteur.setLieu(lieuDao.findByName(a.getLieu()));
-				acteur.setId(a.getId());
-//				acteur.setIdentite(a.getIdentite());
-//				acteur.setTaille(a.getTaille());
-//				acteur.setDateNaissance(a.getDateNaissance());
-				acteur.setUrl(a.getUrl());
+				Film movie = new Film(f.getId(),f.getNom(),f.getAnnee(),f.getRating(),f.getUrl(),f.getResume());
+				movie.setLangue(f.getLangue());
+				movie.setPays(f.getPays());
+				movie.setLieu(lieuDao.findByName(f.getLieu()));
+				movie.setGenres(f.getGenres());
 
 				try {
-					insert(acteur);
+					insert(movie);
 
 				} catch (Exception e) {
 					e.getMessage();
@@ -62,7 +65,7 @@ public class MovieDao implements DaoInterface<Film> {
 
 		// Utilisez une requête JPQL pour récupérer les réalisateurs depuis la base de
 		// données
-		TypedQuery<Film> query = JpaConnection.getEntityManager().createQuery("SELECT f FROM Film f",
+		TypedQuery<Film> query = JpaConnection.getEntityManager().createQuery("SELECT f FROM Film f JOIN FETCH f.lieu l JOIN FETCH l.pays",
 				Film.class);
 		List<Film> movies = query.getResultList();
 
@@ -74,6 +77,7 @@ public class MovieDao implements DaoInterface<Film> {
 		return movieMap;
 	}
 
+	
 
 	@Override
 	public void insert(Film movie) {

@@ -43,7 +43,7 @@ public abstract class AdresseReaderCsv {
 		
 			break;
 		}
-	
+
 		return lieu;
 	}
 	
@@ -55,21 +55,21 @@ public abstract class AdresseReaderCsv {
 		switch(colonne.length) {
 		case 1: 
 			lieu.setPays(countryExistOrAdded(colonne[0]));
-			lieu.setEtat("vide");
-			lieu.setVille("vide");
-			lieu.setRue("vide");
+			lieu.setEtat("");
+			lieu.setVille("");
+			lieu.setRue("");
 			break;
 		case 2:
 			lieu.setPays(countryExistOrAdded(colonne[0]));
 			lieu.setEtat(colonne[1]);
-			lieu.setVille("vide");
-			lieu.setRue("vide");
+			lieu.setVille("");
+			lieu.setRue("");
 			break;
 		case 3 :
 			lieu.setPays(countryExistOrAdded(colonne[0]));
 			lieu.setEtat(colonne[1]);
 			lieu.setVille(colonne[2]);
-			lieu.setRue("vide");
+			lieu.setRue("");
 			
 			break;
 		case 4 :
@@ -85,10 +85,12 @@ public abstract class AdresseReaderCsv {
 			lieu.setRue(colonne[3] + " " + colonne[4]);
 			break;
 		default:
-		
+			lieu.setEtat("");
+			lieu.setVille("");
+			lieu.setRue("");
 			break;
 		}
-	
+		
 		return lieu;
 	}
 	
@@ -96,7 +98,7 @@ public abstract class AdresseReaderCsv {
 	
 	public static Pays countryExistOrAdded(String pays) {
 		
-		  if (pays == null || pays.length()>60) {
+		  if ((pays == null) || (pays.length()>60) ){
 		        return new Pays("", "");
 		    }
 

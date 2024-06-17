@@ -62,6 +62,7 @@ public abstract class ActorReaderCsv {
 		}
 
 		Lieu adress = AdresseReaderCsv.stringToLieu(column[3], column[0]);
+		
 		String taille = column[4];
 		String url = column[5];
 		

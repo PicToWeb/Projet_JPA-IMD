@@ -11,6 +11,8 @@ public abstract class LangueReaderCsv {
 	public static Langue langueExistOrAdded(String langueReceive) {
 
 		Langue langue = langueDao.findByName(langueReceive.trim());
+		
+		
 		if (langue == null) {
 			langue = new Langue(langueReceive.trim());
 			langueDao.insert(langue);
