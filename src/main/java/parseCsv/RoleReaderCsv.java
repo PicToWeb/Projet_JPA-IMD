@@ -38,10 +38,6 @@ public abstract class RoleReaderCsv {
 			Role role = parseStringBeforeAdd(line);
 			Boolean isPrincipal = findMainRole(mainCastingList, role);
 			
-			if(isPrincipal = false) {
-				System.out.println(role.getActeur().getId() + " isPrincipal" + role.isPrincipal());
-			}
-			
 			role.setPrincipal(isPrincipal);
 			roleList.add(role);
 
