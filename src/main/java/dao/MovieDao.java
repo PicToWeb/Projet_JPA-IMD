@@ -30,21 +30,27 @@ public class MovieDao implements DaoInterface<Film> {
 		for (Film f : movieMap.values()) {
 			if (!movieExist(f.getId())) {
 
-				if (!lieuDao.lieuExist(f.getLieu())) {
-					lieuDao.insert(f.getLieu());
-				}
-//				countryDao.countryExistOrAdded(f.getPays());
+				//tester modif
+//				if (!lieuDao.lieuExist(f.getLieu())) {
+//					lieuDao.insert(f.getLieu());
+//				}
+				lieuDao.lieuExistOrAdded(f.getLieu());
+				countryDao.countryExistOrAdded(f.getPays());
+				
 //				countryDao.countryExistOrAdded(f.getLieu().getPays());
 //				lieuDao.lieuExistOrAdded(f.getLieu());
 				
-				if (!countryDao.countryExist2(f.getPays())) {
-					countryDao.insert(f.getPays());
-				}
+				//tester modif
+//				if (!countryDao.countryExist2(f.getPays())) {
+//					countryDao.insert(f.getPays());
+//				}
 
 				Film movie = new Film(f.getId(), f.getNom(), f.getAnnee(), f.getRating(), f.getUrl(), f.getResume());
 				movie.setLangue(f.getLangue());
 				movie.setPays(f.getPays());
 				movie.setLieu(lieuDao.findByName(f.getLieu()));
+				
+				movie.setRealisateurs(f.getRealisateurs());
 				movie.setGenres(f.getGenres());
 
 				try {

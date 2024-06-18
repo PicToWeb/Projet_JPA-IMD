@@ -23,7 +23,7 @@ public class WriteData {
 		FileCountry.addCsvToDataBase(FileCountry.link("pays.csv"));
 		//FileActor.addCsvToDataBase(FileActor.link("acteurs.csv"));
 		FileProducer.addCsvToDataBase(FileProducer.link("realisateurs.csv"));
-		//FileMovie.addCsvToDataBase(FileMovie.link("films.csv"));
+		FileMovie.addCsvToDataBase(FileMovie.link("films.csv"));
 		
 		
 //		EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("jpa_IMD");

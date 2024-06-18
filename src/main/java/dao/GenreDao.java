@@ -1,13 +1,9 @@
 package dao;
 
 import java.util.ArrayList;
-
-
 import java.util.List;
 import java.util.Set;
-
 import entity.Genre;
-import entity.Pays;
 import utils.JpaConnection;
 
 public class GenreDao implements DaoInterface<Genre> {

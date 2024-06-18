@@ -59,6 +59,10 @@ public class RealisateurDao implements DaoInterface<Realisateur> {
 	public boolean producerExist(String idRealisateur) {
 		return realisateurMap.values().stream().anyMatch(r -> r.getId().equals(idRealisateur));
 	}
+	
+	public Realisateur findById(String idRealisateur) {
+		return realisateurMap.values().stream().filter(p->p.getId().equals(idRealisateur)).findFirst().orElse(null);
+	}
 
 	public HashMap<String, Realisateur> findAll() {
 

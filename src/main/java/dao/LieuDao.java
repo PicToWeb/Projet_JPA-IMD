@@ -1,10 +1,10 @@
 package dao;
 
 import java.util.ArrayList;
+
 import java.util.List;
 
 import entity.Lieu;
-import entity.Pays;
 import utils.JpaConnection;
 
 public class LieuDao implements DaoInterface<Lieu> {

@@ -2,7 +2,6 @@ package dao;
 
 import java.util.HashMap;
 import java.util.List;
-
 import entity.Acteur;
 import jakarta.persistence.TypedQuery;
 import utils.JpaConnection;

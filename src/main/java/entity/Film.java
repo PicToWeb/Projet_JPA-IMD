@@ -78,6 +78,11 @@ public class Film {
 
 	public Film() {
 	}
+	
+	
+	public void addProducer(Realisateur realisateur) {
+		realisateurs.add(realisateur);
+	}
 
 	@Override
 	public String toString() {
@@ -85,6 +90,8 @@ public class Film {
 				+ ", resume=" + resume + ", genres=" + genres + ", realisateurs=" + realisateurs + ", langue=" + langue
 				+ ", lieu=" + lieu + ", pays=" + pays + ", roles=" + roles + "]";
 	}
+	
+	
 
 	/** Getter for id
 	 * @return the id
