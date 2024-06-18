@@ -1,52 +1,78 @@
 package parseCsv;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import org.apache.commons.io.FileUtils;
-
-import dao.LieuDao;
-import dao.RealisateurDao;
-import entity.Film;
-import entity.Genre;
-import entity.Langue;
-import entity.Lieu;
-import entity.Pays;
-import entity.Realisateur;
+import dao.AdressDao;
+import dao.ProducerDao;
+import entity.Movie;
+import entity.MovieGenre;
+import entity.MovieLanguage;
+import entity.Adress;
+import entity.Country;
+import entity.Producer;
+import service.connection.DaoLink;
 import utils.FileSource;
-import utils.JpaConnection;
 
+/**
+ * Abstract Class used to process films.csv and film_realisateurs.csv
+ * 
+ */
 public abstract class MovieReaderCsv {
-	public static final LieuDao lieuDao = JpaConnection.lieuDao();
-	public static final RealisateurDao realisateurDao = JpaConnection.realisateurDao();
+	/** adressDao */
+	public static final AdressDao adressDao = DaoLink.adressDao();
+	/** producerDao */
+	public static final ProducerDao producerDao = DaoLink.producerDao();
 
-	public static HashMap<String, Film> readFileToMap(String urlFile) throws IOException {
+	/**
+	 * Static Method used to read each lines of Csv files 
+	 * 
+	 * First step : Call static Method (readFileToMapMovieReal)
+	 * to process film_realisateurs.csv and return a HashMap<id_movie,id_producer>
+	 * HashMap<id_movie,id_producer> (producerMoviesMap) Second Setp :
+	 * 
+	 * Second Step : Loop each lines from films.csv to return a Movie Object
+	 * Third step : Always in the loop, call a method to findProducerForMovie
+	 * Four step: add id_movie and movie in the return HashMap
+	 * @param url films.csv
+	 * @param urlDep film_realisateurs.csv
+	 * @return HashMap<String, Movie> whith producer added to movie
+	 */
+	public static HashMap<String, Movie> readFileToMap(String url, String urlDep) {
 
-		HashMap<String, Film> movieMap = new HashMap<>();
+		HashMap<String, Movie> movieMap = new HashMap<>();
 		List<String> linesMovieList = null;
 
-		HashMap<String, String> producerMoviesMap = readFileToMapFilmReal(FileSource.nom("film_realisateurs.csv"));
+		HashMap<String, String> producerMoviesMap;
 
-		File file = new File(urlFile);
-		linesMovieList = FileUtils.readLines(file, "UTF-8");
-		linesMovieList.remove(0);
+		
+			producerMoviesMap = readFileToMapFilmReal(urlDep);
 
-		for (String movieData : linesMovieList) {
-			Film film = parseStringBeforeAdd(movieData);
-			film = findProducerForMovie(producerMoviesMap, film);
+			linesMovieList = FileSource.readLinesCsv(url);
+			linesMovieList.remove(0);
 
-			movieMap.put(film.getId(), film);
-		}
+			for (String movieData : linesMovieList) {
+				Movie movie = parseStringBeforeAdd(movieData);
+				movie = findProducerForMovie(producerMoviesMap, movie);
+
+				movieMap.put(movie.getId(), movie);
+			}
 
 		return movieMap;
 
 	}
 
-	public static Film parseStringBeforeAdd(String line) {
+	/**
+	 * Static Method used to parse each rows of films.csv
+	 * Static Methods are called for Adress, MovieLanguage, Country and MovieGenre
+	 * 
+	 * @param line (a row of Csv file)
+	 * @return Movie Object
+	 */
+	public static Movie parseStringBeforeAdd(String line) {
 
 		String[] column = line.split(";", -1);
 
@@ -54,47 +80,55 @@ public abstract class MovieReaderCsv {
 
 		String id = column[0];
 		String name = column[1];
-		String yearTrim =column[2].trim();
+		String yearTrim = column[2].trim();
+
 		int year = 0;
-		if(yearTrim.length()>4) {
-			 year = Integer.parseInt(column[2].substring(yearTrim.length() - 4));
-		}else if (yearTrim.length() ==4){
-			 year = Integer.parseInt(yearTrim);
+		if (yearTrim.length() > 4) {
+			year = Integer.parseInt(column[2].substring(yearTrim.length() - 4));
+		} else if (yearTrim.length() == 4) {
+			year = Integer.parseInt(yearTrim);
 		}
 
 		Double rating = 0.0;
 		if (!column[3].isEmpty()) {
 			rating = Double.parseDouble(column[3].replaceAll(",", "."));
 		}
-		
+
 		String url = column[4];
-		Lieu filmAdress = AdresseReaderCsv.stringToLieuMovie(column[5], column[0]);
-		Langue langue = LangueReaderCsv.langueExistOrAdded(column[7]);
+		Adress filmAdress = AdressReaderCsv.stringToLieuMovie(column[5]);
+		MovieLanguage movieLanguage = LanguageReaderCsv.languageExistOrAdded(column[7]);
 		String resume = column[8];
-		Pays pays = AdresseReaderCsv.countryExistOrAdded(column[9]);
+		Country country = CountryReaderCsv.countryExistOrAdded(column[9]);
 
-		Film movie = new Film(id, name, year, rating, url, resume);
+		Movie movie = new Movie(id, name, year, rating, url, resume);
 
-		Set<Genre> movieGenres = GenreReaderCsv.genreExistOrAdded(column[6]);
+		Set<MovieGenre> movieGenres = MovieGenreReaderCsv.genreExistOrAdded(column[6]);
 		if (!movieGenres.isEmpty()) {
 			movie.setGenres(movieGenres);
 		}
 
-		movie.setLieu(filmAdress);
-		movie.setLangue(langue);
-		movie.setPays(pays);
+		movie.setAdress(filmAdress);
+		movie.setLanguage(movieLanguage);
+		movie.setCountry(country);
 
 		return movie;
 
 	}
 
-	public static HashMap<String, String> readFileToMapFilmReal(String urlFile) throws IOException {
+	/**
+	 * Static Method used to read film_realisateurs.csv and create a HashMap<id_movie, id_producer>
+	 * Loop is used to split and add data
+	 * 
+	 * @param urlDep film_realisateurs.csv
+	 * @return HashMap<id_movie, id_producer>
+	 * @throws IOException
+	 */
+	public static HashMap<String, String> readFileToMapFilmReal(String urlDep) {
 
 		HashMap<String, String> producerMoviesMap = new HashMap<>();
 		List<String> linesProducerList = null;
 
-		File fileProdMov = new File(urlFile);
-		linesProducerList = FileUtils.readLines(fileProdMov, "UTF-8");
+		linesProducerList = FileSource.readLinesCsv(urlDep);
 		linesProducerList.remove(0);
 
 		for (String prodMovieData : linesProducerList) {
@@ -105,20 +139,29 @@ public abstract class MovieReaderCsv {
 		return producerMoviesMap;
 	}
 
-	public static Film findProducerForMovie(HashMap<String, String> producerMoviesMap, Film film) {
+	/**
+	 * Static Method used to find the producer of the movie received
+	 * First step : find the producer from HashMap value received as parameter
+	 * Second step : loop HashMap key with movie id to set producer to the movie
+	 * 
+	 * @param producerMoviesMap
+	 * @param movie from loop of (readFileToMap)
+	 * @return movie (with the producer -> ready to persist)
+	 */
+	public static Movie findProducerForMovie(HashMap<String, String> producerMoviesMap, Movie movie) {
 
-		Realisateur realisateur = realisateurDao.findById(producerMoviesMap.values().iterator().next());
+		Producer producer = producerDao.findById(producerMoviesMap.values().iterator().next());
 
 		Iterator<String> keyReal = producerMoviesMap.keySet().iterator();
 		while (keyReal.hasNext()) {
 			String cleJoin = keyReal.next();
 
-			if (film.getId().equals(cleJoin) && realisateur != null) {
+			if (movie.getId().equals(cleJoin) && producer != null) {
 
-				film.addProducer(realisateur);
+				movie.addProducer(producer);
 			}
 		}
-		return film;
+		return movie;
 
 	}
 

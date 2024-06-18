@@ -13,40 +13,40 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "LANGUE")
-public class Langue {
+@Table(name = "LANGUAGE")
+public class MovieLanguage {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
-	@Column(name = "nom", length = 50)
-	private String nom;
+	@Column(name = "name", length = 50)
+	private String name;
 
-	@OneToMany(mappedBy="langue")
-	private Set<Film> films = new HashSet<>();
+	@OneToMany(mappedBy="movieLanguage")
+	private Set<Movie> movies = new HashSet<>();
 
 	/**
 	 * Constructor
 	 * 
 	 * @param id
-	 * @param nom
+	 * @param name
 	 */
-	public Langue(String nom) {
-		this.nom = nom;
+	public MovieLanguage(String name) {
+		this.name = name;
 	}
 	
 
 	/** Constructor
 	 * 
 	 */
-	public Langue() {
+	public MovieLanguage() {
 	}
 
 
 	@Override
 	public String toString() {
-		return "Langue [nom=" + nom + "]";
+		return "Langue [nom=" + name + "]";
 	}
 
 
@@ -55,8 +55,8 @@ public class Langue {
 	 * 
 	 * @return the nom
 	 */
-	public String getNom() {
-		return nom;
+	public String getName() {
+		return name;
 	}
 
 	/**
@@ -64,8 +64,8 @@ public class Langue {
 	 * 
 	 * @param nom the nom to set
 	 */
-	public void setNom(String nom) {
-		this.nom = nom;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 }

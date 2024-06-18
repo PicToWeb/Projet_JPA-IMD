@@ -1,24 +1,20 @@
 package service.importFile;
 
-import java.io.IOException;
 import java.util.HashMap;
 import dao.MovieDao;
-import entity.Film;
+import entity.Movie;
 import parseCsv.MovieReaderCsv;
-import utils.FileSource;
-import utils.JpaConnection;
+import service.connection.DaoLink;
 
 public abstract class FileMovie {
 
-	public static final MovieDao movieDao = JpaConnection.movieDao();
-	
+	public static final MovieDao movieDao = DaoLink.movieDao();
 
-	public static HashMap<String, Film> link(String url) throws IOException {
-		return MovieReaderCsv.readFileToMap(FileSource.nom(url));
+	public static HashMap<String, Movie> link(String url, String urlDep) {
+		return MovieReaderCsv.readFileToMap(url, urlDep);
 	}
 
-	public static void addCsvToDataBase(HashMap<String,Film> movieMap) {
+	public static void addCsvToDataBase(HashMap<String, Movie> movieMap) {
 		movieDao.splitInsert(movieMap);
 	}
 }
-	

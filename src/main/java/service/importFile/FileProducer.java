@@ -2,21 +2,21 @@ package service.importFile;
 
 import java.util.HashMap;
 
-import dao.RealisateurDao;
-import entity.Realisateur;
-import parseCsv.RealisateurReaderCsv;
-import utils.FileSource;
-import utils.JpaConnection;
+
+import dao.ProducerDao;
+import entity.Producer;
+import parseCsv.ProducerReaderCsv;
+import service.connection.DaoLink;
 
 public abstract class FileProducer {
 	
-	public static final RealisateurDao realisateurDao = JpaConnection.realisateurDao();
+	public static final ProducerDao producerDao = DaoLink.producerDao();
 	
-	public static HashMap<String,Realisateur> link(String url) {
-		return RealisateurReaderCsv.readFileToMap(FileSource.nom(url));
+	public static HashMap<String,Producer> link(String url) {
+		return ProducerReaderCsv.readFileToMap(url);
 	}
 
-	public static void addCsvToDataBase(HashMap<String,Realisateur> realisateurMap) {
-		realisateurDao.splitInsert(realisateurMap);
+	public static void addCsvToDataBase(HashMap<String,Producer> producerMap) {
+		producerDao.splitInsert(producerMap);
 	}
 }

@@ -2,12 +2,12 @@ package dao;
 
 import java.util.ArrayList;
 import java.util.List;
-import entity.Pays;
-import utils.JpaConnection;
+import entity.Country;
+import service.connection.JpaLink;
 
-public class CountryDao implements DaoInterface<Pays> {
+public class CountryDao implements DaoInterface<Country> {
 
-	List<Pays> countryList = new ArrayList<>();
+	List<Country> countryList = new ArrayList<>();
 
 	/**
 	 * Constructor
@@ -20,40 +20,40 @@ public class CountryDao implements DaoInterface<Pays> {
 	}
 
 	public boolean countryExist(String pays) {
-		return countryList.stream().anyMatch(p -> p.getNom().equals(pays));
+		return countryList.stream().anyMatch(p -> p.getName().equals(pays));
 	}
 
-	public boolean countryExist2(Pays pays) {
-		return countryList.stream().anyMatch(p -> p.getNom().equals(pays.getNom()));
+	public boolean countryExist2(Country country) {
+		return countryList.stream().anyMatch(p -> p.getName().equals(country.getName()));
 	}
 
-	public Pays findByName(String pays) {
-		return countryList.stream().filter(p -> p.getNom().equals(pays)).findFirst().orElse(null);
+	public Country findByName(String pays) {
+		return countryList.stream().filter(p -> p.getName().equals(pays)).findFirst().orElse(null);
 	}
 
-	public void countryExistOrAdded(Pays pays) {
-		Pays existingCountry = findByName(pays.getNom());
+	public void countryExistOrAdded(Country country) {
+		Country existingCountry = findByName(country.getName());
 		if (existingCountry == null) {
-			existingCountry = new Pays(pays.getNom(), "");
+			existingCountry = new Country(country.getName(), "");
 			insert(existingCountry);
 		}
 	}
 
-	public List<Pays> findAll() {
+	public List<Country> findAll() {
 
-		return JpaConnection.getEntityManager().createQuery("SELECT p FROM Pays p", Pays.class).getResultList();
+		return JpaLink.getEntityManager().createQuery("SELECT c FROM Country c", Country.class).getResultList();
 	}
 
 	@Override
-	public void insert(Pays pays) {
+	public void insert(Country country) {
 
-		JpaConnection.persist(pays);
-		countryList.add(pays);
+		JpaLink.persist(country);
+		countryList.add(country);
 
 	}
 
 	@Override
-	public void delete(Pays entity) {
+	public void delete(Country entity) {
 
 	}
 

@@ -2,23 +2,24 @@ package service.importFile;
 
 import java.util.List;
 
+
+
 import dao.CountryDao;
-import entity.Pays;
+import entity.Country;
 import parseCsv.CountryReaderCsv;
-import utils.FileSource;
-import utils.JpaConnection;
+import service.connection.DaoLink;
 
 public abstract class FileCountry {
 
-	public static final CountryDao countryDao = JpaConnection.countryDao();
+	public static final CountryDao countryDao = DaoLink.countryDao();
 
-	public static List<Pays> link(String url) {
-		return CountryReaderCsv.readFileToList(FileSource.nom(url));
+	public static List<Country> link(String url) {
+		return CountryReaderCsv.readFileToList(url);
 	}
 
-	public static void addCsvToDataBase(List<Pays> countryList) {
-		for (Pays p : countryList) {
-			if (!countryDao.countryExist(p.getNom())) {
+	public static void addCsvToDataBase(List<Country> countryList) {
+		for (Country p : countryList) {
+			if (!countryDao.countryExist(p.getName())) {
 				countryDao.insert(p);
 			}
 		}

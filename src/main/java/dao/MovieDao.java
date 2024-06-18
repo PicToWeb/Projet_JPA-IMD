@@ -3,17 +3,18 @@ package dao;
 import java.util.HashMap;
 import java.util.List;
 
-import entity.Film;
+import entity.Movie;
 import jakarta.persistence.TypedQuery;
-import utils.JpaConnection;
+import service.connection.DaoLink;
+import service.connection.JpaLink;
 
-public class MovieDao implements DaoInterface<Film> {
+public class MovieDao implements DaoInterface<Movie> {
 
-	public static final CountryDao countryDao = JpaConnection.countryDao();
-	public static final LieuDao lieuDao = JpaConnection.lieuDao();
-	public static final GenreDao genreDao = JpaConnection.genreDao();
+	public static final CountryDao countryDao = DaoLink.countryDao();
+	public static final AdressDao adressDao = DaoLink.adressDao();
+	public static final MovieGenreDao movieGenreDao = DaoLink.movieGenreDao();
 
-	HashMap<String, Film> movieMap = new HashMap<>();
+	HashMap<String, Movie> movieMap = new HashMap<>();
 
 	/**
 	 * Constructor
@@ -25,17 +26,17 @@ public class MovieDao implements DaoInterface<Film> {
 
 	}
 
-	public void splitInsert(HashMap<String, Film> movieMap) {
+	public void splitInsert(HashMap<String, Movie> movieMap) {
 
-		for (Film f : movieMap.values()) {
+		for (Movie f : movieMap.values()) {
 			if (!movieExist(f.getId())) {
 
 				//tester modif
 //				if (!lieuDao.lieuExist(f.getLieu())) {
 //					lieuDao.insert(f.getLieu());
 //				}
-				lieuDao.lieuExistOrAdded(f.getLieu());
-				countryDao.countryExistOrAdded(f.getPays());
+				adressDao.lieuExistOrAdded(f.getAdress());
+				countryDao.countryExistOrAdded(f.getCountry());
 				
 //				countryDao.countryExistOrAdded(f.getLieu().getPays());
 //				lieuDao.lieuExistOrAdded(f.getLieu());
@@ -45,12 +46,12 @@ public class MovieDao implements DaoInterface<Film> {
 //					countryDao.insert(f.getPays());
 //				}
 
-				Film movie = new Film(f.getId(), f.getNom(), f.getAnnee(), f.getRating(), f.getUrl(), f.getResume());
-				movie.setLangue(f.getLangue());
-				movie.setPays(f.getPays());
-				movie.setLieu(lieuDao.findByName(f.getLieu()));
+				Movie movie = new Movie(f.getId(), f.getNam(), f.getYear(), f.getRating(), f.getUrl(), f.getResume());
+				movie.setLanguage(f.getLanguage());
+				movie.setCountry(f.getCountry());
+				movie.setAdress(adressDao.findByName(f.getAdress()));
 				
-				movie.setRealisateurs(f.getRealisateurs());
+				movie.setProducers(f.getProducers());
 				movie.setGenres(f.getGenres());
 
 				try {
@@ -70,23 +71,23 @@ public class MovieDao implements DaoInterface<Film> {
 		return movieMap.values().stream().anyMatch(r -> r.getId().equals(idMovie));
 	}
 	
-	public Film findMovieById(String movieId) {
-		return movieMap.values().stream().filter(a->a.getId().equals(movieId)).findFirst().orElse(new Film(movieId,"",null,null,"",""));
+	public Movie findMovieById(String movieId) {
+		return movieMap.values().stream().filter(a->a.getId().equals(movieId)).findFirst().orElse(null);
 	}
 
-	public HashMap<String, Film> findAll() {
+	public HashMap<String, Movie> findAll() {
 
-		HashMap<String, Film> movieMap = new HashMap<>();
+		HashMap<String, Movie> movieMap = new HashMap<>();
 
 		// Utilisez une requête JPQL pour récupérer les réalisateurs depuis la base de
 		// données
-		TypedQuery<Film> query = JpaConnection.getEntityManager().createQuery(
-				"SELECT f FROM Film f JOIN FETCH f.lieu l JOIN FETCH l.pays JOIN FETCH f.genres JOIN FETCH f.langue JOIN FETCH f.pays",
-				Film.class);
-		List<Film> movies = query.getResultList();
+		TypedQuery<Movie> query = JpaLink.getEntityManager().createQuery(
+				"SELECT m FROM Movie m JOIN FETCH m.adress a JOIN FETCH a.country JOIN FETCH m.movieGenres JOIN FETCH m.movieLanguage",
+				Movie.class);
+		List<Movie> movies = query.getResultList();
 
 		// Remplissez le HashMap avec les réalisateurs
-		for (Film a : movies) {
+		for (Movie a : movies) {
 			movieMap.put(a.getId(), a);
 		}
 
@@ -94,15 +95,15 @@ public class MovieDao implements DaoInterface<Film> {
 	}
 
 	@Override
-	public void insert(Film movie) {
+	public void insert(Movie movie) {
 
-		JpaConnection.persist(movie);
+		JpaLink.persist(movie);
 		movieMap.put(movie.getId(), movie);
 
 	}
 
 	@Override
-	public void delete(Film movie) {
+	public void delete(Movie movie) {
 
 	}
 

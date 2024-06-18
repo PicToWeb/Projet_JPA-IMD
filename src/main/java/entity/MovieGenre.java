@@ -15,40 +15,40 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "GENRE")
-public class Genre {
+public class MovieGenre {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
-	@Column(name = "nom", length = 40)
-	private String nom;
+	@Column(name = "name", length = 40)
+	private String name;
 
 	@ManyToMany
-	@JoinTable(name = "FILM_GENRE", joinColumns = @JoinColumn(name = "id_genre", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "id_film", referencedColumnName = "id"))
-	private Set<Film> films = new HashSet<>();
+	@JoinTable(name = "FILM_GENRE", joinColumns = @JoinColumn(name = "id_genre", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "id_movie", referencedColumnName = "id"))
+	private Set<Movie> movies = new HashSet<>();
 
 	/**
 	 * Constructor
 	 * 
-	 * @param nom
+	 * @param name
 	 */
-	public Genre(String nom) {
-		this.nom = nom;
+	public MovieGenre(String name) {
+		this.name = name;
 	}
 	
 
 	/** Constructor
 	 * 
 	 */
-	public Genre() {
+	public MovieGenre() {
 	}
 
 	
 
 	@Override
 	public String toString() {
-		return "Genre [id=" + id + ", nom=" + nom + "]";
+		return "Genre [id=" + id + ", nom=" + name + "]";
 	}
 
 
@@ -57,8 +57,8 @@ public class Genre {
 	 * 
 	 * @return the nom
 	 */
-	public String getNom() {
-		return nom;
+	public String getName() {
+		return name;
 	}
 
 	/**
@@ -66,8 +66,8 @@ public class Genre {
 	 * 
 	 * @param nom the nom to set
 	 */
-	public void setNom(String nom) {
-		this.nom = nom;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 }

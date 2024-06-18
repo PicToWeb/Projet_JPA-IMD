@@ -3,7 +3,7 @@ package dao;
 import java.util.ArrayList;
 import java.util.List;
 import entity.Role;
-import utils.JpaConnection;
+import service.connection.JpaLink;
 
 public class RoleDao implements DaoInterface<Role> {
 
@@ -19,22 +19,22 @@ public class RoleDao implements DaoInterface<Role> {
 
 	}
 	public Role findByPersonName(String person) {
-		return roleList.stream().filter(p -> p.getPersonnage().equals(person)).findFirst().orElse(null);
+		return roleList.stream().filter(p -> p.getPerson().equals(person)).findFirst().orElse(null);
 	}
 	
 	public boolean roleExist(Role role) {
-		return roleList.stream().anyMatch(r ->r.getActeur().getId().equals(role.getActeur().getId()) && r.getFilm().getId().equals(role.getFilm().getId()) && r.getPersonnage().equals(role.getPersonnage()));
+		return roleList.stream().anyMatch(r ->r.getActor().getId().equals(role.getActor().getId()) && r.getMovie().getId().equals(role.getMovie().getId()) && r.getPerson().equals(role.getPerson()));
 	}
 
 	public List<Role> findAll() {
 
-		return JpaConnection.getEntityManager().createQuery("SELECT r FROM Role r JOIN FETCH r.film f JOIN FETCH r.acteur a JOIN FETCH a.lieu JOIN FETCH f.realisateurs rea JOIN FETCH rea.lieu l ", Role.class).getResultList();
+		return JpaLink.getEntityManager().createQuery("SELECT r FROM Role r LEFT JOIN FETCH r.movie m LEFT JOIN FETCH r.actor a JOIN FETCH a.adress ", Role.class).getResultList();
 	}
 
 	@Override
 	public void insert(Role role) {
 
-		JpaConnection.persist(role);
+		JpaLink.persist(role);
 		roleList.add(role);
 
 	}

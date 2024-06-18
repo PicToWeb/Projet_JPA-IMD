@@ -1,31 +1,43 @@
 package parseCsv;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import org.apache.commons.io.FileUtils;
-import entity.Pays;
+import dao.CountryDao;
+import entity.Country;
+import service.connection.DaoLink;
+import utils.FileSource;
 
+/**
+ * Abstract class used to parse and persist country data from acteurs.csv & realisateurs.csv
+ * & films.csv and return Country Object
+ **/
 public abstract class CountryReaderCsv {
 	
+	/** countryDao */
+	public static final CountryDao countryDao = DaoLink.countryDao();
 	
-	public static List<Pays> readFileToList(String urlFile) {
+	/**
+	 * Static Method used to read each lines of Csv file. The first line is removed
+	 * (header of column) For each line, a Country Object is create and added to a List
+	 * 
+	 * @param url from Csv file in main/resources
+	 * @return List of Country
+	 */
+	public static List<Country> readFileToList(String url) {
 
-		List<Pays> countryList = new ArrayList<>();
+		List<Country> countryList = new ArrayList<>();
 
-		try {
-			File file = new File(urlFile);
-			List<String> linesList = FileUtils.readLines(file, "UTF-8");
+			List<String> linesList = FileSource.readLinesCsv(url);
 			linesList.remove(0);
 
 			for (String line : linesList) {
-				Pays p = new Pays();
+				
+				Country p = new Country();
 				String[] column = line.split(";");
 				if (column.length > 2) {
 					return countryList;
 				}
-				p.setNom(column[0].trim());
+				p.setName(column[0].trim());
 				p.setUrl(column[1]);
 				countryList.add(p);
 
@@ -33,11 +45,39 @@ public abstract class CountryReaderCsv {
 
 			return countryList;
 
-		} catch (IOException e) {
-			System.out.println(e.getMessage());
-			return null;
-		}
+	}
 
+	/**
+	 * Static Method used to rename country abbreviations and
+	 * verify if Country needs to be insert in Database 
+	 * 
+	 * @param countryString 
+	 * @return Country composed by a name and an URL
+	 */
+	public static Country countryExistOrAdded(String countryString) {
+	
+		if ((countryString == null) || (countryString.length() > 60)) {
+			return new Country("", "");
+		}
+	
+		String usa = "USA";
+		String uk = "UK";
+		String cleanedPays = countryString.replaceAll("\\[.*?\\]", "").trim();
+	
+		if (cleanedPays.equals(usa)) {
+			cleanedPays = "United States";
+		} else if (cleanedPays.equals(uk)) {
+			cleanedPays = "United Kingdom";
+		}
+	
+		Country existingCountry = countryDao.findByName(cleanedPays);
+		
+		if (existingCountry == null) {
+			existingCountry = new Country(cleanedPays, "");
+			countryDao.insert(existingCountry);
+		}
+	
+		return existingCountry;
 	}
 
 	

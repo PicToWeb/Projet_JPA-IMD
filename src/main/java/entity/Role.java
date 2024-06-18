@@ -17,29 +17,29 @@ public class Role {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
-	@Column(name = "personne", length = 500)
-	private String personnage;
+	@Column(name = "person", length = 500)
+	private String person;
 	
-	@Column(name="casting_principal")
+	@Column(name="main_casting")
 	private boolean isPrincipal;
 
 	@ManyToOne
-	@JoinColumn(name = "id_film")
-	private Film film;
+	@JoinColumn(name = "id_movie")
+	private Movie movie;
 	
 	@ManyToOne
-	@JoinColumn(name = "id_acteur")
-	private Acteur acteur;
+	@JoinColumn(name = "id_actor")
+	private Actor actor;
 
 	/** Constructor
-	 * @param personnage
-	 * @param film
-	 * @param acteur
+	 * @param person
+	 * @param movie
+	 * @param actor
 	 */
-	public Role(String personnage, Film film, Acteur acteur) {
-		this.personnage = personnage;
-		this.film = film;
-		this.acteur = acteur;
+	public Role(String person, Movie movie, Actor actor) {
+		this.person = person;
+		this.movie = movie;
+		this.actor = actor;
 	}
 
 	public Role() {
@@ -50,50 +50,50 @@ public class Role {
 
 	@Override
 	public String toString() {
-		return "Role [id=" + id + ", personnage=" + personnage + ", isPrincipal=" + isPrincipal + ", getFilm()="
-				+ getFilm() + ", getActeur()=" + getActeur() + "]";
+		return "Role [id=" + id + ", personnage=" + person + ", isPrincipal=" + isPrincipal + ", getFilm()="
+				+ getMovie() + ", getActeur()=" + getActor() + "]";
 	}
 
 	/** Getter for personnage
 	 * @return the personnage
 	 */
-	public String getPersonnage() {
-		return personnage;
+	public String getPerson() {
+		return person;
 	}
 
 	/** Setter for personnage
-	 * @param personnage the personnage to set
+	 * @param person the personnage to set
 	 */
-	public void setPersonnage(String personnage) {
-		this.personnage = personnage;
+	public void setPerson(String person) {
+		this.person = person;
 	}
 
 	/** Getter for film
 	 * @return the film
 	 */
-	public Film getFilm() {
-		return film;
+	public Movie getMovie() {
+		return movie;
 	}
 
 	/** Setter for film
-	 * @param film the film to set
+	 * @param movie the film to set
 	 */
-	public void setFilm(Film film) {
-		this.film = film;
+	public void setMovie(Movie movie) {
+		this.movie = movie;
 	}
 
 	/** Getter for acteur
 	 * @return the acteur
 	 */
-	public Acteur getActeur() {
-		return acteur;
+	public Actor getActor() {
+		return actor;
 	}
 
 	/** Setter for acteur
-	 * @param acteur the acteur to set
+	 * @param actor the acteur to set
 	 */
-	public void setActeur(Acteur acteur) {
-		this.acteur = acteur;
+	public void setActor(Actor actor) {
+		this.actor = actor;
 	}
 
 	/** Getter for isPrincipal

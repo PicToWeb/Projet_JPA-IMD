@@ -15,48 +15,48 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "LIEU")
-public class Lieu {
+@Table(name = "ADRESS")
+public class Adress {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
-	@Column(name = "rue", length = 150)
-	private String rue;
+	@Column(name = "street", length = 150)
+	private String street;
 
-	@Column(name = "ville", length = 200)
-	private String ville;
+	@Column(name = "city", length = 200)
+	private String city;
 
 	@Column(name = "etat", length = 100)
 	private String etat;
 
-	@OneToMany(mappedBy = "lieu")
-	private Set<Intervenant> intervenants;
+	@OneToMany(mappedBy = "adress")
+	private Set<Person> persons;
 
-	@OneToMany(mappedBy = "lieu")
-	private Set<Film> films;
+	@OneToMany(mappedBy = "adress")
+	private Set<Movie> movies;
 
 	@ManyToOne
-	@JoinColumn(name = "id_pays")
-	private Pays pays;
+	@JoinColumn(name = "id_country")
+	private Country country;
 
 	/**
 	 * Constructor
 	 * 
-	 * @param rue
+	 * @param street
 	 * @param ville
 	 * @param etat
-	 * @param pays
+	 * @param country
 	 */
-	public Lieu(String rue, String ville, String etat, Pays pays) {
-		this.rue = rue;
-		this.ville = ville;
+	public Adress(String street, String ville, String etat, Country country) {
+		this.street = street;
+		this.city = ville;
 		this.etat = etat;
-		this.pays = pays;
+		this.country = country;
 	}
 
-	public Lieu() {
+	public Adress() {
 		// TODO Auto-generated constructor stub
 	}
 
@@ -66,19 +66,19 @@ public class Lieu {
 			return true;
 		if (o == null || getClass() != o.getClass())
 			return false;
-		Lieu adress = (Lieu) o;
-		return Objects.equals(ville, adress.ville) && Objects.equals(etat, adress.etat)
-				&& Objects.equals(pays, adress.pays);
+		Adress adress = (Adress) o;
+		return Objects.equals(city, adress.city) && Objects.equals(etat, adress.etat)
+				&& Objects.equals(country, adress.country);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(ville, etat, pays);
+		return Objects.hash(city, etat, country);
 	}
 
 	@Override
 	public String toString() {
-		return "Lieu [rue=" + rue + ", ville=" + ville + ", etat=" + etat +  "]";
+		return "Lieu [rue=" + street + ", ville=" + city + ", etat=" + etat +  "]";
 	}
 
 	/**
@@ -86,8 +86,8 @@ public class Lieu {
 	 * 
 	 * @return the rue
 	 */
-	public String getRue() {
-		return rue;
+	public String getStreet() {
+		return street;
 	}
 
 	/**
@@ -95,8 +95,8 @@ public class Lieu {
 	 * 
 	 * @param rue the rue to set
 	 */
-	public void setRue(String rue) {
-		this.rue = rue;
+	public void setStreet(String rue) {
+		this.street = rue;
 	}
 
 	/**
@@ -104,8 +104,8 @@ public class Lieu {
 	 * 
 	 * @return the ville
 	 */
-	public String getVille() {
-		return ville;
+	public String getCity() {
+		return city;
 	}
 
 	/**
@@ -113,8 +113,8 @@ public class Lieu {
 	 * 
 	 * @param ville the ville to set
 	 */
-	public void setVille(String ville) {
-		this.ville = ville;
+	public void setCity(String ville) {
+		this.city = ville;
 	}
 
 	/**
@@ -140,17 +140,17 @@ public class Lieu {
 	 * 
 	 * @return the pays
 	 */
-	public Pays getPays() {
-		return pays;
+	public Country getCountry() {
+		return country;
 	}
 
 	/**
 	 * Setter for pays
 	 * 
-	 * @param pays the pays to set
+	 * @param country the pays to set
 	 */
-	public void setPays(Pays pays) {
-		this.pays = pays;
+	public void setCountry(Country country) {
+		this.country = country;
 	}
 
 	/** Getter for id

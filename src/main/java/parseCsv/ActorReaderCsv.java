@@ -9,72 +9,88 @@ import java.util.List;
 
 import org.apache.commons.io.FileUtils;
 
-import entity.Acteur;
-import entity.Lieu;
-import utils.Convertir;
+import com.mysql.cj.exceptions.DataConversionException;
 
+import entity.Actor;
+import entity.Adress;
+import utils.Convert;
+import utils.FileSource;
+
+/**
+ * Abstract class used to parse import data from acteurs.csv and return HashMap
+ * <String, Actor>
+ **/
 public abstract class ActorReaderCsv {
 
-	public static HashMap<String, Acteur> readFileToMap(String urlFile) {
+	/**
+	 * Static Method used to read each lines of Csv file. The first line is removed
+	 * (header of column) For each line, a parsing Method is called
+	 * (parseStringBeforeAdd)
+	 * 
+	 * @param url from Csv file in main/resources
+	 * @return HashMap <String, Actor> The key of HashMap corresponding to Actor id
+	 */
+	public static HashMap<String, Actor> readFileToMap(String url) {
 
-		HashMap<String, Acteur> actorMap = new HashMap<>();
+		HashMap<String, Actor> actorMap = new HashMap<>();
 		List<String> linesList = null;
 
-		try {
-			File file = new File(urlFile);
-			linesList = FileUtils.readLines(file, "UTF-8");
+			linesList = FileSource.readLinesCsv(url);
 			linesList.remove(0);
 
-			for (String actorData : linesList) {
-				Acteur acteur = addActor(actorData);
-				actorMap.put(acteur.getId(), acteur);
+			for (String data : linesList) {
+				Actor actor = parseStringBeforeAdd(data);
+				actorMap.put(actor.getId(), actor);
 			}
-			
+
 			return actorMap;
-
-		} catch (IOException e) {
-			System.out.println(e.getMessage());
-			return null;
-		}
-
 	}
 
-	public static Acteur addActor(String line) {
+	/**
+	 * Static Method used to parse a line received from readFileToMap Method 
+	 * birthdayDate call a static Method from Convert to transform "String to "LocalDate"
+	 * adress column call a static Method from AdressReaderCsv to parse and
+	 * transform "String" in "Adress" Object
+	 * 
+	 * @param line from readFileToMap Method
+	 * @return Actor Object
+	 */
+	public static Actor parseStringBeforeAdd(String line) {
 
 		String[] column = line.split(";", -1);
-		Acteur acteur = new Acteur();
+		Actor actor = new Actor();
 
 //		if (column.length == 7) {
 //			System.err.println("attention");
 //		}
 
 		String id = column[0];
-		String identite = column[1];
+		String name = column[1];
 
-		LocalDate dateNaissance = null;
+		LocalDate birthdayDate = null;
 		try {
 			if (column[2].split(" ").length == 3) {
-				dateNaissance = Convertir.stringToDateUS(column[2]);
+				birthdayDate = Convert.stringToMakeUsDate(column[2]);
 			}
 
-		} catch (Exception e) {
-			e.getMessage();
+		} catch (DataConversionException e) {
+			System.err.println(e.getMessage());
 		}
 
-		Lieu adress = AdresseReaderCsv.stringToLieu(column[3], column[0]);
-		
-		String taille = column[4];
-		String url = column[5];
-		
-		acteur.setId(id);
-		acteur.setIdentite(identite);
-		acteur.setTaille(taille);
-		acteur.setUrl(url);
-		acteur.setDateNaissance(dateNaissance);
-		acteur.setLieu(adress);
+		Adress adress = AdressReaderCsv.stringToAdress(column[3]);
 
-		return acteur;
-	
+		String size = column[4];
+		String url = column[5];
+
+		actor.setId(id);
+		actor.setIdentite(name);
+		actor.setSize(size);
+		actor.setUrl(url);
+		actor.setBirthdayDate(birthdayDate);
+		actor.setAdress(adress);
+
+		return actor;
+
 	}
 
 }

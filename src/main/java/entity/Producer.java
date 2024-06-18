@@ -13,24 +13,24 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "REALISATEUR")
-public class Realisateur extends Intervenant {
+@Table(name = "PRODUCER")
+public class Producer extends Person {
 
 	
 	@ManyToMany
-	@JoinTable(name = "FILM_REAL", joinColumns = @JoinColumn(name = "id_real", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "id_film", referencedColumnName = "id"))
-	private Set<Film> films = new HashSet<>();
+	@JoinTable(name = "FILM_REAL", joinColumns = @JoinColumn(name = "id_real", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "id_movie", referencedColumnName = "id"))
+	private Set<Movie> movies = new HashSet<>();
 	
-	@OneToMany(mappedBy="acteur")
+	@OneToMany(mappedBy="actor")
 	private Set<Role> roles = new HashSet<>();
 	
 
-	public Realisateur(String id, String identite, String url) {
-		super(id, identite, url);
+	public Producer(String id, String identity, String url) {
+		super(id, identity, url);
 	}
 
 
-	public Realisateur() {
+	public Producer() {
 		
 	}
 
@@ -38,15 +38,15 @@ public class Realisateur extends Intervenant {
 	/** Getter for films
 	 * @return the films
 	 */
-	public Set<Film> getFilms() {
-		return films;
+	public Set<Movie> getMovies() {
+		return movies;
 	}
 
 	/** Setter for films
-	 * @param films the films to set
+	 * @param movies the films to set
 	 */
-	public void setFilms(Set<Film> films) {
-		this.films = films;
+	public void setMovies(Set<Movie> movies) {
+		this.movies = movies;
 	}
 
 	/** Getter for roles

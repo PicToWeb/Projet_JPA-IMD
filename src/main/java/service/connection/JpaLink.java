@@ -1,59 +1,10 @@
-package utils;
+package service.connection;
 
-import dao.ActorDao;
-import dao.CountryDao;
-import dao.GenreDao;
-import dao.LangueDao;
-import dao.LieuDao;
-import dao.MovieDao;
-import dao.RealisateurDao;
-import dao.RoleDao;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 
-public abstract class JpaConnection {
-
-	private static final CountryDao countryDao = new CountryDao();
-	private static final LieuDao lieuDao = new LieuDao();
-	private static final ActorDao actorDao = new ActorDao();
-	private static final RealisateurDao realisateurDao = new RealisateurDao();
-	private static final MovieDao movieDao = new MovieDao();
-	private static final GenreDao genreDao = new GenreDao();
-	private static final LangueDao langueDao = new LangueDao();
-	private static final RoleDao roleDao = new RoleDao();
-	
-	
-	public static CountryDao countryDao() {
-		return countryDao;
-	}
-
-	public static LieuDao lieuDao() {
-		return lieuDao;
-	}
-
-	public static ActorDao actorDao() {
-		return actorDao;
-	}
-
-	public static RealisateurDao realisateurDao() {
-		return realisateurDao;
-	}
-
-	public static MovieDao movieDao() {
-		return movieDao;
-	}
-
-	public static GenreDao genreDao() {
-		return genreDao;
-	}
-
-	public static LangueDao langueDao() {
-		return langueDao;
-	}
-	public static RoleDao roleDao() {
-		return roleDao;
-	}
+public abstract class JpaLink {
 
 	private static final String PERSISTENCE_UNIT_NAME = "jpa_IMD";
 	private static EntityManagerFactory entityManagerFactory;
@@ -85,6 +36,8 @@ public abstract class JpaConnection {
 			entityManager.getTransaction().begin();
 			entityManager.persist(entity);
 			entityManager.getTransaction().commit();
+		} catch (NullPointerException e) {
+			System.err.println(e.getMessage());
 		} finally {
 			entityManager.close();
 		}

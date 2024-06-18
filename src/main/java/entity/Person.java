@@ -12,41 +12,41 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name="INTERVENANT")
+@Table(name="PERSON")
 @Inheritance(strategy=InheritanceType.JOINED)
-public abstract class Intervenant {
+public abstract class Person {
 
 	@Id
 	@Column(name = "id", length = 15)
 	protected String id;
 
-	@Column(name = "identite", length = 150)
-	protected String identite;
+	@Column(name = "identity", length = 150)
+	protected String identity;
 
-	@Column(name = "date_naissance", columnDefinition = "DATE")
-	protected LocalDate dateNaissance;
+	@Column(name = "birthday_date", columnDefinition = "DATE")
+	protected LocalDate birthdayDate;
 
 	@Column(name = "url", length = 200)
 	protected String url;
 	
 	@ManyToOne
-	@JoinColumn(name="id_lieu")
-	protected Lieu lieu;
+	@JoinColumn(name="id_adress")
+	protected Adress adress;
 
 	
 	/** Constructor
 	 * @param id
-	 * @param identite
-	 * @param dateNaissance
+	 * @param identity
+	 * @param birthdayDate
 	 * @param url
 	 */
-	public Intervenant(String id, String identite, String url) {
+	public Person(String id, String identity, String url) {
 		this.id = id;
-		this.identite = identite;
+		this.identity = identity;
 		this.url = url;
 	}
 
-	public Intervenant() {
+	public Person() {
 		
 	}
 
@@ -70,7 +70,7 @@ public abstract class Intervenant {
 	 * @return the identite
 	 */
 	public String getIdentite() {
-		return identite;
+		return identity;
 	}
 
 
@@ -78,23 +78,23 @@ public abstract class Intervenant {
 	 * @param identite the identite to set
 	 */
 	public void setIdentite(String identite) {
-		this.identite = identite;
+		this.identity = identite;
 	}
 
 
 	/** Getter for dateNaissance
 	 * @return the dateNaissance
 	 */
-	public LocalDate getDateNaissance() {
-		return dateNaissance;
+	public LocalDate getbirthdayDate() {
+		return birthdayDate;
 	}
 
 
 	/** Setter for dateNaissance
 	 * @param dateNaissance the dateNaissance to set
 	 */
-	public void setDateNaissance(LocalDate dateNaissance) {
-		this.dateNaissance = dateNaissance;
+	public void setBirthdayDate(LocalDate dateNaissance) {
+		this.birthdayDate = dateNaissance;
 	}
 
 
@@ -117,16 +117,16 @@ public abstract class Intervenant {
 	/** Getter for lieu
 	 * @return the lieu
 	 */
-	public Lieu getLieu() {
-		return lieu;
+	public Adress getAdress() {
+		return adress;
 	}
 
 
 	/** Setter for lieu
-	 * @param lieu the lieu to set
+	 * @param adress the lieu to set
 	 */
-	public void setLieu(Lieu lieu) {
-		this.lieu = lieu;
+	public void setAdress(Adress adress) {
+		this.adress = adress;
 	}
 	
 	

@@ -10,50 +10,50 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "PAYS")
-public class Pays {
+@Table(name = "COUNTRY")
+public class Country {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
-	@Column(name = "nom", length = 60)
-	private String nom;
+	@Column(name = "name", length = 60)
+	private String name;
 
 	@Column(name = "url", length = 200)
 	private String url;
 	
-	@OneToMany(mappedBy = "pays")
-	private Set<Film> films;
+	@OneToMany(mappedBy = "country")
+	private Set<Movie> movies;
 	
-	@OneToMany(mappedBy = "pays")
-	private Set<Lieu> lieux;
+	@OneToMany(mappedBy = "country")
+	private Set<Adress> adresses;
 
 	/** Constructor
-	 * @param nom
+	 * @param name
 	 * @param url
 	 */
-	public Pays(String nom, String url) {
-		this.nom = nom;
+	public Country(String name, String url) {
+		this.name = name;
 		this.url = url;
 	}
 
-	public Pays() {
+	public Country() {
 		// TODO Auto-generated constructor stub
 	}
 
 	/** Getter for nom
 	 * @return the nom
 	 */
-	public String getNom() {
-		return nom ;
+	public String getName() {
+		return name ;
 	}
 
 	/** Setter for nom
 	 * @param nom the nom to set
 	 */
-	public void setNom(String nom) {
-		this.nom = nom;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	/** Getter for url
@@ -72,7 +72,7 @@ public class Pays {
 
 	@Override
 	public String toString() {
-		return "Pays [nom= " + nom + ", url= " + url + "] \n";
+		return "Pays [nom= " + name + ", url= " + url + "] \n";
 	}
 	
 	
