@@ -7,6 +7,7 @@ import dao.LangueDao;
 import dao.LieuDao;
 import dao.MovieDao;
 import dao.RealisateurDao;
+import dao.RoleDao;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
@@ -20,6 +21,7 @@ public abstract class JpaConnection {
 	private static final MovieDao movieDao = new MovieDao();
 	private static final GenreDao genreDao = new GenreDao();
 	private static final LangueDao langueDao = new LangueDao();
+	private static final RoleDao roleDao = new RoleDao();
 	
 	
 	public static CountryDao countryDao() {
@@ -48,6 +50,9 @@ public abstract class JpaConnection {
 
 	public static LangueDao langueDao() {
 		return langueDao;
+	}
+	public static RoleDao roleDao() {
+		return roleDao;
 	}
 
 	private static final String PERSISTENCE_UNIT_NAME = "jpa_IMD";

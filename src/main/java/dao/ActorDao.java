@@ -2,6 +2,7 @@ package dao;
 
 import java.util.HashMap;
 import java.util.List;
+
 import entity.Acteur;
 import jakarta.persistence.TypedQuery;
 import utils.JpaConnection;
@@ -54,6 +55,9 @@ public class ActorDao implements DaoInterface<Acteur> {
 		return actorMap.values().stream().anyMatch(r -> r.getId().equals(idActor));
 	}
 
+	public Acteur findActorById(String acteurId) {
+		return actorMap.values().stream().filter(a->a.getId().equals(acteurId)).findFirst().orElse(new Acteur(acteurId,"","",""));
+	}
 	
 	public HashMap<String, Acteur> findAll() {
 

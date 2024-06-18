@@ -17,7 +17,7 @@ public class Role {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
-	@Column(name = "personne", length = 40)
+	@Column(name = "personne", length = 500)
 	private String personnage;
 	
 	@Column(name="casting_principal")
@@ -40,6 +40,18 @@ public class Role {
 		this.personnage = personnage;
 		this.film = film;
 		this.acteur = acteur;
+	}
+
+	public Role() {
+		
+	}
+	
+	
+
+	@Override
+	public String toString() {
+		return "Role [id=" + id + ", personnage=" + personnage + ", isPrincipal=" + isPrincipal + ", getFilm()="
+				+ getFilm() + ", getActeur()=" + getActeur() + "]";
 	}
 
 	/** Getter for personnage

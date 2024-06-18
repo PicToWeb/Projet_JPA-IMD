@@ -21,56 +21,28 @@ import utils.FileSource;
 import utils.JpaConnection;
 
 public abstract class MovieReaderCsv {
-	public static final String fileLangue = "UTF-8";
 	public static final LieuDao lieuDao = JpaConnection.lieuDao();
 	public static final RealisateurDao realisateurDao = JpaConnection.realisateurDao();
 
-	public static HashMap<String, Film> readFileToMap(String urlFile) {
+	public static HashMap<String, Film> readFileToMap(String urlFile) throws IOException {
 
 		HashMap<String, Film> movieMap = new HashMap<>();
-		List<String> linesProducerList = null;
-
-		HashMap<String, String> producerMoviesMap = new HashMap<>();
 		List<String> linesMovieList = null;
-		String producerMovie = FileSource.nom("film_realisateurs.csv");
 
-		try {
+		HashMap<String, String> producerMoviesMap = readFileToMapFilmReal(FileSource.nom("film_realisateurs.csv"));
 
-			File fileProdMov = new File(producerMovie);
-			linesProducerList = FileUtils.readLines(fileProdMov, fileLangue);
-			linesProducerList.remove(0);
-			
-			for (String prodMovieData : linesProducerList) {
-				String[] column = prodMovieData.split(";");
-				producerMoviesMap.put(column[0], column[1]);
-			}
+		File file = new File(urlFile);
+		linesMovieList = FileUtils.readLines(file, "UTF-8");
+		linesMovieList.remove(0);
 
-			File file = new File(urlFile);
-			linesMovieList = FileUtils.readLines(file, fileLangue);
-			linesMovieList.remove(0);
+		for (String movieData : linesMovieList) {
+			Film film = parseStringBeforeAdd(movieData);
+			film = findProducerForMovie(producerMoviesMap, film);
 
-			for (String movieData : linesMovieList) {
-				Film film = parseStringBeforeAdd(movieData);
-				Realisateur realisateur = realisateurDao.findById(producerMoviesMap.values().iterator().next());
-
-				Iterator<String> keyReal = producerMoviesMap.keySet().iterator();
-				while(keyReal.hasNext()) {
-					String cleJoin = keyReal.next();
-					
-					if(film.getId().equals(cleJoin) && realisateur != null) {
-					
-						film.addProducer(realisateur);
-					}
-				}
-				movieMap.put(film.getId(), film);
-			}
-
-			return movieMap;
-
-		} catch (IOException e) {
-			System.out.println(e.getMessage());
-			return null;
+			movieMap.put(film.getId(), film);
 		}
+
+		return movieMap;
 
 	}
 
@@ -82,12 +54,19 @@ public abstract class MovieReaderCsv {
 
 		String id = column[0];
 		String name = column[1];
-		int year = Integer.parseInt(column[2].substring(column[2].trim().length() - 4));
+		String yearTrim =column[2].trim();
+		int year = 0;
+		if(yearTrim.length()>4) {
+			 year = Integer.parseInt(column[2].substring(yearTrim.length() - 4));
+		}else if (yearTrim.length() ==4){
+			 year = Integer.parseInt(yearTrim);
+		}
 
 		Double rating = 0.0;
 		if (!column[3].isEmpty()) {
 			rating = Double.parseDouble(column[3].replaceAll(",", "."));
 		}
+		
 		String url = column[4];
 		Lieu filmAdress = AdresseReaderCsv.stringToLieuMovie(column[5], column[0]);
 		Langue langue = LangueReaderCsv.langueExistOrAdded(column[7]);
@@ -106,6 +85,40 @@ public abstract class MovieReaderCsv {
 		movie.setPays(pays);
 
 		return movie;
+
+	}
+
+	public static HashMap<String, String> readFileToMapFilmReal(String urlFile) throws IOException {
+
+		HashMap<String, String> producerMoviesMap = new HashMap<>();
+		List<String> linesProducerList = null;
+
+		File fileProdMov = new File(urlFile);
+		linesProducerList = FileUtils.readLines(fileProdMov, "UTF-8");
+		linesProducerList.remove(0);
+
+		for (String prodMovieData : linesProducerList) {
+			String[] column = prodMovieData.split(";");
+			producerMoviesMap.put(column[0], column[1]);
+		}
+
+		return producerMoviesMap;
+	}
+
+	public static Film findProducerForMovie(HashMap<String, String> producerMoviesMap, Film film) {
+
+		Realisateur realisateur = realisateurDao.findById(producerMoviesMap.values().iterator().next());
+
+		Iterator<String> keyReal = producerMoviesMap.keySet().iterator();
+		while (keyReal.hasNext()) {
+			String cleJoin = keyReal.next();
+
+			if (film.getId().equals(cleJoin) && realisateur != null) {
+
+				film.addProducer(realisateur);
+			}
+		}
+		return film;
 
 	}
 

@@ -1,8 +1,8 @@
 package dao;
 
 import java.util.HashMap;
-
 import java.util.List;
+
 import entity.Film;
 import jakarta.persistence.TypedQuery;
 import utils.JpaConnection;
@@ -65,8 +65,13 @@ public class MovieDao implements DaoInterface<Film> {
 		}
 	}
 
+	
 	public boolean movieExist(String idMovie) {
 		return movieMap.values().stream().anyMatch(r -> r.getId().equals(idMovie));
+	}
+	
+	public Film findMovieById(String movieId) {
+		return movieMap.values().stream().filter(a->a.getId().equals(movieId)).findFirst().orElse(new Film(movieId,"",null,null,"",""));
 	}
 
 	public HashMap<String, Film> findAll() {

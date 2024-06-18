@@ -24,13 +24,13 @@ public class Film {
 	@Column(name = "nom", length = 150)
 	private String nom;
 
-	@Column(name = "annee", length = 4)
+	@Column(name = "annee", length = 5)
 	private Integer annee;
 
 	@Column(name = "rating", length = 5)
 	private Double rating;
 
-	@Column(name = "url", length = 200)
+	@Column(name = "url", length = 500)
 	private String url;
 	
 	@Column(name = "resume",length =1500)

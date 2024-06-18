@@ -1,5 +1,6 @@
 package service.importFile;
 
+import java.io.IOException;
 import java.util.HashMap;
 import dao.MovieDao;
 import entity.Film;
@@ -12,7 +13,7 @@ public abstract class FileMovie {
 	public static final MovieDao movieDao = JpaConnection.movieDao();
 	
 
-	public static HashMap<String, Film> link(String url) {
+	public static HashMap<String, Film> link(String url) throws IOException {
 		return MovieReaderCsv.readFileToMap(FileSource.nom(url));
 	}
 
