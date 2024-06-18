@@ -2,11 +2,13 @@ package dao;
 
 import java.util.HashMap;
 import java.util.List;
+
 import entity.Acteur;
 import jakarta.persistence.TypedQuery;
 import utils.JpaConnection;
 
 public class ActorDao implements DaoInterface<Acteur> {
+
 
 	public static final LieuDao lieuDao = JpaConnection.lieuDao();
 
@@ -28,11 +30,8 @@ public class ActorDao implements DaoInterface<Acteur> {
 			if (!actorExist(a.getId())) {
 				
 				Acteur acteur = new Acteur();
-				//System.out.println(a.getLieu() + a.getLieu().getPays().getNom());
-				if (!lieuDao.lieuExist(a.getLieu())) {
-					lieuDao.insert(a.getLieu());
-				}
-				
+
+				lieuDao.lieuExistOrAdded(a.getLieu());
 				acteur.setLieu(lieuDao.findByName(a.getLieu()));
 				acteur.setId(a.getId());
 				acteur.setIdentite(a.getIdentite());

@@ -48,9 +48,7 @@ public abstract class MovieReaderCsv {
 
 		String[] column = line.split(";", -1);
 		
-
 		//if (column.length > 9) return new Film();
-
 
 		String id = column[0];
 		String name = column[1];
@@ -60,14 +58,12 @@ public abstract class MovieReaderCsv {
 		if(!column[3].isEmpty()) {
 		 rating = Double.parseDouble(column[3].replaceAll(",","."));
 		}
-	
 		String url = column[4];
 		Lieu filmAdress = AdresseReaderCsv.stringToLieuMovie(column[5], column[0]);
-		
-		
-		String resume = column[8];
 		Langue langue = LangueReaderCsv.langueExistOrAdded(column[7]);
+		String resume = column[8];
 		Pays pays = AdresseReaderCsv.countryExistOrAdded(column[9]);
+		
 		Film movie = new Film(id,name,year,rating,url,resume);
 		
 		Set<Genre> movieGenres= GenreReaderCsv.genreExistOrAdded(column[6]);

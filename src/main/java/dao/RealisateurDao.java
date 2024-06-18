@@ -30,9 +30,11 @@ public class RealisateurDao implements DaoInterface<Realisateur> {
 			if (!producerExist(r.getId())) {
 				Realisateur realisateur = new Realisateur();
 				
-				if (!lieuDao.lieuExist(r.getLieu())) {
-					lieuDao.insert(r.getLieu());
-				}
+//				if (!lieuDao.lieuExist(r.getLieu())) {
+//					lieuDao.insert(r.getLieu());
+//				}
+
+				lieuDao.lieuExistOrAdded(r.getLieu());
 				
 				realisateur.setLieu(lieuDao.findByName(r.getLieu()));
 				realisateur.setId(r.getId());

@@ -19,28 +19,12 @@ public class WriteData {
 			
 	public static void main(String[] args) {
 		
-		//List<Pays> countryList = CountryReaderCsv.readFileToList(FileSource.nom("pays.csv"));
 		
-//		for(Pays p : countryList) {
-//			if(!countryDao.countryExist(p.getNom())) {
-//			countryDao.insert(p);
-//			}
-//		}
-		
-//		HashMap<String,Realisateur> realisateurMap = RealisateurReaderCsv.readFileToMap(FileSource.nom("realisateurs.csv"));
-//		realisateurDao.splitInsert(realisateurMap);
-		
-		//FileCountry.addCsvToDataBase(FileCountry.link("pays.csv"));
+		FileCountry.addCsvToDataBase(FileCountry.link("pays.csv"));
 		//FileActor.addCsvToDataBase(FileActor.link("acteurs.csv"));
-		//FileProducer.addCsvToDataBase(FileProducer.link("realisateurs.csv"));
-		FileMovie.addCsvToDataBase(FileMovie.link("films.csv"));
+		FileProducer.addCsvToDataBase(FileProducer.link("realisateurs.csv"));
+		//FileMovie.addCsvToDataBase(FileMovie.link("films.csv"));
 		
-		
-		//HashMap<String,Acteur> actorMap = ActorReaderCsv.readFileToMap(FileSource.nom("acteurs.csv"));
-		//actorDao.splitInsert(actorMap);
-		
-
-
 		
 //		EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("jpa_IMD");
 //		EntityManager em = entityManagerFactory.createEntityManager();

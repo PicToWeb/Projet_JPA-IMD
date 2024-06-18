@@ -9,9 +9,9 @@ import utils.JpaConnection;
 
 public class MovieDao implements DaoInterface<Film> {
 
+	public static final CountryDao countryDao = JpaConnection.countryDao();
 	public static final LieuDao lieuDao = JpaConnection.lieuDao();
 	public static final GenreDao genreDao = JpaConnection.genreDao();
-	public static final CountryDao countryDao = JpaConnection.countryDao();
 
 	HashMap<String, Film> movieMap = new HashMap<>();
 
@@ -29,15 +29,19 @@ public class MovieDao implements DaoInterface<Film> {
 
 		for (Film f : movieMap.values()) {
 			if (!movieExist(f.getId())) {
-				
+
 				if (!lieuDao.lieuExist(f.getLieu())) {
 					lieuDao.insert(f.getLieu());
 				}
-				if(!countryDao.countryExist2(f.getPays())) {
+//				countryDao.countryExistOrAdded(f.getPays());
+//				countryDao.countryExistOrAdded(f.getLieu().getPays());
+//				lieuDao.lieuExistOrAdded(f.getLieu());
+				
+				if (!countryDao.countryExist2(f.getPays())) {
 					countryDao.insert(f.getPays());
 				}
-				
-				Film movie = new Film(f.getId(),f.getNom(),f.getAnnee(),f.getRating(),f.getUrl(),f.getResume());
+
+				Film movie = new Film(f.getId(), f.getNom(), f.getAnnee(), f.getRating(), f.getUrl(), f.getResume());
 				movie.setLangue(f.getLangue());
 				movie.setPays(f.getPays());
 				movie.setLieu(lieuDao.findByName(f.getLieu()));
@@ -54,7 +58,7 @@ public class MovieDao implements DaoInterface<Film> {
 			}
 		}
 	}
-	
+
 	public boolean movieExist(String idMovie) {
 		return movieMap.values().stream().anyMatch(r -> r.getId().equals(idMovie));
 	}
@@ -65,7 +69,8 @@ public class MovieDao implements DaoInterface<Film> {
 
 		// Utilisez une requête JPQL pour récupérer les réalisateurs depuis la base de
 		// données
-		TypedQuery<Film> query = JpaConnection.getEntityManager().createQuery("SELECT f FROM Film f JOIN FETCH f.lieu l JOIN FETCH l.pays",
+		TypedQuery<Film> query = JpaConnection.getEntityManager().createQuery(
+				"SELECT f FROM Film f JOIN FETCH f.lieu l JOIN FETCH l.pays JOIN FETCH f.genres JOIN FETCH f.langue JOIN FETCH f.pays",
 				Film.class);
 		List<Film> movies = query.getResultList();
 
@@ -76,8 +81,6 @@ public class MovieDao implements DaoInterface<Film> {
 
 		return movieMap;
 	}
-
-	
 
 	@Override
 	public void insert(Film movie) {
