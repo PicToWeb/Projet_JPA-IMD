@@ -1,16 +1,8 @@
 package parseCsv;
 
-import java.io.File;
-
-import java.io.IOException;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
-
-import org.apache.commons.io.FileUtils;
-
-import com.mysql.cj.exceptions.DataConversionException;
-
 import entity.Actor;
 import entity.Adress;
 import utils.Convert;
@@ -73,8 +65,9 @@ public abstract class ActorReaderCsv {
 				birthdayDate = Convert.stringToMakeUsDate(column[2]);
 			}
 
-		} catch (DataConversionException e) {
+		} catch (Exception e) {
 			System.err.println(e.getMessage());
+			birthdayDate=null;
 		}
 
 		Adress adress = AdressReaderCsv.stringToAdress(column[3]);

@@ -11,22 +11,12 @@ import org.apache.commons.io.FileUtils;
  */
 public abstract class FileSource {
 
-	/** File FORMAT */
-	public static final String FORMAT = "UTF-8";
-
 	/**
-	 * Returns the file path for the specified resource.
+	 * Reads lines from a CSV file and returns them as a list of strings.
 	 *
-	 * @param source The name of the resource.
-	 * @return The file path of the resource.
+	 * @param source The path to the CSV file.
+	 * @return A list of strings representing the lines from the CSV file.
 	 */
-	public static String nom(String source) {
-
-		String filePath = ClassLoader.getSystemClassLoader().getResource(source).getFile();
-
-		return filePath;
-	}
-
 	public static List<String> readLinesCsv(String source) {
 		String filePath = ClassLoader.getSystemClassLoader().getResource(source).getFile();
 		File file = new File(filePath);
