@@ -15,6 +15,7 @@ public abstract class FileRole {
 	}
 
 	public static void addCsvToDataBase(List<Role> roleList) {
+		
 		for (Role r : roleList) {
 			if (!roleDao.roleExist(r)) {
 				roleDao.insert(r);

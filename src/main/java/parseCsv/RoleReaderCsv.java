@@ -12,6 +12,7 @@ import entity.Movie;
 import entity.Role;
 import service.connection.DaoLink;
 import utils.FileSource;
+import utils.ShowThis;
 
 /**
  * Abstract Class used to import and merge roles.csv and castingPrincipal.csv
@@ -48,13 +49,20 @@ public abstract class RoleReaderCsv {
 			
 			linesFileList = FileSource.readLinesCsv(url);
 			linesFileList.remove(0);
-
+			Boolean isPrincipal = false;
 			for (String line : linesFileList) {
 				Role role = parseStringBeforeAdd(line);
-				Boolean isPrincipal = findMainRole(mainCastingList, role);
+				try {
+					isPrincipal = findMainRole(mainCastingList, role);
+					
+				}catch(Exception e) {
+					System.err.println(e.getMessage());
+				}
+				System.out.println(role.toString() );
 
 				role.setPrincipal(isPrincipal);
 				roleList.add(role);
+				System.out.println(roleList.size());
 			}
 
 		return roleList;
@@ -107,22 +115,21 @@ public abstract class RoleReaderCsv {
 		linesCasting.remove(0);
 		
 		System.out.println("---------------");
-		System.out.println("Traitement du fichier Casting principal - en cours");
+		System.out.println("Main Cast List processing - in progress");
 		System.out.println("---------------");
 		int count = 0;
 		for (String c : linesCasting) {
 			String[] column = c.split(";");
 
 			Movie movie = movieDao.findMovieById(column[0]);
-	
 			Actor actor = actorDao.findActorById(column[1]);
-
 			
 			role.setActor(actor);
 			role.setMovie(movie);
-			System.out.println("Line traitée : " + count++);
+			System.out.println(ShowThis.toString("  ", "Line readed : ",count++));
 			mainCastingList.add(role);
 		}
+		System.out.println("Main Cast List processing - completed");
 		return mainCastingList;
 	}
 	
@@ -138,8 +145,10 @@ public abstract class RoleReaderCsv {
 	 * @return Boolean 
 	 */ 
 	public static Boolean findMainRole(List<Role> mainCastingList, Role role) {
-
-		return mainCastingList.stream().anyMatch(r -> r.getActor().getId().equals(role.getActor().getId()));
+		
+		 return mainCastingList.stream()
+		            .anyMatch(r -> r.getMovie().getId().equals(role.getMovie().getId()) &&
+		                    r.getActor().getId().equals(role.getActor().getId()));	
 	}
 
 }
