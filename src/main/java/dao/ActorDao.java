@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import entity.Actor;
+import entity.Adress;
 import jakarta.persistence.TypedQuery;
 import service.connection.DaoLink;
 import service.connection.JpaLink;
@@ -32,21 +33,19 @@ public class ActorDao implements DaoInterface<Actor> {
 				
 				Actor actor = new Actor();
 
-				adressDao.lieuExistOrAdded(a.getAdress());
-				actor.setAdress(adressDao.findByName(a.getAdress()));
+//				adressDao.lieuExistOrAdded(a.getAdress());
+//				actor.setAdress(adressDao.findByName(a.getAdress()));
+				Adress adress = adressDao.lieuExistOrAdded(a.getAdress());
+				if (adress != null) {
+					actor.setAdress(adress);
+				}
 				actor.setId(a.getId());
 				actor.setIdentite(a.getIdentite());
 				actor.setSize(a.getSize());
 				actor.setBirthdayDate(a.getbirthdayDate());
 				actor.setUrl(a.getUrl());
 
-				try {
-					insert(actor);
-
-				} catch (Exception e) {
-					e.getMessage();
-					continue;
-				}
+				insert(actor);
 
 			}
 		}
@@ -66,7 +65,7 @@ public class ActorDao implements DaoInterface<Actor> {
 
 		// Utilisez une requête JPQL pour récupérer les réalisateurs depuis la base de
 		// données
-		TypedQuery<Actor> query = JpaLink.getEntityManager().createQuery("SELECT a FROM Actor a JOIN FETCH a.adress l JOIN FETCH l.country",
+		TypedQuery<Actor> query = JpaLink.getEntityManager().createQuery("SELECT a FROM Actor a LEFT JOIN FETCH a.adress ad LEFT JOIN FETCH ad.country",
 				Actor.class);
 		List<Actor> actors = query.getResultList();
 

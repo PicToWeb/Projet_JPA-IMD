@@ -46,7 +46,7 @@ public class Country {
 	 * @return the nom
 	 */
 	public String getName() {
-		return name ;
+		return name != null ? name : ""; 
 	}
 
 	/** Setter for nom

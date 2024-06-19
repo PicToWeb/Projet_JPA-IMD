@@ -23,9 +23,8 @@ public abstract class FileSource {
 		try {
 			return FileUtils.readLines(file, "UTF-8");
 		} catch (IOException e) {
-			System.err.println(e.getMessage());
-			e.printStackTrace();
-			return null;
+			throw new RuntimeException(e);
+			
 		}
 	}
 

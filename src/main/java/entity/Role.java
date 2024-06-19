@@ -1,6 +1,9 @@
 package entity;
 
+import org.hibernate.type.YesNoConverter;
+
 import jakarta.persistence.Column;
+import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -21,6 +24,7 @@ public class Role {
 	private String person;
 	
 	@Column(name="main_casting")
+	@Convert(converter = YesNoConverter.class)
 	private boolean isPrincipal;
 
 	@ManyToOne

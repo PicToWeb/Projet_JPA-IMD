@@ -18,6 +18,7 @@ public abstract class FileRole {
 		for (Role r : roleList) {
 			if (!roleDao.roleExist(r)) {
 				roleDao.insert(r);
+				
 			}
 		}
 	}

@@ -28,7 +28,7 @@ public class RoleDao implements DaoInterface<Role> {
 
 	public List<Role> findAll() {
 
-		return JpaLink.getEntityManager().createQuery("SELECT r FROM Role r LEFT JOIN FETCH r.movie m LEFT JOIN FETCH r.actor a JOIN FETCH a.adress ", Role.class).getResultList();
+		return JpaLink.getEntityManager().createQuery("SELECT r FROM Role r ", Role.class).getResultList();
 	}
 
 	@Override

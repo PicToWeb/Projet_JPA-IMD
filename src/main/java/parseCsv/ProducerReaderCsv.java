@@ -2,6 +2,7 @@ package parseCsv;
 
 
 import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.HashMap;
 import java.util.List;
 
@@ -63,18 +64,22 @@ public abstract class ProducerReaderCsv {
 					birthdayDate = Convert.stringToMakeUsDate(column[2]);
 				}
 
-			} catch (Exception e) {
+			} catch (DateTimeParseException e) {
 				System.err.println(e.getMessage()); 
 			}
 
-			Adress adress = AdressReaderCsv.stringToAdress(column[3]);
+			Adress birthplace = null;
+			if (!column[3].isEmpty()) {
+				birthplace = AdressReaderCsv.stringToAdress(column[3]);
+			}
 			String url = column[4];
-
+			
 			producer.setId(id);
 			producer.setIdentite(identite);
 			producer.setUrl(url);
 			producer.setBirthdayDate(birthdayDate);
-			producer.setAdress(adress);
+			producer.setAdress(birthplace);
+		
 		}
 		return producer;
 

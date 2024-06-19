@@ -82,10 +82,10 @@ public class MovieDao implements DaoInterface<Movie> {
 		// Utilisez une requête JPQL pour récupérer les réalisateurs depuis la base de
 		// données
 		TypedQuery<Movie> query = JpaLink.getEntityManager().createQuery(
-				"SELECT m FROM Movie m JOIN FETCH m.adress a JOIN FETCH a.country JOIN FETCH m.movieGenres JOIN FETCH m.movieLanguage",
+				"SELECT m FROM Movie m LEFT JOIN FETCH m.adress a LEFT JOIN FETCH a.country LEFT JOIN FETCH m.country",
 				Movie.class);
 		List<Movie> movies = query.getResultList();
-
+		
 		// Remplissez le HashMap avec les réalisateurs
 		for (Movie a : movies) {
 			movieMap.put(a.getId(), a);

@@ -37,7 +37,7 @@ public abstract class JpaLink {
 			entityManager.persist(entity);
 			entityManager.getTransaction().commit();
 		} catch (NullPointerException e) {
-			System.err.println(e.getMessage());
+			System.err.println(e);
 		} finally {
 			entityManager.close();
 		}

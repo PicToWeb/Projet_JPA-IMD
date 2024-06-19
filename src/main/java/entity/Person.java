@@ -4,6 +4,8 @@ import java.time.LocalDate;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
@@ -12,14 +14,17 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name="PERSON")
-@Inheritance(strategy=InheritanceType.JOINED)
+@Table(name = "PERSON")
+@Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Person {
 
 	@Id
-	@Column(name = "id", length = 15)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name = "id")
+	protected Integer idPrimary;
+	
+	@Column(name = "idPerson")
 	protected String id;
-
 	@Column(name = "identity", length = 150)
 	protected String identity;
 
@@ -28,13 +33,14 @@ public abstract class Person {
 
 	@Column(name = "url", length = 200)
 	protected String url;
-	
+
 	@ManyToOne
-	@JoinColumn(name="id_adress")
+	@JoinColumn(name = "id_adress", nullable = true)
 	protected Adress adress;
 
-	
-	/** Constructor
+	/**
+	 * Constructor
+	 * 
 	 * @param id
 	 * @param identity
 	 * @param birthdayDate
@@ -47,89 +53,97 @@ public abstract class Person {
 	}
 
 	public Person() {
-		
+
 	}
 
-	/** Getter for id
+	/**
+	 * Getter for id
+	 * 
 	 * @return the id
 	 */
 	public String getId() {
 		return id;
 	}
 
-
-	/** Setter for id
+	/**
+	 * Setter for id
+	 * 
 	 * @param id the id to set
 	 */
 	public void setId(String id) {
 		this.id = id;
 	}
 
-
-	/** Getter for identite
+	/**
+	 * Getter for identite
+	 * 
 	 * @return the identite
 	 */
 	public String getIdentite() {
 		return identity;
 	}
 
-
-	/** Setter for identite
+	/**
+	 * Setter for identite
+	 * 
 	 * @param identite the identite to set
 	 */
 	public void setIdentite(String identite) {
 		this.identity = identite;
 	}
 
-
-	/** Getter for dateNaissance
+	/**
+	 * Getter for dateNaissance
+	 * 
 	 * @return the dateNaissance
 	 */
 	public LocalDate getbirthdayDate() {
 		return birthdayDate;
 	}
 
-
-	/** Setter for dateNaissance
+	/**
+	 * Setter for dateNaissance
+	 * 
 	 * @param dateNaissance the dateNaissance to set
 	 */
 	public void setBirthdayDate(LocalDate dateNaissance) {
 		this.birthdayDate = dateNaissance;
 	}
 
-
-	/** Getter for url
+	/**
+	 * Getter for url
+	 * 
 	 * @return the url
 	 */
 	public String getUrl() {
 		return url;
 	}
 
-
-	/** Setter for url
+	/**
+	 * Setter for url
+	 * 
 	 * @param url the url to set
 	 */
 	public void setUrl(String url) {
 		this.url = url;
 	}
 
-
-	/** Getter for lieu
+	/**
+	 * Getter for lieu
+	 * 
 	 * @return the lieu
 	 */
 	public Adress getAdress() {
 		return adress;
 	}
 
-
-	/** Setter for lieu
+	/**
+	 * Setter for lieu
+	 * 
 	 * @param adress the lieu to set
 	 */
 	public void setAdress(Adress adress) {
 		this.adress = adress;
 	}
-	
-	
-	
-	
+
 }

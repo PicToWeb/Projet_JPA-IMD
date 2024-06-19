@@ -3,6 +3,7 @@ package parseCsv;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
 import dao.ActorDao;
 import dao.AdressDao;
 import dao.MovieDao;
@@ -44,7 +45,7 @@ public abstract class RoleReaderCsv {
 		List<String> linesFileList = null;
 
 			List<Role> mainCastingList = readFileToLinkMainCasting(urlDep);
-
+			
 			linesFileList = FileSource.readLinesCsv(url);
 			linesFileList.remove(0);
 
@@ -104,20 +105,29 @@ public abstract class RoleReaderCsv {
 
 		linesCasting = FileSource.readLinesCsv(urlDep);
 		linesCasting.remove(0);
-
+		
+		System.out.println("---------------");
+		System.out.println("Traitement du fichier Casting principal - en cours");
+		System.out.println("---------------");
+		int count = 0;
 		for (String c : linesCasting) {
 			String[] column = c.split(";");
 
 			Movie movie = movieDao.findMovieById(column[0]);
+	
 			Actor actor = actorDao.findActorById(column[1]);
 
+			
 			role.setActor(actor);
 			role.setMovie(movie);
-
+			System.out.println("Line traitée : " + count++);
 			mainCastingList.add(role);
 		}
 		return mainCastingList;
 	}
+	
+	//Trouver le film dans castingPrincipal = film dans role
+	// Ce film doit etre bouclé et faire matcher les acteurs de casting principal a ceux de role -> is principal = true 
 
 	/**
 	 * Static Method is used to compare witch id_actor from list and id_actor from role 
@@ -129,8 +139,7 @@ public abstract class RoleReaderCsv {
 	 */ 
 	public static Boolean findMainRole(List<Role> mainCastingList, Role role) {
 
-		return mainCastingList.stream().anyMatch(r -> r.getActor().getId().equals(role.getActor().getId())
-				&& r.getMovie().getId().equals(role.getMovie().getId()));
+		return mainCastingList.stream().anyMatch(r -> r.getActor().getId().equals(role.getActor().getId()));
 	}
 
 }

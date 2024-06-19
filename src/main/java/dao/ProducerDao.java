@@ -1,8 +1,9 @@
 package dao;
 
 import java.util.HashMap;
-import java.util.List;
 
+import java.util.List;
+import entity.Adress;
 import entity.Producer;
 import jakarta.persistence.TypedQuery;
 import service.connection.DaoLink;
@@ -25,32 +26,22 @@ public class ProducerDao implements DaoInterface<Producer> {
 
 	}
 
-	public void splitInsert(HashMap<String, Producer> realisateurMap) {
+	public void splitInsert(HashMap<String, Producer> producerMap) {
 
-		for (Producer r : realisateurMap.values()) {
-			if (!producerExist(r.getId())) {
-				Producer producer = new Producer();
-				
-//				if (!lieuDao.lieuExist(r.getLieu())) {
-//					lieuDao.insert(r.getLieu());
-//				}
+		for (Producer p : producerMap.values()) {
+			if (!producerExist(p.getId())) {
+				Producer producerNew = new Producer();
 
-				adressDao.lieuExistOrAdded(r.getAdress());
-				
-				producer.setAdress(adressDao.findByName(r.getAdress()));
-				producer.setId(r.getId());
-				producer.setIdentite(r.getIdentite());
-				producer.setBirthdayDate(r.getbirthdayDate());
-				producer.setUrl(r.getUrl());
-
-				try {
-					insert(producer);
-//					realisateurMap.put(a.getId(), realisateur);
-
-				} catch (Exception e) {
-					e.getMessage();
-					continue;
+				Adress adress = adressDao.lieuExistOrAdded(p.getAdress());
+				if (adress != null) {
+					producerNew.setAdress(adress);
 				}
+				producerNew.setId(p.getId());
+				producerNew.setIdentite(p.getIdentite());
+				producerNew.setBirthdayDate(p.getbirthdayDate());
+				producerNew.setUrl(p.getUrl());
+
+				insert(producerNew);
 
 			}
 		}
@@ -61,8 +52,9 @@ public class ProducerDao implements DaoInterface<Producer> {
 		return realisateurMap.values().stream().anyMatch(r -> r.getId().equals(idRealisateur));
 	}
 	
+
 	public Producer findById(String idRealisateur) {
-		return realisateurMap.values().stream().filter(p->p.getId().equals(idRealisateur)).findFirst().orElse(null);
+		return realisateurMap.values().stream().filter(p -> p.getId().equals(idRealisateur)).findFirst().orElse(null);
 	}
 
 	public HashMap<String, Producer> findAll() {
@@ -71,8 +63,8 @@ public class ProducerDao implements DaoInterface<Producer> {
 
 		// Utilisez une requête JPQL pour récupérer les réalisateurs depuis la base de
 		// données
-		TypedQuery<Producer> query = JpaLink.getEntityManager().createQuery("SELECT p FROM Producer p JOIN FETCH p.adress a JOIN FETCH a.country",
-				Producer.class);
+		TypedQuery<Producer> query = JpaLink.getEntityManager()
+				.createQuery("SELECT p FROM Producer p LEFT JOIN FETCH p.adress ad LEFT JOIN FETCH ad.country", Producer.class);
 		List<Producer> producers = query.getResultList();
 
 		// Remplissez le HashMap avec les réalisateurs

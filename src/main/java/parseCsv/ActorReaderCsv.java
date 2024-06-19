@@ -1,6 +1,7 @@
 package parseCsv;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.HashMap;
 import java.util.List;
 import entity.Actor;
@@ -65,14 +66,19 @@ public abstract class ActorReaderCsv {
 				birthdayDate = Convert.stringToMakeUsDate(column[2]);
 			}
 
-		} catch (Exception e) {
+		} catch (DateTimeParseException e) {
 			System.err.println(e.getMessage());
 			birthdayDate=null;
 		}
 
-		Adress adress = AdressReaderCsv.stringToAdress(column[3]);
-
-		String size = column[4];
+		Adress birthplace = null;
+		if (!column[3].isEmpty()) {
+			birthplace = AdressReaderCsv.stringToAdress(column[3]);
+		}
+		String size = null;
+		if(column[4].length() < 7) {
+			size = column[4].replaceAll("m", "").trim();
+		}
 		String url = column[5];
 
 		actor.setId(id);
@@ -80,7 +86,7 @@ public abstract class ActorReaderCsv {
 		actor.setSize(size);
 		actor.setUrl(url);
 		actor.setBirthdayDate(birthdayDate);
-		actor.setAdress(adress);
+		actor.setAdress(birthplace);
 
 		return actor;
 

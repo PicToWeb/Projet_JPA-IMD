@@ -1,6 +1,5 @@
 package entity;
 
-
 import java.util.Objects;
 import java.util.Set;
 
@@ -38,7 +37,7 @@ public class Adress {
 	private Set<Movie> movies;
 
 	@ManyToOne
-	@JoinColumn(name = "id_country")
+	@JoinColumn(name = "id_country", nullable = true)
 	private Country country;
 
 	/**
@@ -78,7 +77,7 @@ public class Adress {
 
 	@Override
 	public String toString() {
-		return "Lieu [rue=" + street + ", ville=" + city + ", etat=" + etat +  "]";
+		return "Lieu [rue=" + street + ", ville=" + city + ", etat=" + etat + " pays " + "]";
 	}
 
 	/**
@@ -87,7 +86,7 @@ public class Adress {
 	 * @return the rue
 	 */
 	public String getStreet() {
-		return street;
+		return street != null ? street : "";
 	}
 
 	/**
@@ -105,7 +104,7 @@ public class Adress {
 	 * @return the ville
 	 */
 	public String getCity() {
-		return city;
+		return city != null ? city : "";
 	}
 
 	/**
@@ -123,7 +122,7 @@ public class Adress {
 	 * @return the etat
 	 */
 	public String getEtat() {
-		return etat;
+		return etat != null ? etat : "";
 	}
 
 	/**
@@ -153,7 +152,9 @@ public class Adress {
 		this.country = country;
 	}
 
-	/** Getter for id
+	/**
+	 * Getter for id
+	 * 
 	 * @return the id
 	 */
 	public int getId() {
