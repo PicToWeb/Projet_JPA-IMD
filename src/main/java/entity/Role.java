@@ -1,5 +1,7 @@
 package entity;
 
+import java.util.Objects;
+
 import org.hibernate.type.YesNoConverter;
 
 import jakarta.persistence.Column;
@@ -11,6 +13,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import utils.ShowThis;
 
 @Entity
 @Table(name = "ROLE")
@@ -50,12 +53,25 @@ public class Role {
 		
 	}
 	
-	
+	@Override
+	public boolean equals(Object o) {
+		if (this == o)
+			return true;
+		if (o == null || getClass() != o.getClass())
+			return false;
+		Role role = (Role) o;
+		return Objects.equals(actor.getId(), role.getActor().getId()) && Objects.equals(movie.getId(), role.getMovie().getId());
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(actor, movie);
+	}
 
 	@Override
 	public String toString() {
-		return "Role [id=" + id + ", personnage=" + person + ", isPrincipal=" + isPrincipal + ", getFilm()="
-				+ getMovie() + ", getActeur()=" + getActor() + "]";
+		//return ShowThis.toString(" ","Personnage: ",person,", isPrincipal: ", isPrincipal,", Movie :",getMovie().getId(),", Actor :",getActor().getId());	
+		return ShowThis.toString(" "," isPrincipal: ", isPrincipal);	
 	}
 
 	/** Getter for personnage

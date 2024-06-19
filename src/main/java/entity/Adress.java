@@ -56,7 +56,7 @@ public class Adress {
 	}
 
 	public Adress() {
-		// TODO Auto-generated constructor stub
+		
 	}
 
 	@Override
