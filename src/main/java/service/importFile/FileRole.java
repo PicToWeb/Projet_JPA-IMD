@@ -22,7 +22,7 @@ public abstract class FileRole {
 //				roleDao.insert(r);
 //				
 //			}
-			ShowThis.toString(" ", r.isPrincipal());
+			System.out.println(ShowThis.toString(" ", r.isPrincipal()));
 		}
 	}
 

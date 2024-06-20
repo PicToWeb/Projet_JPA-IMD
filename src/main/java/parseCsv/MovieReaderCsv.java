@@ -93,7 +93,7 @@ public abstract class MovieReaderCsv {
 		if (!column[3].isEmpty()) {
 			rating = Double.parseDouble(column[3].replaceAll(",", "."));
 		}
-
+		
 		String url = column[4];
 		Adress filmAdress = AdressReaderCsv.stringToLieuMovie(column[5]);
 		MovieLanguage movieLanguage = LanguageReaderCsv.languageExistOrAdded(column[7]);

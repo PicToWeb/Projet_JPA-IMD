@@ -69,15 +69,14 @@ public abstract class RoleReaderCsv {
 				roleList.add(role);
 				
 			}
-			System.out.println(mainCastingList.size());
-			System.out.println(roleList.size());
 			
-			 Map<String, String> filmActorMap = roleList.stream()
-		                .filter(role -> mainCastingList .stream()
-		                        .anyMatch(movie -> movie.getMovie().getId().equals(role.getMovie().getId())))
-		                .collect(Collectors.toMap(
-		                        role -> role.getMovie().getId(),
-		                        role -> role.getActor().getId()));
+			Map<String, String> filmActorMap = roleList.stream()
+			        .filter(role -> role.getMovie() != null) // Ajoutez cette condition
+			        .filter(role -> mainCastingList.stream()
+			                .anyMatch(movie -> movie.getMovie().getId().equals(role.getMovie().getId())))
+			        .collect(Collectors.toMap(
+			                role -> role.getActor().getId(),
+			                role -> role.getMovie().getId()));
 
 			 roleList.forEach(movie -> {
 		            String actorId = filmActorMap.get(movie.getActor().getId());
@@ -102,18 +101,8 @@ public abstract class RoleReaderCsv {
 		String[] column = line.split(";");
 
 		// if (column.length > 9) return new Film();
-		if(column[1].equals("nm0111348") && column[0].equals("tt0073310")) {
-			System.out.println(column[1]);
-			System.err.println("found");
-			System.err.println("found");
-			System.err.println("found");
-			System.out.println(column[0]);
-		}
 			
 		Movie movie = movieDao.findMovieById(column[0]);
-		if(column[1].equals("nm0111348") && column[0].equals("tt0073310")) {
-		System.out.println(movie.getId());
-		}
 		Actor actor = actorDao.findActorById(column[1]);
 		String person = "";
 
@@ -122,9 +111,7 @@ public abstract class RoleReaderCsv {
 		}
 
 		Role role = new Role(person, movie, actor);
-		if(column[1].equals("nm0111348") && column[0].equals("tt0073310")) {
-			System.out.println(role.getMovie().getId());
-			}
+
 		return role;
 
 	}
