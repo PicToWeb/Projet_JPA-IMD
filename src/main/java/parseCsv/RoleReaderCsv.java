@@ -1,8 +1,11 @@
 package parseCsv;
 
 import java.io.IOException;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import dao.ActorDao;
 import dao.AdressDao;
@@ -44,27 +47,45 @@ public abstract class RoleReaderCsv {
 
 		List<Role> roleList = new ArrayList<>();
 		List<String> linesFileList = null;
+		Boolean isPrincipal = false;
 
 			List<Role> mainCastingList = readFileToLinkMainCasting(urlDep);
 			
 			linesFileList = FileSource.readLinesCsv(url);
 			linesFileList.remove(0);
-			Boolean isPrincipal = false;
 			for (String line : linesFileList) {
 				Role role = parseStringBeforeAdd(line);
-				try {
-					isPrincipal = findMainRole(mainCastingList, role);
-					
-				}catch(Exception e) {
-					System.err.println(e.getMessage());
-				}
-				System.out.println(role.toString() );
-
-				role.setPrincipal(isPrincipal);
+				
+				//System.out.println(role.getMovie().getId());
+				//System.out.println("----------" + " bug : nm0111348");
+				//System.out.println(role.getActor().getId());
+//				try {
+//					isPrincipal = findMainRole(mainCastingList, role);
+//					
+//				}catch(Exception e) {
+//					System.err.println(e.getMessage());
+//				}
+				//role.setPrincipal(isPrincipal);
 				roleList.add(role);
-				System.out.println(roleList.size());
+				
 			}
+			System.out.println(mainCastingList.size());
+			System.out.println(roleList.size());
+			
+			 Map<String, String> filmActorMap = roleList.stream()
+		                .filter(role -> mainCastingList .stream()
+		                        .anyMatch(movie -> movie.getMovie().getId().equals(role.getMovie().getId())))
+		                .collect(Collectors.toMap(
+		                        role -> role.getMovie().getId(),
+		                        role -> role.getActor().getId()));
 
+			 roleList.forEach(movie -> {
+		            String actorId = filmActorMap.get(movie.getActor().getId());
+		            if (actorId != null) {
+		                 movie.setPrincipal(true); 
+		            }
+		        });
+			 System.out.println("Main Cast List processing - completed");
 		return roleList;
 	}
 
@@ -81,8 +102,18 @@ public abstract class RoleReaderCsv {
 		String[] column = line.split(";");
 
 		// if (column.length > 9) return new Film();
-
+		if(column[1].equals("nm0111348") && column[0].equals("tt0073310")) {
+			System.out.println(column[1]);
+			System.err.println("found");
+			System.err.println("found");
+			System.err.println("found");
+			System.out.println(column[0]);
+		}
+			
 		Movie movie = movieDao.findMovieById(column[0]);
+		if(column[1].equals("nm0111348") && column[0].equals("tt0073310")) {
+		System.out.println(movie.getId());
+		}
 		Actor actor = actorDao.findActorById(column[1]);
 		String person = "";
 
@@ -91,7 +122,9 @@ public abstract class RoleReaderCsv {
 		}
 
 		Role role = new Role(person, movie, actor);
-
+		if(column[1].equals("nm0111348") && column[0].equals("tt0073310")) {
+			System.out.println(role.getMovie().getId());
+			}
 		return role;
 
 	}
@@ -117,7 +150,6 @@ public abstract class RoleReaderCsv {
 		System.out.println("---------------");
 		System.out.println("Main Cast List processing - in progress");
 		System.out.println("---------------");
-		int count = 0;
 		for (String c : linesCasting) {
 			String[] column = c.split(";");
 
@@ -126,10 +158,9 @@ public abstract class RoleReaderCsv {
 			
 			role.setActor(actor);
 			role.setMovie(movie);
-			System.out.println(ShowThis.toString("  ", "Line readed : ",count++));
 			mainCastingList.add(role);
 		}
-		System.out.println("Main Cast List processing - completed");
+		
 		return mainCastingList;
 	}
 	
