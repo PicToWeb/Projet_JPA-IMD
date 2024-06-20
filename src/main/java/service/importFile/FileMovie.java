@@ -11,10 +11,10 @@ public abstract class FileMovie {
 	public static final MovieDao movieDao = DaoLink.movieDao();
 
 	public static HashMap<String, Movie> link(String url, String urlDep) {
-		return MovieReaderCsv.readFileToMap(url, urlDep);
+		return MovieReaderCsv.readFile(url, urlDep);
 	}
 
 	public static void addCsvToDataBase(HashMap<String, Movie> movieMap) {
-		movieDao.splitInsert(movieMap);
+		movieDao.allInsert(movieMap);
 	}
 }

@@ -6,7 +6,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import dao.AdressDao;
+import dao.AddressDao;
 import dao.ProducerDao;
 import entity.Movie;
 import entity.MovieGenre;
@@ -23,9 +23,9 @@ import utils.FileSource;
  */
 public abstract class MovieReaderCsv {
 	/** adressDao */
-	public static final AdressDao adressDao = DaoLink.adressDao();
+	public static final AddressDao ADDRESS_DAO = DaoLink.addressDao();
 	/** producerDao */
-	public static final ProducerDao producerDao = DaoLink.producerDao();
+	public static final ProducerDao PRODUCER_DAO = DaoLink.producerDao();
 
 	/**
 	 * Static Method used to read each lines of Csv files 
@@ -41,7 +41,7 @@ public abstract class MovieReaderCsv {
 	 * @param urlDep film_realisateurs.csv
 	 * @return HashMap<String, Movie> whith producer added to movie
 	 */
-	public static HashMap<String, Movie> readFileToMap(String url, String urlDep) {
+	public static HashMap<String, Movie> readFile(String url, String urlDep) {
 
 		HashMap<String, Movie> movieMap = new HashMap<>();
 		List<String> linesMovieList = null;
@@ -55,7 +55,7 @@ public abstract class MovieReaderCsv {
 			linesMovieList.remove(0);
 
 			for (String movieData : linesMovieList) {
-				Movie movie = parseStringBeforeAdd(movieData);
+				Movie movie = parseLine(movieData);
 				movie = findProducerForMovie(producerMoviesMap, movie);
 
 				movieMap.put(movie.getId(), movie);
@@ -72,7 +72,7 @@ public abstract class MovieReaderCsv {
 	 * @param line (a row of Csv file)
 	 * @return Movie Object
 	 */
-	public static Movie parseStringBeforeAdd(String line) {
+	public static Movie parseLine(String line) {
 
 		String[] column = line.split(";", -1);
 
@@ -95,14 +95,14 @@ public abstract class MovieReaderCsv {
 		}
 		
 		String url = column[4];
-		Adress filmAdress = AdressReaderCsv.stringToLieuMovie(column[5]);
-		MovieLanguage movieLanguage = LanguageReaderCsv.languageExistOrAdded(column[7]);
+		Adress filmAdress = AddressReaderCsv.parseLineReverse(column[5]);
+		MovieLanguage movieLanguage = LanguageReaderCsv.existOrAdd(column[7]);
 		String resume = column[8];
-		Country country = CountryReaderCsv.countryExistOrAdded(column[9]);
+		Country country = CountryReaderCsv.existOrAdd(column[9]);
 
 		Movie movie = new Movie(id, name, year, rating, url, resume);
 
-		Set<MovieGenre> movieGenres = MovieGenreReaderCsv.genreExistOrAdded(column[6]);
+		Set<MovieGenre> movieGenres = MovieGenreReaderCsv.existOrAdd(column[6]);
 		if (!movieGenres.isEmpty()) {
 			movie.setGenres(movieGenres);
 		}
@@ -150,7 +150,7 @@ public abstract class MovieReaderCsv {
 	 */
 	public static Movie findProducerForMovie(HashMap<String, String> producerMoviesMap, Movie movie) {
 
-		Producer producer = producerDao.findById(producerMoviesMap.values().iterator().next());
+		Producer producer = PRODUCER_DAO.findById(producerMoviesMap.values().iterator().next());
 
 		Iterator<String> keyReal = producerMoviesMap.keySet().iterator();
 		while (keyReal.hasNext()) {

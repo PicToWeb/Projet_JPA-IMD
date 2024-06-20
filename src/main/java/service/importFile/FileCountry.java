@@ -14,7 +14,7 @@ public abstract class FileCountry {
 	public static final CountryDao countryDao = DaoLink.countryDao();
 
 	public static List<Country> link(String url) {
-		return CountryReaderCsv.readFileToList(url);
+		return CountryReaderCsv.readAndParseFile(url);
 	}
 
 	public static void addCsvToDataBase(List<Country> countryList) {

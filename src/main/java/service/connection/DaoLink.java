@@ -1,7 +1,7 @@
 package service.connection;
 
 import dao.ActorDao;
-import dao.AdressDao;
+import dao.AddressDao;
 import dao.CountryDao;
 import dao.LanguageDao;
 import dao.MovieDao;
@@ -11,45 +11,45 @@ import dao.RoleDao;
 
 public abstract class DaoLink {
 
-	private static final CountryDao countryDao = new CountryDao();
-	private static final AdressDao adressDao = new AdressDao();
-	private static final ActorDao actorDao = new ActorDao();
-	private static final ProducerDao producerDao = new ProducerDao();
-	private static final MovieDao movieDao = new MovieDao();
-	private static final MovieGenreDao movieGenreDao = new MovieGenreDao();
-	private static final LanguageDao languageDao = new LanguageDao();
-	private static final RoleDao roleDao = new RoleDao();
+	private static final CountryDao COUNTRY_DAO = new CountryDao();
+	private static final AddressDao ADRESSE_DAO = new AddressDao();
+	private static final ActorDao ACTOR_DAO = new ActorDao();
+	private static final ProducerDao PRODUCER_DAO = new ProducerDao();
+	private static final MovieDao MOVIE_DAO = new MovieDao();
+	private static final MovieGenreDao MOVIE_GENRE = new MovieGenreDao();
+	private static final LanguageDao LANGUE_DAO = new LanguageDao();
+	private static final RoleDao ROLE_DAO = new RoleDao();
 
 	public static CountryDao countryDao() {
-		return countryDao;
+		return COUNTRY_DAO;
 	}
 
-	public static AdressDao adressDao() {
-		return adressDao;
+	public static AddressDao addressDao() {
+		return ADRESSE_DAO;
 	}
 
 	public static ActorDao actorDao() {
-		return actorDao;
+		return ACTOR_DAO;
 	}
 
 	public static ProducerDao producerDao() {
-		return producerDao;
+		return PRODUCER_DAO;
 	}
 
 	public static MovieDao movieDao() {
-		return movieDao;
+		return MOVIE_DAO;
 	}
 
 	public static MovieGenreDao movieGenreDao() {
-		return movieGenreDao;
+		return MOVIE_GENRE;
 	}
 
 	public static LanguageDao languageDao() {
-		return languageDao;
+		return LANGUE_DAO;
 	}
 
 	public static RoleDao roleDao() {
-		return roleDao;
+		return ROLE_DAO;
 	}
 
 }

@@ -1,6 +1,6 @@
 package service.importFile;
 
-import java.util.HashMap;
+import java.util.Map;
 
 import dao.ActorDao;
 import entity.Actor;
@@ -11,11 +11,11 @@ public abstract class FileActor {
 	
 	public static final ActorDao actorDao = DaoLink.actorDao();
 	
-	public static HashMap<String,Actor> link(String url) {
-		return ActorReaderCsv.readFileToMap(url);
+	public static Map<String,Actor> link(String url) {
+		return ActorReaderCsv.readFile(url);
 	}
 
-	public static void addCsvToDataBase(HashMap<String,Actor> actorMap) {
-		actorDao.splitInsert(actorMap);
+	public static void addCsvToDataBase(Map<String,Actor> actorMap) {
+		actorDao.allInsert(actorMap);
 	}
 }

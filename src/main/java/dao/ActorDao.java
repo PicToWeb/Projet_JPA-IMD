@@ -2,6 +2,7 @@ package dao;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import entity.Actor;
 import entity.Adress;
@@ -11,8 +12,7 @@ import service.connection.JpaLink;
 
 public class ActorDao implements DaoInterface<Actor> {
 
-
-	public static final AdressDao adressDao = DaoLink.adressDao();
+	public static final AddressDao addressDao = DaoLink.addressDao();
 
 	HashMap<String, Actor> actorMap = new HashMap<>();
 
@@ -26,16 +26,13 @@ public class ActorDao implements DaoInterface<Actor> {
 
 	}
 
-	public void splitInsert(HashMap<String, Actor> actorMap) {
+	public void allInsert(Map<String, Actor> actorMap) {
 
 		for (Actor a : actorMap.values()) {
 			if (!actorExist(a.getId())) {
-				
 				Actor actor = new Actor();
 
-//				adressDao.lieuExistOrAdded(a.getAdress());
-//				actor.setAdress(adressDao.findByName(a.getAdress()));
-				Adress adress = adressDao.lieuExistOrAdded(a.getAdress());
+				Adress adress = addressDao.existOrAdd(a.getAdress());
 				if (adress != null) {
 					actor.setAdress(adress);
 				}
@@ -46,30 +43,17 @@ public class ActorDao implements DaoInterface<Actor> {
 				actor.setUrl(a.getUrl());
 
 				insert(actor);
-
 			}
 		}
 	}
-	
-	public boolean actorExist(String idActor) {
-		return actorMap.values().stream().anyMatch(r -> r.getId().equals(idActor));
-	}
 
-	public Actor findActorById(String acteurId) {
-		return actorMap.values().stream().filter(a->a.getId().equals(acteurId)).findFirst().orElse(null);
-	}
-	
 	public HashMap<String, Actor> findAll() {
-
 		HashMap<String, Actor> acteurMap = new HashMap<>();
 
-		// Utilisez une requête JPQL pour récupérer les réalisateurs depuis la base de
-		// données
-		TypedQuery<Actor> query = JpaLink.getEntityManager().createQuery("SELECT a FROM Actor a LEFT JOIN FETCH a.adress ad LEFT JOIN FETCH ad.country",
-				Actor.class);
+		TypedQuery<Actor> query = JpaLink.getEntityManager().createQuery(
+				"SELECT a FROM Actor a LEFT JOIN FETCH a.adress ad LEFT JOIN FETCH ad.country", Actor.class);
 		List<Actor> actors = query.getResultList();
 
-		// Remplissez le HashMap avec les réalisateurs
 		for (Actor a : actors) {
 			acteurMap.put(a.getId(), a);
 		}
@@ -77,13 +61,18 @@ public class ActorDao implements DaoInterface<Actor> {
 		return acteurMap;
 	}
 
+	public boolean actorExist(String idActor) {
+		return actorMap.values().stream().anyMatch(r -> r.getId().equals(idActor));
+	}
+
+	public Actor findActorById(String acteurId) {
+		return actorMap.values().stream().filter(a -> a.getId().equals(acteurId)).findFirst().orElse(null);
+	}
 
 	@Override
 	public void insert(Actor actor) {
-
 		JpaLink.persist(actor);
 		actorMap.put(actor.getId(), actor);
-
 	}
 
 	@Override

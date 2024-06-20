@@ -11,7 +11,7 @@ import service.connection.DaoLink;
 public abstract class LanguageReaderCsv {
 
 	/** langueDao */
-	public static final LanguageDao languageDao = DaoLink.languageDao();
+	public static final LanguageDao LANGUAGE_DAO = DaoLink.languageDao();
 
 	/**
 	 * Static Method used to verify if Language needs to be insert in Database
@@ -19,13 +19,13 @@ public abstract class LanguageReaderCsv {
 	 * @param languageReceive from MovieReaderCsv
 	 * @return movieLanguage MovieLanguage Object
 	 */
-	public static MovieLanguage languageExistOrAdded(String languageReceive) {
+	public static MovieLanguage existOrAdd(String languageReceive) {
 
-		MovieLanguage movieLanguage = languageDao.findByName(languageReceive.trim());
+		MovieLanguage movieLanguage = LANGUAGE_DAO.findByName(languageReceive.trim());
 
 		if (movieLanguage == null) {
 			movieLanguage = new MovieLanguage(languageReceive.trim());
-			languageDao.insert(movieLanguage);
+			LANGUAGE_DAO.insert(movieLanguage);
 		}
 
 		return movieLanguage;

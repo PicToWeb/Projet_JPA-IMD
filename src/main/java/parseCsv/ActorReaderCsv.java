@@ -1,9 +1,9 @@
 package parseCsv;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeParseException;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import entity.Actor;
 import entity.Adress;
 import utils.Convert;
@@ -23,16 +23,16 @@ public abstract class ActorReaderCsv {
 	 * @param url from Csv file in main/resources
 	 * @return HashMap <String, Actor> The key of HashMap corresponding to Actor id
 	 */
-	public static HashMap<String, Actor> readFileToMap(String url) {
+	public static Map<String, Actor> readFile(String url) {
 
-		HashMap<String, Actor> actorMap = new HashMap<>();
+		Map<String, Actor> actorMap = new HashMap<>();
 		List<String> linesList = null;
 
 			linesList = FileSource.readLinesCsv(url);
 			linesList.remove(0);
 
 			for (String data : linesList) {
-				Actor actor = parseStringBeforeAdd(data);
+				Actor actor = parseLine(data);
 				actorMap.put(actor.getId(), actor);
 			}
 
@@ -48,7 +48,7 @@ public abstract class ActorReaderCsv {
 	 * @param line from readFileToMap Method
 	 * @return Actor Object
 	 */
-	public static Actor parseStringBeforeAdd(String line) {
+	public static Actor parseLine(String line) {
 
 		String[] column = line.split(";", -1);
 		Actor actor = new Actor();
@@ -63,17 +63,17 @@ public abstract class ActorReaderCsv {
 		LocalDate birthdayDate = null;
 		try {
 			if (column[2].split(" ").length == 3) {
-				birthdayDate = Convert.stringToMakeUsDate(column[2]);
+				birthdayDate = Convert.UsDate(column[2]);
 			}
 
-		} catch (DateTimeParseException e) {
+		} catch (Exception e) {
 			System.err.println(e.getMessage());
 			birthdayDate=null;
 		}
 
 		Adress birthplace = null;
 		if (!column[3].isEmpty()) {
-			birthplace = AdressReaderCsv.stringToAdress(column[3]);
+			birthplace = AddressReaderCsv.parseLine(column[3]);
 		}
 		String size = null;
 		if(column[4].length() < 7) {

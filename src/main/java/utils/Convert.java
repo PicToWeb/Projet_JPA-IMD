@@ -17,7 +17,7 @@ public abstract class Convert {
 	 * @param string The input string representing the date.
 	 * @return A LocalDate object parsed from the input string.
 	 */
-	public static LocalDate stringToMakeUsDate(String string) {
+	public static LocalDate UsDate(String string) {
 		String chaine = string.trim();
 		LocalDate date = LocalDate.parse(chaine, DateTimeFormatter.ofPattern("MMMM d yyyy", Locale.US));
 

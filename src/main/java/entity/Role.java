@@ -2,7 +2,7 @@ package entity;
 
 import java.util.Objects;
 
-import org.hibernate.type.YesNoConverter;
+import org.hibernate.type.TrueFalseConverter;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Convert;
@@ -27,7 +27,7 @@ public class Role {
 	private String person;
 	
 	@Column(name="main_casting")
-	@Convert(converter = YesNoConverter.class)
+	@Convert(converter = TrueFalseConverter.class)
 	private boolean isPrincipal;
 
 	@ManyToOne

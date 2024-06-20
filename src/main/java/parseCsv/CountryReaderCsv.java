@@ -14,7 +14,7 @@ import utils.FileSource;
 public abstract class CountryReaderCsv {
 	
 	/** countryDao */
-	public static final CountryDao countryDao = DaoLink.countryDao();
+	public static final CountryDao COUNTRY_DAO = DaoLink.countryDao();
 	
 	/**
 	 * Static Method used to read each lines of Csv file. The first line is removed
@@ -23,7 +23,7 @@ public abstract class CountryReaderCsv {
 	 * @param url from Csv file in main/resources
 	 * @return List of Country
 	 */
-	public static List<Country> readFileToList(String url) {
+	public static List<Country> readAndParseFile(String url) {
 
 		List<Country> countryList = new ArrayList<>();
 
@@ -31,20 +31,19 @@ public abstract class CountryReaderCsv {
 			linesList.remove(0);
 
 			for (String line : linesList) {
+				String[] column = line.split(";");
+				
+				if (column.length <= 2) {
 				
 				Country p = new Country();
-				String[] column = line.split(";");
-				if (column.length > 2) {
-					return countryList;
-				}
+				
 				p.setName(column[0].trim());
 				p.setUrl(column[1]);
+				
 				countryList.add(p);
-
+				}
 			}
-
 			return countryList;
-
 	}
 
 	/**
@@ -54,7 +53,7 @@ public abstract class CountryReaderCsv {
 	 * @param countryString 
 	 * @return Country composed by a name and an URL
 	 */
-	public static Country countryExistOrAdded(String countryString) {
+	public static Country existOrAdd(String countryString) {
 	
 		if ((countryString == null) || (countryString.length() > 60)) {
 			return new Country("", "");
@@ -70,11 +69,11 @@ public abstract class CountryReaderCsv {
 			cleanedPays = "United Kingdom";
 		}
 	
-		Country existingCountry = countryDao.findByName(cleanedPays);
+		Country existingCountry = COUNTRY_DAO.findByName(cleanedPays);
 		
 		if (existingCountry == null) {
 			existingCountry = new Country(cleanedPays, "");
-			countryDao.insert(existingCountry);
+			COUNTRY_DAO.insert(existingCountry);
 		}
 	
 		return existingCountry;

@@ -24,7 +24,7 @@ public abstract class ProducerReaderCsv {
 	 * @param url realisateurs.csv
 	 * @return HashMap<id_producer, producer>
 	 */
-	public static HashMap<String, Producer> readFileToMap(String url) {
+	public static HashMap<String, Producer> readFile(String url) {
 
 		HashMap<String, Producer> producerMap = new HashMap<>();
 		List<String> linesList = null;
@@ -33,7 +33,7 @@ public abstract class ProducerReaderCsv {
 			linesList.remove(0);
 
 			for (String data : linesList) {
-				Producer producer = parseStringBeforeAdd(data);
+				Producer producer = parseLine(data);
 				producerMap.put(producer.getId(), producer);
 			}
 
@@ -48,7 +48,7 @@ public abstract class ProducerReaderCsv {
 	 * @param line (row of producer csv file)
 	 * @return Producer Object
 	 */
-	public static Producer parseStringBeforeAdd(String line) {
+	public static Producer parseLine(String line) {
 
 		String[] column = line.split(";", -1);
 		Producer producer = new Producer();
@@ -61,7 +61,7 @@ public abstract class ProducerReaderCsv {
 			LocalDate birthdayDate = null;
 			try {
 				if (column[2].split(" ").length == 3) {
-					birthdayDate = Convert.stringToMakeUsDate(column[2]);
+					birthdayDate = Convert.UsDate(column[2]);
 				}
 
 			} catch (DateTimeParseException e) {
@@ -70,7 +70,7 @@ public abstract class ProducerReaderCsv {
 
 			Adress birthplace = null;
 			if (!column[3].isEmpty()) {
-				birthplace = AdressReaderCsv.stringToAdress(column[3]);
+				birthplace = AddressReaderCsv.parseLine(column[3]);
 			}
 			String url = column[4];
 			
