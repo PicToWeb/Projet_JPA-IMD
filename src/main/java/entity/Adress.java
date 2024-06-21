@@ -44,14 +44,14 @@ public class Adress {
 	 * Constructor
 	 * 
 	 * @param street
-	 * @param ville
+	 * @param city
 	 * @param etat
 	 * @param country
 	 */
-	public Adress(String street, String ville, String etat, Country country) {
-		this.street = street;
-		this.city = ville;
-		this.etat = etat;
+	public Adress(String street, String city, String etat, Country country) {
+		this.street = street != null ? street : "";
+		this.city = city  != null ? city : "";
+		this.etat = etat  != null ? etat : "";
 		this.country = country;
 	}
 
@@ -86,7 +86,7 @@ public class Adress {
 	 * @return the rue
 	 */
 	public String getStreet() {
-		return street != null ? street : "";
+		return street ;
 	}
 
 	/**
@@ -104,7 +104,7 @@ public class Adress {
 	 * @return the ville
 	 */
 	public String getCity() {
-		return city != null ? city : "";
+		return city;
 	}
 
 	/**
@@ -122,7 +122,7 @@ public class Adress {
 	 * @return the etat
 	 */
 	public String getEtat() {
-		return etat != null ? etat : "";
+		return etat;
 	}
 
 	/**

@@ -2,6 +2,7 @@ package dao;
 
 import java.util.ArrayList;
 
+
 import java.util.List;
 
 import entity.Adress;
@@ -9,15 +10,15 @@ import service.connection.JpaLink;
 
 public class AddressDao implements DaoInterface<Adress> {
 
-	List<Adress> lieuList = new ArrayList<>();
+	List<Adress> addressList = new ArrayList<>();
 
 	/**
 	 * Constructor
 	 * 
-	 * @param lieuList
+	 * @param addressList
 	 */
 	public AddressDao() {
-		this.lieuList = findAll();
+		this.addressList = findAll();
 	}
 
 	public List<Adress> findAll() {
@@ -27,41 +28,25 @@ public class AddressDao implements DaoInterface<Adress> {
 
 	public Adress findByName(Adress address) {
 
-		return lieuList.stream()
-				.filter(l -> l.getCity() != null && address.getCity() != null && l.getCity().equals(address.getCity()))
-				.filter(l -> l.getEtat() != null && address.getEtat() != null && l.getEtat().equals(address.getEtat()))
+		return addressList.stream()
+				.filter(l -> l.getCity().equals(address.getCity()))
+				.filter(l -> l.getEtat().equals(address.getEtat()))
 				.findFirst().orElse(null);
 	}
 
 	public Adress existOrAdd(Adress address) {
-		if (address != null) {
-			Adress existingAdress = findByName(address);
-
-			if (existingAdress == null) {
-				existingAdress = new Adress();
-				if (!address.getStreet().isEmpty()) {
-					existingAdress.setStreet(address.getStreet());
-				}
-				if (address.getCity() != null) {
-					existingAdress.setCity(address.getCity());
-				}
-				if (address.getEtat() != null) {
-					existingAdress.setEtat(address.getEtat());
-				}
-				existingAdress.setCountry(address.getCountry());
-
-				insert(existingAdress);
-			}
-			return existingAdress;
+		Adress addressFound = findByName(address);
+		if (addressFound == null) {
+			addressFound = new Adress(address.getStreet(), address.getCity(),address.getEtat(),address.getCountry());
+				insert(addressFound);
 		}
-		return null;
-
+		return addressFound;
 	}
 
 	@Override
 	public void insert(Adress adress) {
 		JpaLink.persist(adress);
-		lieuList.add(adress);
+		addressList.add(adress);
 	}
 
 	@Override
@@ -69,10 +54,4 @@ public class AddressDao implements DaoInterface<Adress> {
 
 	}
 
-//	public boolean lieuExist(Adress address) {
-//		return lieuList.stream()
-//				.anyMatch(l -> l.getStreet() != null && l.getStreet().equals(address.getStreet()) && l.getCity() != null
-//						&& l.getCity().equals(address.getCity()) && l.getEtat() != null
-//						&& l.getEtat().equals(address.getEtat()));
-//	}
 }

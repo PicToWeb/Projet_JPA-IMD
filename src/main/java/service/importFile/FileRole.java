@@ -6,6 +6,7 @@ import dao.RoleDao;
 import entity.Role;
 import parseCsv.RoleReaderCsv;
 import service.connection.DaoLink;
+import utils.ShowThis;
 
 public abstract class FileRole {
 
@@ -17,6 +18,7 @@ public abstract class FileRole {
 
 	public static void addCsvToDataBase(List<Role> roleList) {
 		roleDao.allInsert(roleList);	
+		System.out.println("Role insert : DONE");
 	}
 
 }

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import entity.Role;
 import service.connection.JpaLink;
+import utils.ShowThis;
 
 public class RoleDao implements DaoInterface<Role> {
 
@@ -26,13 +27,13 @@ public class RoleDao implements DaoInterface<Role> {
 	}
 
 	public void allInsert(List<Role> roleList) {
+		
 		for (Role r : roleList) {
 
 			Role role = new Role(r.getPerson(), r.getMovie(), r.getActor());
 			role.setPrincipal(r.isPrincipal());
 			
-			insert(role);
-
+			insert(role);	
 		}
 	}
 

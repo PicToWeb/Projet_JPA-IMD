@@ -29,19 +29,17 @@ public class ProducerDao implements DaoInterface<Producer> {
 	public void allInsert(HashMap<String, Producer> producerMap) {
 
 		for (Producer p : producerMap.values()) {
-			if (!producerExist(p.getId())) {
-				Producer producerNew = new Producer();
+			if (!exist(p.getId())) {
+				Producer producer = p;
+				Adress address = ADDRESS_DAO.existOrAdd(p.getAdress());
 
-				Adress adress = ADDRESS_DAO.existOrAdd(p.getAdress());
-				if (adress != null) {
-					producerNew.setAdress(adress);
-				}
-				producerNew.setId(p.getId());
-				producerNew.setIdentite(p.getIdentite());
-				producerNew.setBirthdayDate(p.getbirthdayDate());
-				producerNew.setUrl(p.getUrl());
+				producer.setAdress(address);
+				producer.setId(p.getId());
+				producer.setIdentite(p.getIdentite());
+				producer.setBirthdayDate(p.getbirthdayDate());
+				producer.setUrl(p.getUrl());
 
-				insert(producerNew);
+				insert(producer);
 			}
 		}
 
@@ -61,7 +59,7 @@ public class ProducerDao implements DaoInterface<Producer> {
 		return realisateursMap;
 	}
 
-	public boolean producerExist(String idRealisateur) {
+	public boolean exist(String idRealisateur) {
 		return realisateurMap.values().stream().anyMatch(r -> r.getId().equals(idRealisateur));
 	}
 

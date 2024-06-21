@@ -29,13 +29,11 @@ public class ActorDao implements DaoInterface<Actor> {
 	public void allInsert(Map<String, Actor> actorMap) {
 
 		for (Actor a : actorMap.values()) {
-			if (!actorExist(a.getId())) {
-				Actor actor = new Actor();
-
+			if (!exist(a.getId())) {
+				Actor actor = a;
 				Adress adress = addressDao.existOrAdd(a.getAdress());
-				if (adress != null) {
-					actor.setAdress(adress);
-				}
+				
+				actor.setAdress(adress);
 				actor.setId(a.getId());
 				actor.setIdentite(a.getIdentite());
 				actor.setSize(a.getSize());
@@ -61,11 +59,11 @@ public class ActorDao implements DaoInterface<Actor> {
 		return acteurMap;
 	}
 
-	public boolean actorExist(String idActor) {
+	public boolean exist(String idActor) {
 		return actorMap.values().stream().anyMatch(r -> r.getId().equals(idActor));
 	}
 
-	public Actor findActorById(String acteurId) {
+	public Actor findById(String acteurId) {
 		return actorMap.values().stream().filter(a -> a.getId().equals(acteurId)).findFirst().orElse(null);
 	}
 

@@ -61,22 +61,22 @@ public abstract class CountryReaderCsv {
 	
 		String usa = "USA";
 		String uk = "UK";
-		String cleanedPays = countryString.replaceAll("\\[.*?\\]", "").trim();
+		String countryClean = countryString.replaceAll("\\[.*?\\]", "").trim();
 	
-		if (cleanedPays.equals(usa)) {
-			cleanedPays = "United States";
-		} else if (cleanedPays.equals(uk)) {
-			cleanedPays = "United Kingdom";
+		if (countryClean.equals(usa)) {
+			countryClean = "United States";
+		} else if (countryClean.equals(uk)) {
+			countryClean = "United Kingdom";
 		}
 	
-		Country existingCountry = COUNTRY_DAO.findByName(cleanedPays);
+		Country countryFind = COUNTRY_DAO.findByName(countryClean);
 		
-		if (existingCountry == null) {
-			existingCountry = new Country(cleanedPays, "");
-			COUNTRY_DAO.insert(existingCountry);
+		if (countryFind == null) {
+			countryFind = new Country(countryClean, "");
+			COUNTRY_DAO.insert(countryFind);
 		}
 	
-		return existingCountry;
+		return countryFind;
 	}
 
 	

@@ -71,10 +71,9 @@ public abstract class ActorReaderCsv {
 			birthdayDate=null;
 		}
 
-		Adress birthplace = null;
-		if (!column[3].isEmpty()) {
-			birthplace = AddressReaderCsv.parseLine(column[3]);
-		}
+
+		Adress birthplace = AddressReaderCsv.parseLine(column[3]);
+
 		String size = null;
 		if(column[4].length() < 7) {
 			size = column[4].replaceAll("m", "").trim();

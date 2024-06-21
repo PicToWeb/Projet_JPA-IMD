@@ -92,7 +92,7 @@ public abstract class RoleReaderCsv {
 		// if (column.length > 9) return new Film();
 			
 		Movie movie = MOVIE_DAO.findMovieById(column[0]);
-		Actor actor = ACTOR_DAO.findActorById(column[1]);
+		Actor actor = ACTOR_DAO.findById(column[1]);
 		String person = "";
 
 		if (column.length > 2) {
@@ -131,7 +131,7 @@ public abstract class RoleReaderCsv {
 			String[] column = c.split(";");
 
 			Movie movie = MOVIE_DAO.findMovieById(column[0]);
-			Actor actor = ACTOR_DAO.findActorById(column[1]);
+			Actor actor = ACTOR_DAO.findById(column[1]);
 			
 			role.setActor(actor);
 			role.setMovie(movie);

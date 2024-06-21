@@ -68,10 +68,8 @@ public abstract class ProducerReaderCsv {
 				System.err.println(e.getMessage()); 
 			}
 
-			Adress birthplace = null;
-			if (!column[3].isEmpty()) {
-				birthplace = AddressReaderCsv.parseLine(column[3]);
-			}
+			Adress birthplace = AddressReaderCsv.parseLine(column[3]);
+
 			String url = column[4];
 			
 			producer.setId(id);
