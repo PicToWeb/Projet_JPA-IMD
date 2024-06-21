@@ -37,18 +37,4 @@ public class MovieGenreDao implements DaoInterface<MovieGenre> {
 
 	}
 
-//	public void insertGenre(Set<MovieGenre> genreList) {
-//		for(MovieGenre g : genreList) {
-//			 MovieGenre existingGenre = findByName(g.getName());
-//			    if (existingGenre == null) {
-//			    	existingGenre = new MovieGenre(g.getName());
-//			        insert(existingGenre);
-//			    }
-//		}
-//	}
-
-//	public boolean genreExist(String genre) {
-//		return genreList.stream().anyMatch(p->p.getName().equals(genre));
-//	}
-
 }

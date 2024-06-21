@@ -1,10 +1,10 @@
 package dao;
 
 import java.util.HashMap;
-
 import java.util.List;
 
 import entity.Adress;
+import entity.Country;
 import entity.Movie;
 import jakarta.persistence.TypedQuery;
 import service.connection.DaoLink;
@@ -31,15 +31,15 @@ public class MovieDao implements DaoInterface<Movie> {
 	public void allInsert(HashMap<String, Movie> movieMap) {
 
 		for (Movie f : movieMap.values()) {
-			if (!movieExist(f.getId())) {
+			if (!exist(f.getId())) {
 
 				Adress address = ADDRESS_DAO.existOrAdd(f.getAdress());
-				COUNTRY_DAO.existOrAdd(f.getCountry());
+				Country country = COUNTRY_DAO.existOrAdd(f.getCountry());
 
 				Movie movie = new Movie(f.getId(), f.getNam(), f.getYear(), f.getRating(), f.getUrl(), f.getResume());
 
 				movie.setLanguage(f.getLanguage());
-				movie.setCountry(f.getCountry());
+				movie.setCountry(country);
 				movie.setAdress(address);
 				movie.setProducers(f.getProducers());
 				movie.setGenres(f.getGenres());
@@ -50,7 +50,7 @@ public class MovieDao implements DaoInterface<Movie> {
 		}
 	}
 
-	public boolean movieExist(String idMovie) {
+	public boolean exist(String idMovie) {
 		return movieMap.values().stream().anyMatch(r -> r.getId().equals(idMovie));
 	}
 

@@ -30,12 +30,13 @@ public class CountryDao implements DaoInterface<Country> {
 		return countryList.stream().filter(p -> p.getName().equals(pays)).findFirst().orElse(null);
 	}
 
-	public void existOrAdd(Country country) {
-		Country existingCountry = findByName(country.getName());
-		if (existingCountry == null) {
-			existingCountry = new Country(country.getName(), "");
-			insert(existingCountry);
+	public Country existOrAdd(Country country) {
+		Country countryFound = findByName(country.getName());
+		if (countryFound == null) {
+			countryFound = new Country(country.getName(), "");
+			insert(countryFound);
 		}
+		return countryFound;
 	}
 
 	@Override
