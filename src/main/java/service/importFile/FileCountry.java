@@ -14,10 +14,17 @@ public abstract class FileCountry {
 	/** countryDao */
 	public static final CountryDao countryDao = DaoLink.countryDao();
 
+	/**
+	 * @param url
+	 * @return
+	 */
 	public static List<Country> link(String url) {
 		return CountryReaderCsv.readAndParseFile(url);
 	}
 
+	/**
+	 * @param countryList
+	 */
 	public static void addCsvToDataBase(List<Country> countryList) {
 		for (Country p : countryList) {
 			if (!countryDao.countryExist(p.getName())) {

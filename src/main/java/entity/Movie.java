@@ -109,8 +109,7 @@ public class Movie {
 				+ ", resume=" + resume + ", genres=" + movieGenres + ", realisateurs=" + producers + ", langue=" + movieLanguage
 				+ ", lieu=" + address + ", pays=" + country + ", roles=" + roles + "]";
 	}
-	
-	
+		
 
 	/** Getter for id
 	 * @return the id

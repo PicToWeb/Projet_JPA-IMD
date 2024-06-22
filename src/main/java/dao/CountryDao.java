@@ -5,6 +5,9 @@ import java.util.List;
 import entity.Country;
 import service.connection.JpaLink;
 
+/**
+ * 
+ */
 public class CountryDao implements DaoInterface<Country> {
 
 	List<Country> countryList = new ArrayList<>();

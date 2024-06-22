@@ -15,8 +15,7 @@ public class Actor extends Person {
 
 	/** size */
 	@Column(name = "size", length = 10)
-	private String size;
-	
+	private String size;	
 	
 	/** roles */
 	@OneToMany(mappedBy="actor")

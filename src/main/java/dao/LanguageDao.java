@@ -5,6 +5,9 @@ import java.util.List;
 import entity.MovieLanguage;
 import service.connection.JpaLink;
 
+/**
+ * 
+ */
 public class LanguageDao implements DaoInterface<MovieLanguage> {
 
 	List<MovieLanguage> langueList = new ArrayList<>();

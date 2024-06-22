@@ -52,7 +52,6 @@ public class MovieGenre {
 		return "Genre [id=" + id + ", nom=" + name + "]";
 	}
 
-
 	/**
 	 * Getter for nom
 	 * 

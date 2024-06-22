@@ -12,7 +12,6 @@ import service.connection.DaoLink;
  */
 public abstract class MovieGenreReaderCsv {
 
-	
 	/** movieGenreDao */
 	public static final MovieGenreDao MOVIE_GENRE_DAO = DaoLink.movieGenreDao();
 

@@ -47,7 +47,6 @@ public class Address {
 	@JoinColumn(name = "id_country", nullable = true)
 	private Country country;
 
-	
 	/**
 	 * Constructor
 	 * 

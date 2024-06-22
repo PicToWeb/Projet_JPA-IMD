@@ -4,7 +4,6 @@ import dao.LanguageDao;
 import entity.MovieLanguage;
 import service.connection.DaoLink;
 
-
 /**
  * Abstract class used to verify if Language from films.csv needs to be insert
  * in Database

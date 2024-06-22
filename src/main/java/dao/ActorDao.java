@@ -10,6 +10,9 @@ import jakarta.persistence.TypedQuery;
 import service.connection.DaoLink;
 import service.connection.JpaLink;
 
+/**
+ * 
+ */
 public class ActorDao implements DaoInterface<Actor> {
 
 	public static final AddressDao addressDao = DaoLink.addressDao();

@@ -33,7 +33,6 @@ public class Country {
 	/** adresses */
 	@OneToMany(mappedBy = "country")
 	private Set<Address> adresses;
-
 	
 	/** Constructor
 	 * @param name

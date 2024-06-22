@@ -5,6 +5,9 @@ import java.util.List;
 import entity.MovieGenre;
 import service.connection.JpaLink;
 
+/**
+ * 
+ */
 public class MovieGenreDao implements DaoInterface<MovieGenre> {
 
 	List<MovieGenre> genreList = new ArrayList<>();

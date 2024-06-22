@@ -30,7 +30,7 @@ public class Producer extends Person {
 	}
 
 
-	/** Constructor
+	/** Constructor 
 	 * 
 	 */
 	public Producer() {

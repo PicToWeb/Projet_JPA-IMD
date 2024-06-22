@@ -8,6 +8,9 @@ import java.util.List;
 import entity.Address;
 import service.connection.JpaLink;
 
+/**
+ * 
+ */
 public class AddressDao implements DaoInterface<Address> {
 
 	List<Address> addressList = new ArrayList<>();

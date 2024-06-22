@@ -60,10 +60,18 @@ public class ProducerDao implements DaoInterface<Producer> {
 	}
 
 	
+	/**
+	 * @param idRealisateur
+	 * @return
+	 */
 	public boolean exist(String idRealisateur) {
 		return realisateurMap.values().stream().anyMatch(r -> r.getId().equals(idRealisateur));
 	}
 
+	/**
+	 * @param idRealisateur
+	 * @return
+	 */
 	public Producer findById(String idRealisateur) {
 		return realisateurMap.values().stream().filter(p -> p.getId().equals(idRealisateur)).findFirst().orElse(null);
 	}

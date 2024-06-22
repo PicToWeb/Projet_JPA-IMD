@@ -10,10 +10,16 @@ import jakarta.persistence.TypedQuery;
 import service.connection.DaoLink;
 import service.connection.JpaLink;
 
+/**
+ * 
+ */
 public class MovieDao implements DaoInterface<Movie> {
 
+	/** COUNTRY_DAO */
 	public static final CountryDao COUNTRY_DAO = DaoLink.countryDao();
+	/** ADDRESS_DAO */
 	public static final AddressDao ADDRESS_DAO = DaoLink.addressDao();
+	/** MOVIE_GENRE_DAO */
 	public static final MovieGenreDao MOVIE_GENRE_DAO = DaoLink.movieGenreDao();
 
 	HashMap<String, Movie> movieMap = new HashMap<>();

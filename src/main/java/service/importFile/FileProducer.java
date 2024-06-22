@@ -15,17 +15,18 @@ public abstract class FileProducer {
 	/** addressDao */
 	public static final AddressDao addressDao = DaoLink.addressDao();
 
+	/**
+	 * @param url
+	 * @return
+	 */
 	public static HashMap<String, Producer> link(String url) {
 		return ProducerReaderCsv.readFile(url);
 	}
 
+	/**
+	 * @param producerMap
+	 */
 	public static void addCsvToDataBase(HashMap<String, Producer> producerMap) {
-	
-//		producerMap.values().forEach(producer -> {
-//			 	adressDao.lieuExistOrAdded(producer.getAdress());
-//			 	producerDao.splitInsert(producer);
-////		        System.out.println("Adresse du producteur " + producer.getIdentite() + ": " + producer.getAdress());
-//		    });
 
 		producerDao.allInsert(producerMap);
 	}

@@ -46,7 +46,7 @@ public abstract class Person {
 
 	/**
 	 * Constructor
-	 * 
+	 *  
 	 * @param id
 	 * @param identity
 	 * @param birthdayDate

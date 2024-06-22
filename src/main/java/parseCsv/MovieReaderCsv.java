@@ -121,7 +121,6 @@ public abstract class MovieReaderCsv {
 		return movie;
 	}
 
-	
 	/**
 	 * Static Method used to read film_realisateurs.csv and create a
 	 * HashMap<id_movie, id_producer> Loop is used to split and add data

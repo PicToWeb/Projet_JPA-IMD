@@ -12,10 +12,17 @@ public abstract class FileActor {
 	/** actorDao */
 	public static final ActorDao actorDao = DaoLink.actorDao();
 	
+	/**
+	 * @param url
+	 * @return
+	 */
 	public static Map<String,Actor> link(String url) {
 		return ActorReaderCsv.readFile(url);
 	}
 
+	/**
+	 * @param actorMap
+	 */
 	public static void addCsvToDataBase(Map<String,Actor> actorMap) {
 		actorDao.allInsert(actorMap);
 	}

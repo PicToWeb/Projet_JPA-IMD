@@ -12,7 +12,6 @@ import org.apache.commons.io.FileUtils;
  */
 public abstract class FileSource {
 
-	
 	/**
 	 * Reads lines from a CSV file and returns them as a list of strings.
 	 *

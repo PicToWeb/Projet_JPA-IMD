@@ -7,6 +7,9 @@ import java.util.List;
 import entity.Role;
 import service.connection.JpaLink;
 
+/**
+ * 
+ */
 public class RoleDao implements DaoInterface<Role> {
 
 	List<Role> roleList = new ArrayList<>();
@@ -22,11 +25,17 @@ public class RoleDao implements DaoInterface<Role> {
 	}
 
 	
+	/**
+	 * @return
+	 */
 	public List<Role> findAll() {
 		return JpaLink.getEntityManager()
 				.createQuery("SELECT r FROM Role r LEFT JOIN FETCH r.actor LEFT JOIN FETCH r.movie", Role.class).getResultList();
 	}
 
+	/**
+	 * @param roleList
+	 */
 	public void allInsert(List<Role> roleList) {
 		
 		for (Role r : roleList) {

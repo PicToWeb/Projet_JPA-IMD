@@ -40,7 +40,6 @@ public abstract class ProducerReaderCsv {
 			return producerMap;
 	}
 
-	
 	/**
 	 * Static Method used to parse a producer row
 	 * Convert Method is called for birthday date

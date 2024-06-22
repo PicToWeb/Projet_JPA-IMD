@@ -16,8 +16,7 @@ public class WriteData {
 		FileProducer.addCsvToDataBase(FileProducer.link("realisateurs.csv"));
 		FileMovie.addCsvToDataBase(FileMovie.link("films.csv", "film_realisateurs.csv"));
 		FileRole.addCsvToDataBase(FileRole.link("roles.csv","castingPrincipal.csv"));
-		
-		
+			
 	}
 
 }

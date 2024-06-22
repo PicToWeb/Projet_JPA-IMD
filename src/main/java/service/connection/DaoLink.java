@@ -11,6 +11,7 @@ import dao.RoleDao;
 
 /**
  * 
+ * 
  */
 public abstract class DaoLink {
 

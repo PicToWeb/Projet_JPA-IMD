@@ -68,7 +68,6 @@ public abstract class RoleReaderCsv {
 		return roleList;
 	}
 
-	
 	/**
 	 * Static Method used to parse row from roles.csv
 	 * findMovieById Method is called for Movie
