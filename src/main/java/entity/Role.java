@@ -19,21 +19,26 @@ import utils.ShowThis;
 @Table(name = "ROLE")
 public class Role {
 
+	/** id */
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
+	/** person */
 	@Column(name = "person", length = 500)
 	private String person;
 	
+	/** isPrincipal */
 	@Column(name="main_casting")
 	@Convert(converter = TrueFalseConverter.class)
 	private boolean isPrincipal;
 
+	/** movie */
 	@ManyToOne
 	@JoinColumn(name = "id_movie")
 	private Movie movie ;
 	
+	/** actor */
 	@ManyToOne
 	@JoinColumn(name = "id_actor")
 	private Actor actor;
@@ -49,6 +54,9 @@ public class Role {
 		this.actor = actor;
 	}
 
+	/** Constructor
+	 * 
+	 */
 	public Role() {
 		
 	}

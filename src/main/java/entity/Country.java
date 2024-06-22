@@ -13,22 +13,28 @@ import jakarta.persistence.Table;
 @Table(name = "COUNTRY")
 public class Country {
 
+	/** id */
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
+	/** name */
 	@Column(name = "name", length = 60)
 	private String name;
 
+	/** url */
 	@Column(name = "url", length = 200)
 	private String url;
 	
+	/** movies */
 	@OneToMany(mappedBy = "country")
 	private Set<Movie> movies;
 	
+	/** adresses */
 	@OneToMany(mappedBy = "country")
 	private Set<Address> adresses;
 
+	
 	/** Constructor
 	 * @param name
 	 * @param url

@@ -17,29 +17,37 @@ import jakarta.persistence.Table;
 @Table(name = "ADRESS")
 public class Address {
 
+	/** id */
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
+	/** street */
 	@Column(name = "street", length = 150)
 	private String street;
 
+	/** city */
 	@Column(name = "city", length = 200)
 	private String city;
 
+	/** etat */
 	@Column(name = "etat", length = 100)
 	private String etat;
 
+	/** persons */
 	@OneToMany(mappedBy = "address")
 	private Set<Person> persons;
 
+	/** movies */
 	@OneToMany(mappedBy = "address")
 	private Set<Movie> movies;
 
+	/** country */
 	@ManyToOne
 	@JoinColumn(name = "id_country", nullable = true)
 	private Country country;
 
+	
 	/**
 	 * Constructor
 	 * 

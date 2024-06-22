@@ -1,7 +1,11 @@
 package utils;
 
+/**
+ * 
+ */
 public abstract class ShowThis {
 
+	
 	/** Méthode qui concatène des informations de différentes natures (String, double, etc.) pour générer une String
 	 * @param objets informations à concaténer
 	 * @return String

@@ -17,20 +17,21 @@ import jakarta.persistence.Table;
 @Table(name = "GENRE")
 public class MovieGenre {
 
+	/** id */
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
+	/** name */
 	@Column(name = "name", length = 40)
 	private String name;
 
+	/** movies */
 	@ManyToMany
 	@JoinTable(name = "GENRE_MOVIE", joinColumns = @JoinColumn(name = "id_genre", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "id_movie", referencedColumnName = "id"))
 	private Set<Movie> movies = new HashSet<>();
 
-	/**
-	 * Constructor
-	 * 
+	/** Constructor
 	 * @param name
 	 */
 	public MovieGenre(String name) {

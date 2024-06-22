@@ -18,45 +18,57 @@ import jakarta.persistence.Table;
 @Table(name = "MOVIE")
 public class Movie {
 
+	/** id */
 	@Id
 	@Column(name = "id", length = 15)
 	private String id;
 
+	/** name */
 	@Column(name = "name", length = 150)
 	private String name;
 
+	/** year */
 	@Column(name = "year", length = 5)
 	private Integer year;
 
+	/** rating */
 	@Column(name = "rating", length = 5)
 	private Double rating;
 
+	/** url */
 	@Column(name = "url", length = 500)
 	private String url;
 	
+	/** resume */
 	@Column(name = "resume",length =1500)
 	private String resume;
 
+	/** movieGenres */
 	@ManyToMany
 	@JoinTable(name = "GENRE_MOVIE", joinColumns = @JoinColumn(name = "id_movie", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "id_genre", referencedColumnName = "id"))
 	private Set<MovieGenre> movieGenres = new HashSet<>();
 		
+	/** producers */
 	@ManyToMany
 	@JoinTable(name = "PRODUCER_MOVIE", joinColumns = @JoinColumn(name = "id_movie", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "id_producer", referencedColumnName = "id_primary"))
 	private Set<Producer> producers = new HashSet<>();
 	
+	/** movieLanguage */
 	@ManyToOne
 	@JoinColumn(name="id_language")
 	private MovieLanguage movieLanguage;
 	
+	/** address */
 	@ManyToOne
 	@JoinColumn(name="id_adress")
 	private Address address;
 	
+	/** country */
 	@ManyToOne
 	@JoinColumn(name="id_country")
 	private Country country;
 	
+	/** roles */
 	@OneToMany(mappedBy="movie")
 	private Set<Role> roles = new HashSet<>();
 
@@ -77,10 +89,16 @@ public class Movie {
 		this.resume = resume;
 	}
 
+	/** Constructor
+	 * 
+	 */
 	public Movie() {
 	}
 	
 	
+	/**
+	 * @param producer
+	 */
 	public void addProducer(Producer producer) {
 		producers.add(producer);
 	}

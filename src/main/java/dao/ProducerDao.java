@@ -59,6 +59,7 @@ public class ProducerDao implements DaoInterface<Producer> {
 		return realisateursMap;
 	}
 
+	
 	public boolean exist(String idRealisateur) {
 		return realisateurMap.values().stream().anyMatch(r -> r.getId().equals(idRealisateur));
 	}

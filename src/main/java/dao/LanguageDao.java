@@ -9,6 +9,7 @@ public class LanguageDao implements DaoInterface<MovieLanguage> {
 
 	List<MovieLanguage> langueList = new ArrayList<>();
 
+	
 	/**
 	 * Constructor
 	 * 

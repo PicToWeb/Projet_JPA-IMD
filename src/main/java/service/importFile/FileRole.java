@@ -10,6 +10,7 @@ import service.connection.DaoLink;
 
 public abstract class FileRole {
 
+	/** roleDao */
 	public static final RoleDao roleDao = DaoLink.roleDao();
 
 	public static List<Role> link(String url, String urlDep) {

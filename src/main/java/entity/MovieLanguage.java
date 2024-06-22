@@ -16,13 +16,16 @@ import jakarta.persistence.Table;
 @Table(name = "LANGUAGE")
 public class MovieLanguage {
 
+	/** id */
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
+	/** name */
 	@Column(name = "name", length = 50)
 	private String name;
 
+	/** movies */
 	@OneToMany(mappedBy="movieLanguage")
 	private Set<Movie> movies = new HashSet<>();
 

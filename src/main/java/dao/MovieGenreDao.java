@@ -9,6 +9,7 @@ public class MovieGenreDao implements DaoInterface<MovieGenre> {
 
 	List<MovieGenre> genreList = new ArrayList<>();
 
+	
 	/**
 	 * Constructor
 	 * 

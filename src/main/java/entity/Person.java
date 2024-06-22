@@ -18,22 +18,28 @@ import jakarta.persistence.Table;
 @Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Person {
 
+	/** idPrimary */
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_primary")
 	protected Integer idPrimary;
 
+	/** id */
 	@Column(name = "id_person", length = 25)
 	protected String id;
+	/** identity */
 	@Column(name = "identity", length = 150)
 	protected String identity;
 
+	/** birthdayDate */
 	@Column(name = "birthday_date", columnDefinition = "DATE")
 	protected LocalDate birthdayDate;
 
+	/** url */
 	@Column(name = "url", length = 200)
 	protected String url;
 
+	/** address */
 	@ManyToOne
 	@JoinColumn(name = "id_adress", nullable = true)
 	protected Address address;
@@ -52,6 +58,9 @@ public abstract class Person {
 		this.url = url;
 	}
 
+	/** Constructor
+	 * 
+	 */
 	public Person() {
 
 	}

@@ -10,7 +10,9 @@ import service.connection.DaoLink;
 
 public abstract class FileProducer {
 
+	/** producerDao */
 	public static final ProducerDao producerDao = DaoLink.producerDao();
+	/** addressDao */
 	public static final AddressDao addressDao = DaoLink.addressDao();
 
 	public static HashMap<String, Producer> link(String url) {

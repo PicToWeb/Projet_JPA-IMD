@@ -11,6 +11,7 @@ import service.connection.DaoLink;
 
 public abstract class FileCountry {
 
+	/** countryDao */
 	public static final CountryDao countryDao = DaoLink.countryDao();
 
 	public static List<Country> link(String url) {

@@ -6,7 +6,9 @@ import jakarta.persistence.Persistence;
 
 public abstract class JpaLink {
 
+	/** PERSISTENCE_UNIT_NAME */
 	private static final String PERSISTENCE_UNIT_NAME = "jpa_IMD";
+	/** entityManagerFactory */
 	private static EntityManagerFactory entityManagerFactory;
 
 	// Méthode statique pour initialiser l'EntityManagerFactory

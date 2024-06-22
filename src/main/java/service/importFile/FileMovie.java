@@ -8,6 +8,7 @@ import service.connection.DaoLink;
 
 public abstract class FileMovie {
 
+	/** movieDao */
 	public static final MovieDao movieDao = DaoLink.movieDao();
 
 	public static HashMap<String, Movie> link(String url, String urlDep) {

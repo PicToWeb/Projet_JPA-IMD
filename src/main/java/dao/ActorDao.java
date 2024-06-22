@@ -25,6 +25,7 @@ public class ActorDao implements DaoInterface<Actor> {
 		this.actorMap = findAll();
 
 	}
+	
 
 	public void allInsert(Map<String, Actor> actorMap) {
 
