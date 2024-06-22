@@ -19,11 +19,11 @@ import jakarta.persistence.Table;
 public abstract class Person {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name = "id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id_primary")
 	protected Integer idPrimary;
-	
-	@Column(name = "idPerson")
+
+	@Column(name = "id_person", length = 25)
 	protected String id;
 	@Column(name = "identity", length = 150)
 	protected String identity;
@@ -36,7 +36,7 @@ public abstract class Person {
 
 	@ManyToOne
 	@JoinColumn(name = "id_adress", nullable = true)
-	protected Adress adress;
+	protected Address address;
 
 	/**
 	 * Constructor
@@ -133,17 +133,17 @@ public abstract class Person {
 	 * 
 	 * @return the lieu
 	 */
-	public Adress getAdress() {
-		return adress;
+	public Address getAdress() {
+		return address;
 	}
 
 	/**
 	 * Setter for lieu
 	 * 
-	 * @param adress the lieu to set
+	 * @param address the lieu to set
 	 */
-	public void setAdress(Adress adress) {
-		this.adress = adress;
+	public void setAdress(Address address) {
+		this.address = address;
 	}
 
 }

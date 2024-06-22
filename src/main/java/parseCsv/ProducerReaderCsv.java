@@ -6,7 +6,7 @@ import java.time.format.DateTimeParseException;
 import java.util.HashMap;
 import java.util.List;
 
-import entity.Adress;
+import entity.Address;
 import entity.Producer;
 import utils.Convert;
 import utils.FileSource;
@@ -68,7 +68,7 @@ public abstract class ProducerReaderCsv {
 				System.err.println(e.getMessage()); 
 			}
 
-			Adress birthplace = AddressReaderCsv.parseLine(column[3]);
+			Address birthplace = AddressReaderCsv.parseLine(column[3]);
 
 			String url = column[4];
 			

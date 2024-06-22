@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import entity.Actor;
-import entity.Adress;
+import entity.Address;
 import jakarta.persistence.TypedQuery;
 import service.connection.DaoLink;
 import service.connection.JpaLink;
@@ -31,9 +31,9 @@ public class ActorDao implements DaoInterface<Actor> {
 		for (Actor a : actorMap.values()) {
 			if (!exist(a.getId())) {
 				Actor actor = a;
-				Adress adress = addressDao.existOrAdd(a.getAdress());
+				Address address = addressDao.existOrAdd(a.getAdress());
 				
-				actor.setAdress(adress);
+				actor.setAdress(address);
 				actor.setId(a.getId());
 				actor.setIdentite(a.getIdentite());
 				actor.setSize(a.getSize());
@@ -49,7 +49,7 @@ public class ActorDao implements DaoInterface<Actor> {
 		HashMap<String, Actor> acteurMap = new HashMap<>();
 
 		TypedQuery<Actor> query = JpaLink.getEntityManager().createQuery(
-				"SELECT a FROM Actor a LEFT JOIN FETCH a.adress ad LEFT JOIN FETCH ad.country", Actor.class);
+				"SELECT a FROM Actor a LEFT JOIN FETCH a.address ad LEFT JOIN FETCH ad.country", Actor.class);
 		List<Actor> actors = query.getResultList();
 
 		for (Actor a : actors) {

@@ -1,6 +1,6 @@
 package parseCsv;
 
-import entity.Adress;
+import entity.Address;
 
 /**
  * Abstract class used to parse adress data from acteurs.csv & realisateurs.csv
@@ -16,8 +16,8 @@ public abstract class AddressReaderCsv {
 	 * @param line received from ActorReaderCsv, ProducerReaderCsv
 	 * @return Adress Object
 	 */
-	public static Adress parseLine(String line) {
-		Adress address = new Adress();
+	public static Address parseLine(String line) {
+		Address address = new Address();
 		String[] column = line.split(",");
 
 		switch (column.length) {
@@ -61,8 +61,8 @@ public abstract class AddressReaderCsv {
 	 * @param line received from MovieReaderCsv
 	 * @return Adress Object
 	 */
-	public static Adress parseLineReverse(String line) {
-		Adress address = new Adress();
+	public static Address parseLineReverse(String line) {
+		Address address = new Address();
 		String[] column = line.split(",|-");
 
 		switch (column.length) {

@@ -43,7 +43,7 @@ public class RoleDao implements DaoInterface<Role> {
 
 	public boolean roleExist(Role role) {
 		return roleList.stream().anyMatch(r -> r.getActor().getId().equals(role.getActor().getId())
-				&& r.getMovie().getId().equals(role.getMovie().getId()) && r.getPerson().equals(role.getPerson()));
+				&& r.getMovie().getId().equals(role.getMovie().getId()) &&  r.getPerson().equals(role.getPerson()));
 	}
 
 	@Override

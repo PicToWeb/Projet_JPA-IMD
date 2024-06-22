@@ -1,6 +1,7 @@
 package entity;
 
 import java.util.HashSet;
+
 import java.util.Set;
 
 import jakarta.persistence.Column;
@@ -37,11 +38,11 @@ public class Movie {
 	private String resume;
 
 	@ManyToMany
-	@JoinTable(name = "FILM_GENRE", joinColumns = @JoinColumn(name = "id_movie", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "id_genre", referencedColumnName = "id"))
+	@JoinTable(name = "GENRE_MOVIE", joinColumns = @JoinColumn(name = "id_movie", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "id_genre", referencedColumnName = "id"))
 	private Set<MovieGenre> movieGenres = new HashSet<>();
 		
 	@ManyToMany
-	@JoinTable(name = "FILM_REAL", joinColumns = @JoinColumn(name = "id_movie", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "id_real", referencedColumnName = "id"))
+	@JoinTable(name = "PRODUCER_MOVIE", joinColumns = @JoinColumn(name = "id_movie", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "id_producer", referencedColumnName = "id_primary"))
 	private Set<Producer> producers = new HashSet<>();
 	
 	@ManyToOne
@@ -50,7 +51,7 @@ public class Movie {
 	
 	@ManyToOne
 	@JoinColumn(name="id_adress")
-	private Adress adress;
+	private Address address;
 	
 	@ManyToOne
 	@JoinColumn(name="id_country")
@@ -88,7 +89,7 @@ public class Movie {
 	public String toString() {
 		return "Film [id=" + id + ", nom=" + name + ", annee=" + year + ", rating=" + rating + ", url=" + url
 				+ ", resume=" + resume + ", genres=" + movieGenres + ", realisateurs=" + producers + ", langue=" + movieLanguage
-				+ ", lieu=" + adress + ", pays=" + country + ", roles=" + roles + "]";
+				+ ", lieu=" + address + ", pays=" + country + ", roles=" + roles + "]";
 	}
 	
 	
@@ -223,15 +224,15 @@ public class Movie {
 	/** Getter for lieu
 	 * @return the lieu
 	 */
-	public Adress getAdress() {
-		return adress;
+	public Address getAdress() {
+		return address;
 	}
 
 	/** Setter for lieu
-	 * @param adress the lieu to set
+	 * @param address the lieu to set
 	 */
-	public void setAdress(Adress adress) {
-		this.adress = adress;
+	public void setAdress(Address address) {
+		this.address = address;
 	}
 
 	/** Getter for pays

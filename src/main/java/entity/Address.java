@@ -15,7 +15,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "ADRESS")
-public class Adress {
+public class Address {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,10 +30,10 @@ public class Adress {
 	@Column(name = "etat", length = 100)
 	private String etat;
 
-	@OneToMany(mappedBy = "adress")
+	@OneToMany(mappedBy = "address")
 	private Set<Person> persons;
 
-	@OneToMany(mappedBy = "adress")
+	@OneToMany(mappedBy = "address")
 	private Set<Movie> movies;
 
 	@ManyToOne
@@ -48,14 +48,14 @@ public class Adress {
 	 * @param etat
 	 * @param country
 	 */
-	public Adress(String street, String city, String etat, Country country) {
+	public Address(String street, String city, String etat, Country country) {
 		this.street = street != null ? street : "";
 		this.city = city  != null ? city : "";
 		this.etat = etat  != null ? etat : "";
 		this.country = country;
 	}
 
-	public Adress() {
+	public Address() {
 		
 	}
 
@@ -65,9 +65,9 @@ public class Adress {
 			return true;
 		if (o == null || getClass() != o.getClass())
 			return false;
-		Adress adress = (Adress) o;
-		return Objects.equals(city, adress.city) && Objects.equals(etat, adress.etat)
-				&& Objects.equals(country, adress.country);
+		Address address = (Address) o;
+		return Objects.equals(city, address.city) && Objects.equals(etat, address.etat)
+				&& Objects.equals(country, address.country);
 	}
 
 	@Override

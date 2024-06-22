@@ -11,7 +11,7 @@ import dao.ProducerDao;
 import entity.Movie;
 import entity.MovieGenre;
 import entity.MovieLanguage;
-import entity.Adress;
+import entity.Address;
 import entity.Country;
 import entity.Producer;
 import service.connection.DaoLink;
@@ -73,44 +73,52 @@ public abstract class MovieReaderCsv {
 	public static Movie parseLine(String line) {
 
 		String[] column = line.split(";", -1);
+		Movie movie = new Movie();
 
-		// if (column.length > 9) return new Film();
+			String id = column[0];
+			String name = column[1];
+			String yearTrim = column[2].trim();
 
-		String id = column[0];
-		String name = column[1];
-		String yearTrim = column[2].trim();
+			int year = 0;
+			if (yearTrim.length() > 4) {
+				year = Integer.parseInt(column[2].substring(yearTrim.length() - 4));
+			} else if (yearTrim.length() == 4) {
+				year = Integer.parseInt(yearTrim);
+			}
 
-		int year = 0;
-		if (yearTrim.length() > 4) {
-			year = Integer.parseInt(column[2].substring(yearTrim.length() - 4));
-		} else if (yearTrim.length() == 4) {
-			year = Integer.parseInt(yearTrim);
-		}
+			Double rating = 0.0;
+			if (!column[3].isEmpty()) {
+				rating = Double.parseDouble(column[3].replaceAll(",", "."));
+			}
 
-		Double rating = 0.0;
-		if (!column[3].isEmpty()) {
-			rating = Double.parseDouble(column[3].replaceAll(",", "."));
-		}
+			String url = column[4];
+			Address filmAdress = AddressReaderCsv.parseLineReverse(column[5]);
+			MovieLanguage movieLanguage = LanguageReaderCsv.existOrAdd(column[7]);
+			String resume = column[8];
+			
+			Country country;
+			if (column.length < 11) {
+				country = CountryReaderCsv.existOrAdd(column[9]);
+			} else {
+				country = CountryReaderCsv.existOrAdd(column[10]);
+			}
 
-		String url = column[4];
-		Adress filmAdress = AddressReaderCsv.parseLineReverse(column[5]);
-		MovieLanguage movieLanguage = LanguageReaderCsv.existOrAdd(column[7]);
-		String resume = column[8];
-		Country country = CountryReaderCsv.existOrAdd(column[9]);
+			Set<MovieGenre> movieGenres = MovieGenreReaderCsv.existOrAdd(column[6]);
+			if (!movieGenres.isEmpty()) {
+				movie.setGenres(movieGenres);
+			}
 
-		Movie movie = new Movie(id, name, year, rating, url, resume);
-
-		Set<MovieGenre> movieGenres = MovieGenreReaderCsv.existOrAdd(column[6]);
-		if (!movieGenres.isEmpty()) {
-			movie.setGenres(movieGenres);
-		}
-
-		movie.setAdress(filmAdress);
-		movie.setLanguage(movieLanguage);
-		movie.setCountry(country);
-
+			movie.setId(id);
+			movie.setName(name);
+			movie.setYear(year);
+			movie.setRating(rating);
+			movie.setUrl(url);
+			movie.setResume(resume);
+			movie.setAdress(filmAdress);
+			movie.setLanguage(movieLanguage);
+			movie.setCountry(country);
+			
 		return movie;
-
 	}
 
 	/**

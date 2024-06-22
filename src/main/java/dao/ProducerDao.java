@@ -3,7 +3,7 @@ package dao;
 import java.util.HashMap;
 import java.util.List;
 
-import entity.Adress;
+import entity.Address;
 import entity.Producer;
 import jakarta.persistence.TypedQuery;
 import service.connection.DaoLink;
@@ -31,7 +31,7 @@ public class ProducerDao implements DaoInterface<Producer> {
 		for (Producer p : producerMap.values()) {
 			if (!exist(p.getId())) {
 				Producer producer = p;
-				Adress address = ADDRESS_DAO.existOrAdd(p.getAdress());
+				Address address = ADDRESS_DAO.existOrAdd(p.getAdress());
 
 				producer.setAdress(address);
 				producer.setId(p.getId());
@@ -50,7 +50,7 @@ public class ProducerDao implements DaoInterface<Producer> {
 		HashMap<String, Producer> realisateursMap = new HashMap<>();
 
 		TypedQuery<Producer> query = JpaLink.getEntityManager().createQuery(
-				"SELECT p FROM Producer p LEFT JOIN FETCH p.adress ad LEFT JOIN FETCH ad.country", Producer.class);
+				"SELECT p FROM Producer p LEFT JOIN FETCH p.address ad LEFT JOIN FETCH ad.country", Producer.class);
 		List<Producer> producers = query.getResultList();
 
 		for (Producer producer : producers) {

@@ -59,17 +59,8 @@ public abstract class RoleReaderCsv {
 			
 			System.out.println("Main Cast List processing - merging");
 			
-			Map<String, String> filmActorMap = roleList.parallelStream()
-			        .filter(role -> role.getMovie() != null) 
-			        .filter(role -> mainCastingList.stream()
-			                .anyMatch(movie -> movie.getMovie().getId().equals(role.getMovie().getId())))
-			        .collect(Collectors.toMap(
-			                role -> role.getActor().getId(),
-			                role -> role.getMovie().getId()));
-
 			 roleList.forEach(role -> {
-		            String actorId = filmActorMap.get(role.getActor().getId());
-		            if (actorId != null) {
+		            if (mainCastingList.contains(role)) {
 		                 role.setPrincipal(true); 
 		            }
 		        });
@@ -88,8 +79,6 @@ public abstract class RoleReaderCsv {
 	public static Role parseLine(String line) {
 
 		String[] column = line.split(";");
-
-		// if (column.length > 9) return new Film();
 			
 		Movie movie = MOVIE_DAO.findMovieById(column[0]);
 		Actor actor = ACTOR_DAO.findById(column[1]);
@@ -116,8 +105,7 @@ public abstract class RoleReaderCsv {
 	 */
 	public static List<Role> readFileMainCasting(String urlDep) {
 
-		List<Role> mainCastingList = new ArrayList<>();
-		Role role = new Role();
+		List<Role> mainCastingList = new ArrayList<>();	
 		List<String> linesCasting = null;
 
 		linesCasting = FileSource.readLinesCsv(urlDep);
@@ -130,6 +118,7 @@ public abstract class RoleReaderCsv {
 		for (String c : linesCasting) {
 			String[] column = c.split(";");
 
+			Role role = new Role();
 			Movie movie = MOVIE_DAO.findMovieById(column[0]);
 			Actor actor = ACTOR_DAO.findById(column[1]);
 			
@@ -141,19 +130,5 @@ public abstract class RoleReaderCsv {
 		return mainCastingList;
 	}
 	
-	/**
-	 * Static Method is used to compare witch id_actor from list and id_actor from role 
-	 * are equals to id_film from list and id_film from role
-	 * 
-	 * @param mainCastingList
-	 * @param role
-	 * @return Boolean 
-	 */ 
-	public static Boolean findMainRole(List<Role> mainCastingList, Role role) {
-		
-		 return mainCastingList.stream()
-		            .anyMatch(r -> r.getMovie().getId().equals(role.getMovie().getId()) &&
-		                    r.getActor().getId().equals(role.getActor().getId()));	
-	}
 
 }

@@ -32,7 +32,7 @@ public class Role {
 
 	@ManyToOne
 	@JoinColumn(name = "id_movie")
-	private Movie movie;
+	private Movie movie ;
 	
 	@ManyToOne
 	@JoinColumn(name = "id_actor")

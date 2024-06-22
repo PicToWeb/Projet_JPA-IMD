@@ -27,7 +27,7 @@ public class Country {
 	private Set<Movie> movies;
 	
 	@OneToMany(mappedBy = "country")
-	private Set<Adress> adresses;
+	private Set<Address> adresses;
 
 	/** Constructor
 	 * @param name

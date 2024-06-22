@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import entity.Actor;
-import entity.Adress;
+import entity.Address;
 import utils.Convert;
 import utils.FileSource;
 
@@ -72,7 +72,7 @@ public abstract class ActorReaderCsv {
 		}
 
 
-		Adress birthplace = AddressReaderCsv.parseLine(column[3]);
+		Address birthplace = AddressReaderCsv.parseLine(column[3]);
 
 		String size = null;
 		if(column[4].length() < 7) {

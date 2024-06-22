@@ -5,12 +5,12 @@ import java.util.ArrayList;
 
 import java.util.List;
 
-import entity.Adress;
+import entity.Address;
 import service.connection.JpaLink;
 
-public class AddressDao implements DaoInterface<Adress> {
+public class AddressDao implements DaoInterface<Address> {
 
-	List<Adress> addressList = new ArrayList<>();
+	List<Address> addressList = new ArrayList<>();
 
 	/**
 	 * Constructor
@@ -21,12 +21,12 @@ public class AddressDao implements DaoInterface<Adress> {
 		this.addressList = findAll();
 	}
 
-	public List<Adress> findAll() {
-		return JpaLink.getEntityManager().createQuery("SELECT a FROM Adress a JOIN FETCH a.country", Adress.class)
+	public List<Address> findAll() {
+		return JpaLink.getEntityManager().createQuery("SELECT a FROM Address a JOIN FETCH a.country", Address.class)
 				.getResultList();
 	}
 
-	public Adress findByName(Adress address) {
+	public Address findByName(Address address) {
 
 		return addressList.stream()
 				.filter(l -> l.getCity().equals(address.getCity()))
@@ -34,23 +34,23 @@ public class AddressDao implements DaoInterface<Adress> {
 				.findFirst().orElse(null);
 	}
 
-	public Adress existOrAdd(Adress address) {
-		Adress addressFound = findByName(address);
+	public Address existOrAdd(Address address) {
+		Address addressFound = findByName(address);
 		if (addressFound == null) {
-			addressFound = new Adress(address.getStreet(), address.getCity(),address.getEtat(),address.getCountry());
+			addressFound = new Address(address.getStreet(), address.getCity(),address.getEtat(),address.getCountry());
 				insert(addressFound);
 		}
 		return addressFound;
 	}
 
 	@Override
-	public void insert(Adress adress) {
-		JpaLink.persist(adress);
-		addressList.add(adress);
+	public void insert(Address address) {
+		JpaLink.persist(address);
+		addressList.add(address);
 	}
 
 	@Override
-	public void delete(Adress entity) {
+	public void delete(Address entity) {
 
 	}
 

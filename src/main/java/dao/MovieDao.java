@@ -3,7 +3,7 @@ package dao;
 import java.util.HashMap;
 import java.util.List;
 
-import entity.Adress;
+import entity.Address;
 import entity.Country;
 import entity.Movie;
 import jakarta.persistence.TypedQuery;
@@ -33,7 +33,7 @@ public class MovieDao implements DaoInterface<Movie> {
 		for (Movie f : movieMap.values()) {
 			if (!exist(f.getId())) {
 
-				Adress address = ADDRESS_DAO.existOrAdd(f.getAdress());
+				Address address = ADDRESS_DAO.existOrAdd(f.getAdress());
 				Country country = COUNTRY_DAO.existOrAdd(f.getCountry());
 
 				Movie movie = new Movie(f.getId(), f.getNam(), f.getYear(), f.getRating(), f.getUrl(), f.getResume());
@@ -62,7 +62,7 @@ public class MovieDao implements DaoInterface<Movie> {
 		HashMap<String, Movie> movieMap = new HashMap<>();
 
 		TypedQuery<Movie> query = JpaLink.getEntityManager().createQuery(
-				"SELECT m FROM Movie m LEFT JOIN FETCH m.adress a LEFT JOIN FETCH a.country LEFT JOIN FETCH m.country",
+				"SELECT m FROM Movie m LEFT JOIN FETCH m.address a LEFT JOIN FETCH a.country LEFT JOIN FETCH m.country",
 				Movie.class);
 		List<Movie> movies = query.getResultList();
 
