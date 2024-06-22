@@ -1,7 +1,6 @@
 package entity;
 
 import java.util.Objects;
-
 import org.hibernate.type.TrueFalseConverter;
 
 import jakarta.persistence.Column;

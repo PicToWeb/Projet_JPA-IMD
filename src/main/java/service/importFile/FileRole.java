@@ -17,6 +17,7 @@ public abstract class FileRole {
 	}
 
 	public static void addCsvToDataBase(List<Role> roleList) {
+    
 		roleDao.allInsert(roleList);	
 		System.out.println("Role insert : DONE");
 	}
