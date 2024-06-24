@@ -62,6 +62,9 @@ public class Address {
 		this.country = country;
 	}
 
+	/** Constructor
+	 * 
+	 */
 	public Address() {
 		
 	}

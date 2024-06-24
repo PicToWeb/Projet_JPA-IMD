@@ -52,21 +52,4 @@ public class Producer extends Person {
 		this.movies = movies;
 	}
 
-//	/** Getter for roles
-//	 * @return the roles
-//	 */
-//	public Set<Role> getRoles() {
-//		return roles;
-//	}
-//
-//	/** Setter for roles
-//	 * @param roles the roles to set
-//	 */
-//	public void setRoles(Set<Role> roles) {
-//		this.roles = roles;
-//	}
-	
-	
-	
-
 }

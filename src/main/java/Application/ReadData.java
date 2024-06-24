@@ -1,56 +1,67 @@
 package Application;
 
 import java.util.Scanner;
+import service.searchData.SearchData;
 
-import dao.MovieDao;
-import dao.RoleDao;
-import service.connection.DaoLink;
-
+/**
+ * ReadData is an abstract class that provides methods for reading data.
+ * It contains a menu-driven program to interact with different data search options.
+ *
+ * @author Antoine Picron
+ */
 public abstract class ReadData {
 	
-	public static final MovieDao MOVIE_DAO = DaoLink.movieDao();
-	public static final RoleDao ROLE_DAO = DaoLink.roleDao();
-	
+	/**
+     * The main method that displays the menu and handles user input.
+     *
+     * @param args Command line arguments (not used in this case)
+     */
 	public static void main(String[] args) {
-		Scanner input = new Scanner(System.in);
+		
 		int userSelected;
-		do {
-			userSelected=menuChoice(input);
+		boolean exit =false;
+		
+		while(!exit) {
+			userSelected=menuChoice();
+			
 			switch(userSelected) {
 			case 1 :
-				System.out.println("Witch actor ? ");
-				MOVIE_DAO.findMovieOfActor(input.nextLine()).forEach(System.out::println);
+				SearchData.movieOfActor();
 				break;
 			case 2 : 
-				System.out.println("Witch Movie ? ");
-				ROLE_DAO.findCasting(input.nextLine()).forEach(System.out::println);
+				SearchData.movieCasting();
 				break;
 			case 3 :
-				System.out.println("Year 1 ? ");
-				int year1 = input.nextInt();
-				System.out.println("Year 2 ? ");
-				int year2 = input.nextInt();
-				MOVIE_DAO.findMovieBetweenDate(year1,year2).forEach(System.out::println);
+				SearchData.movieBetweenTwoYear();
 				break;
 			case 4 :
+				SearchData.communMoviesOfTwoActors();
 				break;
 			case 5 :
+				SearchData.communActorsOfTwoMovies();
 				break;
 			case 6 :
+				SearchData.movieBetweenTwoYearFromActor();
 				break;
 			case 7 : 
 				break;
-			default : 
+			case 8 : 
+				exit = true;
+				SearchData.input.close();
 				break;
 			}
 		}
-		while(userSelected > 7);
 		
 	}
 	
-	
-	public static int menuChoice(Scanner input)
+	 /**
+     * Displays the menu options and returns the user's choice.
+     *
+     * @return The selected menu option
+     */
+	public static int menuChoice()
 	{
+		Scanner input = SearchData.input;
 			System.out.println("Select you option: ");
 			System.out.println("---------------------");
 			System.out.println("1 - Affichage de la filmographie d’un acteur donné");

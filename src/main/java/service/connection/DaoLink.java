@@ -10,80 +10,94 @@ import dao.ProducerDao;
 import dao.RoleDao;
 
 /**
- * 
- * 
+ * Abstract class representing a link to various DAO (Data Access Object) instances.
  */
 public abstract class DaoLink {
 
-	/** COUNTRY_DAO */
+	/** DAO instance for managing countries */
 	private static final CountryDao COUNTRY_DAO = new CountryDao();
-	/** ADRESSE_DAO */
+	 /** DAO instance for managing addresses */
 	private static final AddressDao ADRESSE_DAO = new AddressDao();
-	/** ACTOR_DAO */
+	 /** DAO instance for managing actors */
 	private static final ActorDao ACTOR_DAO = new ActorDao();
-	/** PRODUCER_DAO */
+	/** DAO instance for managing producers */
 	private static final ProducerDao PRODUCER_DAO = new ProducerDao();
-	/** MOVIE_DAO */
+	 /** DAO instance for managing movies */
 	private static final MovieDao MOVIE_DAO = new MovieDao();
-	/** MOVIE_GENRE */
+	 /** DAO instance for managing movie genres */
 	private static final MovieGenreDao MOVIE_GENRE = new MovieGenreDao();
-	/** LANGUE_DAO */
+	 /** DAO instance for managing languages */
 	private static final LanguageDao LANGUE_DAO = new LanguageDao();
-	/** ROLE_DAO */
+	/** DAO instance for managing roles */
 	private static final RoleDao ROLE_DAO = new RoleDao();
 
-	/**
-	 * @return
-	 */
+	 /**
+     * Retrieves the DAO instance for managing countries.
+     *
+     * @return CountryDao instance
+     */
 	public static CountryDao countryDao() {
 		return COUNTRY_DAO;
 	}
 
-	/**
-	 * @return
-	 */
+	 /**
+     * Retrieves the DAO instance for managing addresses.
+     *
+     * @return AddressDao instance
+     */
 	public static AddressDao addressDao() {
 		return ADRESSE_DAO;
 	}
 
-	/**
-	 * @return
-	 */
+	 /**
+     * Retrieves the DAO instance for managing actors.
+     *
+     * @return ActorDao instance
+     */
 	public static ActorDao actorDao() {
 		return ACTOR_DAO;
 	}
 
-	/**
-	 * @return
-	 */
+	 /**
+     * Retrieves the DAO instance for managing producers.
+     *
+     * @return ProducerDao instance
+     */
 	public static ProducerDao producerDao() {
 		return PRODUCER_DAO;
 	}
 
-	/**
-	 * @return
-	 */
+	 /**
+     * Retrieves the DAO instance for managing movies.
+     *
+     * @return MovieDao instance
+     */
 	public static MovieDao movieDao() {
 		return MOVIE_DAO;
 	}
 
 	/**
-	 * @return
-	 */
+     * Retrieves the DAO instance for managing movie genres.
+     *
+     * @return MovieGenreDao instance
+     */
 	public static MovieGenreDao movieGenreDao() {
 		return MOVIE_GENRE;
 	}
 
 	/**
-	 * @return
-	 */
+     * Retrieves the DAO instance for managing languages.
+     *
+     * @return LanguageDao instance
+     */
 	public static LanguageDao languageDao() {
 		return LANGUE_DAO;
 	}
-
 	/**
-	 * @return
-	 */
+     * Retrieves the DAO instance for managing roles.
+     *
+     * @return RoleDao instance
+     */
 	public static RoleDao roleDao() {
 		return ROLE_DAO;
 	}

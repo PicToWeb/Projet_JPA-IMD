@@ -1,7 +1,6 @@
 package dao;
 
 import java.util.HashMap;
-
 import java.util.List;
 import java.util.Map;
 
@@ -12,25 +11,29 @@ import service.connection.DaoLink;
 import service.connection.JpaLink;
 
 /**
- * 
+ * Data Access Object (DAO) for managing actors.
+ * Implements the DaoInterface for Actor objects.
  */
 public class ActorDao implements DaoInterface<Actor> {
 
+	/** addressDao */
 	public static final AddressDao addressDao = DaoLink.addressDao();
 
+	 /** HashMap to store actor data */
 	HashMap<String, Actor> actorMap = new HashMap<>();
 
 	/**
-	 * Constructor
-	 * 
-	 * @param lieuMap
-	 */
+     * Constructor initializes the actor map by calling findAll().
+     */
 	public ActorDao() {
 		this.actorMap = findAll();
-
 	}
-	
 
+	/**
+     * Inserts all actors from the given map into the database.
+     *
+     * @param actorMap Map of actors to insert.
+     */
 	public void allInsert(Map<String, Actor> actorMap) {
 
 		for (Actor a : actorMap.values()) {
@@ -50,6 +53,11 @@ public class ActorDao implements DaoInterface<Actor> {
 		}
 	}
 
+	/**
+     * Retrieves all actors from the database.
+     *
+     * @return Map of actors with their IDs as keys.
+     */
 	public HashMap<String, Actor> findAll() {
 		HashMap<String, Actor> acteurMap = new HashMap<>();
 
@@ -63,14 +71,52 @@ public class ActorDao implements DaoInterface<Actor> {
 
 		return acteurMap;
 	}
+	
+	/**
+     * Finds actors who have roles in both specified movies.
+     *
+     * @param movie1 ID of the first movie.
+     * @param movie2 ID of the second movie.
+     * @return List of actors.
+     */
+	public List<Actor> findMovieOfActors(String movie1,String movie2) {
+		TypedQuery<Actor> query = JpaLink.getEntityManager()
+				.createQuery("SELECT a FROM Actor a "
+		                + "JOIN a.roles r1 JOIN r1.movie m1 "
+		                + "JOIN a.roles r2 JOIN r2.movie m2 "
+		                + "WHERE m1.id = :movie1 AND m2.id = :movie2", Actor.class);
+		query.setParameter("movie1", movie1);
+		query.setParameter("movie2", movie2);
+		List <Actor>actors = query.getResultList();
+		return actors;
+	}
 
+	 /**
+     * Checks if an actor with the given ID exists in the map.
+     *
+     * @param idActor ID of the actor.
+     * @return True if actor exists, false otherwise.
+     */
 	public boolean exist(String idActor) {
 		return actorMap.values().stream().anyMatch(r -> r.getId().equals(idActor));
 	}
 
+	/**
+     * Finds an actor by their ID.
+     *
+     * @param acteurId ID of the actor.
+     * @return Actor object or null if not found.
+     */
 	public Actor findById(String acteurId) {
 		return actorMap.values().stream().filter(a -> a.getId().equals(acteurId)).findFirst().orElse(null);
 	}
+	
+	/**
+     * Finds an actor by their name (identite).
+     *
+     * @param actor Name of the actor.
+     * @return Actor object or null if not found.
+     */
 	public Actor findByName(String actor) {
 		return actorMap.values().stream().filter(a -> a.getIdentite().equals(actor)).findFirst().orElse(null);
 	}
@@ -81,9 +127,5 @@ public class ActorDao implements DaoInterface<Actor> {
 		actorMap.put(actor.getId(), actor);
 	}
 
-	@Override
-	public void delete(Actor actor) {
-
-	}
 
 }

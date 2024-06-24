@@ -14,21 +14,23 @@ import utils.ShowThis;
 @Table(name = "ACTOR")
 public class Actor extends Person {
 
-	/** size */
+	/** Size of the actor */
 	@Column(name = "size", length = 10)
 	private String size;	
 	
-	/** roles */
+	 /** Set of roles associated with this actor */
 	@OneToMany(mappedBy="actor")
 	private Set<Role> roles = new HashSet<>();
 	
 
-	/** Constructor
-	 * @param id
-	 * @param identite
-	 * @param url
-	 * @param size
-	 */
+	/**
+     * Constructor for Actor with specified parameters.
+     *
+     * @param id       Actor's ID
+     * @param identity Actor's identity
+     * @param url      Actor's URL
+     * @param size     Actor's size
+     */
 	public Actor(String id, String identite, String url, String size) {
 		super(id, identite, url);
 		this.size = size;

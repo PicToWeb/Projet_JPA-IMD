@@ -37,8 +37,8 @@ public abstract class RoleReaderCsv {
 	 * 
 	 * Second Step : Loop each lines from roles.csv to call parseStringBeforeAdd Method 
 	 * and return a role Object
-	 * Third step : Always in the loop, call findMainRole Method to find witch actor isPrincipal
-	 * Four step: set boolean principal role to the Role Object and add this to the list of Role
+	 * Third step : Check for each element of roleList if the mainCasingList contains the same role, 
+	 * if it s true, set parameter isPrincipal to true
 	 * @param url roles.csv
 	 * @param urlDep castingPrincipal.csv
 	 * @return List of Role Object whith principal Casting added

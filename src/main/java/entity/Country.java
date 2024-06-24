@@ -43,8 +43,10 @@ public class Country {
 		this.url = url;
 	}
 
+	/** Constructor
+	 * 
+	 */
 	public Country() {
-		// TODO Auto-generated constructor stub
 	}
 
 	/** Getter for nom

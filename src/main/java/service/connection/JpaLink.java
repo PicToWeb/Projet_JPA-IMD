@@ -5,28 +5,28 @@ import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 
 /**
- * 
+ * Abstract class representing a link to JPA (Java Persistence API) functionality.
  */
 public abstract class JpaLink {
 
-	/** PERSISTENCE_UNIT_NAME */
+	 /** Name of the persistence unit */
 	private static final String PERSISTENCE_UNIT_NAME = "jpa_IMD";
-	/** entityManagerFactory */
+	 /** EntityManagerFactory instance */
 	private static EntityManagerFactory entityManagerFactory;
 
 	
 	/**
-	 * Méthode statique pour initialiser l'EntityManagerFactory
-	 * 
-	 */
+     * Static method to initialize the EntityManagerFactory.
+     */
 	public static void initializeEntityManagerFactory() {
 		entityManagerFactory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
 	}
 
-	/**
-	 * Méthode statique pour obtenir un EntityManager
-	 * @return
-	 */
+	 /**
+     * Static method to obtain an EntityManager.
+     *
+     * @return EntityManager instance
+     */
 	public static EntityManager getEntityManager() {
 		if (entityManagerFactory == null) {
 			initializeEntityManagerFactory();
@@ -34,20 +34,20 @@ public abstract class JpaLink {
 		return entityManagerFactory.createEntityManager();
 	}
 
-	/**
-	 * Méthode statique pour fermer l'EntityManagerFactory
-	 * 
-	 */
+	 /**
+     * Static method to close the EntityManagerFactory.
+     */
 	public static void closeEntityManagerFactory() {
 		if (entityManagerFactory != null && entityManagerFactory.isOpen()) {
 			entityManagerFactory.close();
 		}
 	}
 
-	/** 
-	 * Méthode statique pour persister une entité
-	 * @param entity
-	 */
+	 /**
+     * Static method to persist an entity.
+     *
+     * @param entity Entity to persist
+     */
 	public static void persist(Object entity) {
 		EntityManager entityManager = getEntityManager();
 		try {

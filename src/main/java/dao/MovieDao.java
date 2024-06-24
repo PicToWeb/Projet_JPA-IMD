@@ -11,7 +11,11 @@ import service.connection.DaoLink;
 import service.connection.JpaLink;
 
 /**
- * 
+ * MovieDao is a data access class that interacts with the movie-related data in the database.
+ * It provides methods for inserting, retrieving, and searching movie information.
+ * The class uses DAOs (Data Access Objects) for related entities such as countries, addresses, and genres.
+ *
+ * @author Antoine Picron
  */
 public class MovieDao implements DaoInterface<Movie> {
 
@@ -22,18 +26,22 @@ public class MovieDao implements DaoInterface<Movie> {
 	/** MOVIE_GENRE_DAO */
 	public static final MovieGenreDao MOVIE_GENRE_DAO = DaoLink.movieGenreDao();
 
+	 /** HashMap to store movie data */
 	HashMap<String, Movie> movieMap = new HashMap<>();
 
 	/**
-	 * Constructor
-	 * 
-	 * @param lieuMap
-	 */
+     * Constructor initializes the movie map by fetching data from the database.
+     */
 	public MovieDao() {
 		this.movieMap = findAll();
 
 	}
-
+	
+	 /**
+     * Inserts movie data into the database.
+     *
+     * @param movieMap A map containing movie data
+     */
 	public void allInsert(HashMap<String, Movie> movieMap) {
 
 		for (Movie f : movieMap.values()) {
@@ -56,14 +64,11 @@ public class MovieDao implements DaoInterface<Movie> {
 		}
 	}
 
-	public boolean exist(String idMovie) {
-		return movieMap.values().stream().anyMatch(r -> r.getId().equals(idMovie));
-	}
-
-	public Movie findMovieById(String movieId) {
-		return movieMap.values().stream().filter(a -> a.getId().equals(movieId)).findFirst().orElse(null);
-	}
-
+	 /**
+     * Retrieves all movies from the database.
+     *
+     * @return A map of movie data
+     */
 	public HashMap<String, Movie> findAll() {
 		HashMap<String, Movie> movieMap = new HashMap<>();
 
@@ -78,14 +83,27 @@ public class MovieDao implements DaoInterface<Movie> {
 		return movieMap;
 	}
 
+	/**
+     * Finds movies associated with a specific actor.
+     *
+     * @param actorSearched The name of the actor
+     * @return A list of movies
+     */
 	public List<Movie> findMovieOfActor(String actorSearched) {
 		TypedQuery<Movie> query = JpaLink.getEntityManager().createQuery(
-				"SELECT m FROM Movie m JOIN m.roles r JOIN r.actor a WHERE a.identity = :actorName", Movie.class);
-		List<Movie> movies = query.setParameter("actorName", actorSearched).getResultList();
+				"SELECT m FROM Movie m JOIN m.roles r JOIN r.actor a WHERE a.id = :actorId", Movie.class);
+		List<Movie> movies = query.setParameter("actorId", actorSearched).getResultList();
 		return movies;
 	}
 
-	public List<Movie> findMovieBetweenDate(int year1, int year2) {
+	/**
+	 * Retrieves a list of movies whose release year falls between {@code year1} and {@code year2}.
+	 *
+	 * @param year1 The starting year.
+	 * @param year2 The ending year.
+	 * @return The list of movies.
+	 */
+	public List<Movie> findMovieBetweenYear(int year1, int year2) {
 		TypedQuery<Movie> query = JpaLink.getEntityManager()
 				.createQuery("SELECT m FROM Movie m WHERE m.year BETWEEN :year1 AND :year2", Movie.class);
 		query.setParameter("year1", year1);
@@ -94,15 +112,70 @@ public class MovieDao implements DaoInterface<Movie> {
 		return movies;
 	}
 
+	/**
+	 * Finds a movie that both {@code actor1} and {@code actor2} have acted in.
+	 *
+	 * @param actor1 The first actor's ID.
+	 * @param actor2 The second actor's ID.
+	 * @return The common movie.
+	 */
+	public Movie findCommunMoviebyTwoActors(String actor1, String actor2){
+		TypedQuery<Movie> query = JpaLink.getEntityManager()
+				.createQuery("SELECT DISTINCT m FROM Movie m "
+		                + "JOIN m.roles r1 JOIN r1.actor a1 "
+		                + "JOIN m.roles r2 JOIN r2.actor a2 "
+		                + "WHERE a1.id = :actor1 AND a2.id = :actor2", Movie.class);
+		query.setParameter("actor1", actor1);
+		query.setParameter("actor2", actor2);
+		Movie movie = query.getSingleResult();
+		return movie;
+	}
+	
+	/**
+	 * Retrieves movies acted in by a specific {@code actor} between {@code year1} and {@code year2}.
+	 *
+	 * @param year1 The starting year.
+	 * @param year2 The ending year.
+	 * @param actor The actor's ID.
+	 * @return The list of movies.
+	 */
+	public List<Movie> findMovieBetweenYearFromActor(int year1,int year2,String actor){
+		TypedQuery<Movie> query = JpaLink.getEntityManager()
+				.createQuery("SELECT m FROM Movie m "
+						+ "JOIN m.roles r JOIN r.actor a "
+						+ "WHERE a.id = :actor AND m.year BETWEEN :year1 AND :year2", Movie.class);
+		query.setParameter("year1", year1);
+		query.setParameter("year2", year2);
+		query.setParameter("actor", actor);
+		List<Movie> movies = query.getResultList();
+		return movies;
+	}
+	
+	/**
+     * Checks if a movie with the given ID exists in the map.
+     *
+     * @param idMovie The ID of the movie to check
+     * @return true if the movie exists, false otherwise
+     */
+	public boolean exist(String idMovie) {
+		return movieMap.values().stream().anyMatch(r -> r.getId().equals(idMovie));
+	}
+
+	 /**
+     * Finds a movie by its ID.
+     *
+     * @param movieId The ID of the movie to find
+     * @return The Movie object or null if not found
+     */
+	public Movie findMovieById(String movieId) {
+		return movieMap.values().stream().filter(a -> a.getId().equals(movieId)).findFirst().orElse(null);
+	}
+	
 	@Override
 	public void insert(Movie movie) {
 		JpaLink.persist(movie);
 		movieMap.put(movie.getId(), movie);
 	}
 
-	@Override
-	public void delete(Movie movie) {
-
-	}
 
 }
