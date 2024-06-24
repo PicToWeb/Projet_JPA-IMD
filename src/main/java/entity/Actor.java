@@ -8,6 +8,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import utils.ShowThis;
 
 @Entity
 @Table(name = "ACTOR")
@@ -43,8 +44,8 @@ public class Actor extends Person {
 	
 	@Override
 	public String toString() {
-		return "Acteur [ " +super.id + " " +super.identity  + " LieuNaissance= " + getAdress() + " DateNaissance= " + getbirthdayDate() + 
-				" taille= "+ getSize() + " " + " URL= " + super.url + "]";
+		return 
+				ShowThis.toString(" ", "Actor =",super.getId(),"Identity :",super.getIdentite(),"Born place :",getAdress()," Birthday date:",getBirthdayDate(),"Size:",getSize(),"Url:",super.getUrl());
 	}
 
 	/** Getter for taille

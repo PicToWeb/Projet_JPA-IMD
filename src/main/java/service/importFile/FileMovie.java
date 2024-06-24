@@ -9,7 +9,7 @@ import service.connection.DaoLink;
 public abstract class FileMovie {
 
 	/** movieDao */
-	public static final MovieDao movieDao = DaoLink.movieDao();
+	public static final MovieDao MOVIE_DAO = DaoLink.movieDao();
 
 	/**
 	 * @param url
@@ -24,6 +24,6 @@ public abstract class FileMovie {
 	 * @param movieMap
 	 */
 	public static void addCsvToDataBase(HashMap<String, Movie> movieMap) {
-		movieDao.allInsert(movieMap);
+		MOVIE_DAO.allInsert(movieMap);
 	}
 }

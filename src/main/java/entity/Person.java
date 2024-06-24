@@ -106,7 +106,7 @@ public abstract class Person {
 	 * 
 	 * @return the dateNaissance
 	 */
-	public LocalDate getbirthdayDate() {
+	public LocalDate getBirthdayDate() {
 		return birthdayDate;
 	}
 

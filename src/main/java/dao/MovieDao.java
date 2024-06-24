@@ -24,7 +24,6 @@ public class MovieDao implements DaoInterface<Movie> {
 
 	HashMap<String, Movie> movieMap = new HashMap<>();
 
-	
 	/**
 	 * Constructor
 	 * 
@@ -77,6 +76,22 @@ public class MovieDao implements DaoInterface<Movie> {
 			movieMap.put(a.getId(), a);
 		}
 		return movieMap;
+	}
+
+	public List<Movie> findMovieOfActor(String actorSearched) {
+		TypedQuery<Movie> query = JpaLink.getEntityManager().createQuery(
+				"SELECT m FROM Movie m JOIN m.roles r JOIN r.actor a WHERE a.identity = :actorName", Movie.class);
+		List<Movie> movies = query.setParameter("actorName", actorSearched).getResultList();
+		return movies;
+	}
+
+	public List<Movie> findMovieBetweenDate(int year1, int year2) {
+		TypedQuery<Movie> query = JpaLink.getEntityManager()
+				.createQuery("SELECT m FROM Movie m WHERE m.year BETWEEN :year1 AND :year2", Movie.class);
+		query.setParameter("year1", year1);
+		query.setParameter("year2", year2);
+		List<Movie> movies = query.getResultList();
+		return movies;
 	}
 
 	@Override

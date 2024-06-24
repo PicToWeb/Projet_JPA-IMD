@@ -36,7 +36,7 @@ public class ProducerDao implements DaoInterface<Producer> {
 				producer.setAdress(address);
 				producer.setId(p.getId());
 				producer.setIdentite(p.getIdentite());
-				producer.setBirthdayDate(p.getbirthdayDate());
+				producer.setBirthdayDate(p.getBirthdayDate());
 				producer.setUrl(p.getUrl());
 
 				insert(producer);

@@ -3,8 +3,10 @@ package dao;
 import java.util.ArrayList;
 
 
+
 import java.util.List;
 import entity.Role;
+import jakarta.persistence.TypedQuery;
 import service.connection.JpaLink;
 
 /**
@@ -54,6 +56,13 @@ public class RoleDao implements DaoInterface<Role> {
 	public boolean roleExist(Role role) {
 		return roleList.stream().anyMatch(r -> r.getActor().getId().equals(role.getActor().getId())
 				&& r.getMovie().getId().equals(role.getMovie().getId()) &&  r.getPerson().equals(role.getPerson()));
+	}
+	
+	public List<Role> findCasting(String movieSearched) {
+		TypedQuery<Role> query = JpaLink.getEntityManager().createQuery(
+				  "SELECT r FROM Role r JOIN r.movie m WHERE m.name = :movieName", Role.class);
+				List<Role> roles = query.setParameter("movieName", movieSearched).getResultList();
+		return roles;
 	}
 
 	@Override

@@ -79,8 +79,7 @@ public class Role {
 
 	@Override
 	public String toString() {
-		//return ShowThis.toString(" ","Personnage: ",person,", isPrincipal: ", isPrincipal,", Movie :",getMovie().getId(),", Actor :",getActor().getId());	
-		return ShowThis.toString(" "," isPrincipal: ", isPrincipal);	
+		return ShowThis.toString(" ","Personnage: ",person,", isPrincipal: ", isPrincipal,", Movie :",getMovie().getId(),", Actor :",getActor().getId());	
 	}
 
 	/** Getter for personnage

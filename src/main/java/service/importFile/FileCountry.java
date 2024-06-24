@@ -12,7 +12,7 @@ import service.connection.DaoLink;
 public abstract class FileCountry {
 
 	/** countryDao */
-	public static final CountryDao countryDao = DaoLink.countryDao();
+	public static final CountryDao COUNTRY_DAO = DaoLink.countryDao();
 
 	/**
 	 * @param url
@@ -27,8 +27,8 @@ public abstract class FileCountry {
 	 */
 	public static void addCsvToDataBase(List<Country> countryList) {
 		for (Country p : countryList) {
-			if (!countryDao.countryExist(p.getName())) {
-				countryDao.insert(p);
+			if (!COUNTRY_DAO.countryExist(p.getName())) {
+				COUNTRY_DAO.insert(p);
 			}
 		}
 	}

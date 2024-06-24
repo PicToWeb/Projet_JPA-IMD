@@ -11,9 +11,9 @@ import service.connection.DaoLink;
 public abstract class FileProducer {
 
 	/** producerDao */
-	public static final ProducerDao producerDao = DaoLink.producerDao();
+	public static final ProducerDao PRODUCER_DAO = DaoLink.producerDao();
 	/** addressDao */
-	public static final AddressDao addressDao = DaoLink.addressDao();
+	public static final AddressDao ADDRESS_DAO = DaoLink.addressDao();
 
 	/**
 	 * @param url
@@ -28,6 +28,6 @@ public abstract class FileProducer {
 	 */
 	public static void addCsvToDataBase(HashMap<String, Producer> producerMap) {
 
-		producerDao.allInsert(producerMap);
+		PRODUCER_DAO.allInsert(producerMap);
 	}
 }

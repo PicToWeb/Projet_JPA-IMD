@@ -11,7 +11,7 @@ import service.connection.DaoLink;
 public abstract class FileRole {
 
 	/** roleDao */
-	public static final RoleDao roleDao = DaoLink.roleDao();
+	public static final RoleDao ROLE_DAO = DaoLink.roleDao();
 
 	/**
 	 * @param url
@@ -26,7 +26,7 @@ public abstract class FileRole {
 	 * @param roleList
 	 */
 	public static void addCsvToDataBase(List<Role> roleList) {
-		roleDao.allInsert(roleList);	
+		ROLE_DAO.allInsert(roleList);	
 		System.out.println("Role insert : DONE");
 	}
 

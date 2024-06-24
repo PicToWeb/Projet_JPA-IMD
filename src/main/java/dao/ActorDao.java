@@ -1,6 +1,7 @@
 package dao;
 
 import java.util.HashMap;
+
 import java.util.List;
 import java.util.Map;
 
@@ -41,7 +42,7 @@ public class ActorDao implements DaoInterface<Actor> {
 				actor.setId(a.getId());
 				actor.setIdentite(a.getIdentite());
 				actor.setSize(a.getSize());
-				actor.setBirthdayDate(a.getbirthdayDate());
+				actor.setBirthdayDate(a.getBirthdayDate());
 				actor.setUrl(a.getUrl());
 
 				insert(actor);
@@ -69,6 +70,9 @@ public class ActorDao implements DaoInterface<Actor> {
 
 	public Actor findById(String acteurId) {
 		return actorMap.values().stream().filter(a -> a.getId().equals(acteurId)).findFirst().orElse(null);
+	}
+	public Actor findByName(String actor) {
+		return actorMap.values().stream().filter(a -> a.getIdentite().equals(actor)).findFirst().orElse(null);
 	}
 
 	@Override
