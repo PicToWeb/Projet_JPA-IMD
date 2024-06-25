@@ -17,7 +17,7 @@ import service.connection.JpaLink;
 public class ActorDao implements DaoInterface<Actor> {
 
 	/** addressDao */
-	public static final AddressDao addressDao = DaoLink.addressDao();
+	public static final AddressDao ADDRESS_DAO = DaoLink.addressDao();
 
 	 /** HashMap to store actor data */
 	HashMap<String, Actor> actorMap = new HashMap<>();
@@ -39,7 +39,7 @@ public class ActorDao implements DaoInterface<Actor> {
 		for (Actor a : actorMap.values()) {
 			if (!exist(a.getId())) {
 				Actor actor = a;
-				Address address = addressDao.existOrAdd(a.getAdress());
+				Address address = ADDRESS_DAO.existOrAdd(a.getAdress());
 				
 				actor.setAdress(address);
 				actor.setId(a.getId());
